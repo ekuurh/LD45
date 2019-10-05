@@ -1,6 +1,7 @@
 - implement further intention resolving
 - - buildings
 - implement opinions
+- rework "suggestion"
 
 think about:
 - what happens if a tree falls on a person?
