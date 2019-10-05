@@ -4,8 +4,8 @@
 - end condition + level swap
 - implement people waiting
 - make levels easier to create
-- trees
-- - falling trees
+- trees/statues
+- - falling trees/statues
 
 think about:
 - what happens if a tree falls on a person?
