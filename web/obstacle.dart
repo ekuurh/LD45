@@ -24,3 +24,19 @@ class StaticObstacle extends Obstacle {
 StaticObstacle make_house() {
   return StaticObstacle(ImageElement(src: 'resources/house_large.bmp'), Tuple2<num, num>(2, 2));
 }
+
+StaticObstacle make_tree1() {
+  return StaticObstacle(ImageElement(src: 'resources/tree.bmp'), Tuple2<num, num>(1, 1));
+}
+
+StaticObstacle make_tree2() {
+  return StaticObstacle(ImageElement(src: 'resources/tree2.bmp'), Tuple2<num, num>(1, 1));
+}
+
+StaticObstacle make_bush1() {
+  return StaticObstacle(ImageElement(src: 'resources/bush.bmp'), Tuple2<num, num>(1, 1));
+}
+
+StaticObstacle make_bush2() {
+  return StaticObstacle(ImageElement(src: 'resources/bush2.bmp'), Tuple2<num, num>(1, 1));
+}
