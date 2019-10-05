@@ -2,3 +2,7 @@
 build/
 pubspec.lock
 .idea/
+web/ld45.dart.js
+web/ld45.dart.js.deps
+web/ld45.dart.js.map
+.packages

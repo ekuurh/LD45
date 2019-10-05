@@ -2,19 +2,26 @@ import 'utils.dart';
 import 'dart:math';
 import 'dart:html';
 
-const num WALK_TIME = 1.0;
+const num WALK_TIME = CLOCK_TIME;
 
 class Person {
-  Location walk_start;
-  Location walk_end;
+  List<Location> waypoints;
+  Location location;
+  Location next_location;
   num walk_progress;
+  num next_waypoint;
   bool is_walking;
   
-  Person() {
-    walk_start = Location(0,0);
-    walk_end = Location(1,0);
+  Person(this.waypoints) {
     walk_progress = 0;
-    is_walking = true;
+    next_waypoint = 1;
+    is_walking = false;
+    location = waypoints[0];
+    next_location = waypoints[0]; //how_to_get_to(waypoints[next_waypoint]);
+  }
+  
+  void walk_in_direction(Direction dir) {
+    
   }
   
   void update(num dt) {
@@ -29,8 +36,8 @@ class Person {
   }
   
   void draw(CanvasRenderingContext2D ctx) {
-    num center_tile_x = 0.5 + interpolate(walk_start.x, walk_end.x, walk_progress);
-    num center_tile_y = 0.5 + interpolate(walk_start.y, walk_end.y, walk_progress);
+    num center_tile_x = 0.5 + interpolate(location.x, next_location.x, walk_progress);
+    num center_tile_y = 0.5 + interpolate(location.y, next_location.y, walk_progress);
     
     ctx.fillStyle = "#808080";
     ctx.beginPath();
