@@ -6,6 +6,12 @@ import 'map.dart';
 
 const num WALK_TIME = CLOCK_TIME;
 
+enum PersonState {
+  WALKING,
+  CONVERSING,
+  STAYING
+}
+
 class Person {
   List<Location> waypoints;
   Location location;
@@ -13,13 +19,13 @@ class Person {
   num belief;
   num walk_progress;
   num next_waypoint;
-  bool is_walking;
+  PersonState state;
   
   Person(this.waypoints) {
     walk_progress = 0;
     belief = 0;
     next_waypoint = 1;
-    is_walking = false;
+    state = PersonState.STAYING;
     location = waypoints[0];
     next_location = waypoints[0];
   }
@@ -41,7 +47,7 @@ class Person {
   
   void walk_in_direction(Direction dir) {
     next_location = location_add(location, dir);
-    is_walking = true;
+    state = PersonState.WALKING;
   }
   
   void set_belief(num belief) {
@@ -49,13 +55,13 @@ class Person {
   }
   
   void update(num dt) {
-    if (is_walking) {
+    if (state == PersonState.WALKING) {
       if (walk_progress < 1.0) {
         walk_progress += dt / WALK_TIME;
         walk_progress = min(walk_progress, 1.0);
       }
       if (walk_progress >= 1.0) {
-        is_walking = false;
+        state = PersonState.STAYING;
         location = next_location;
         walk_progress = 0.0;
         if(location == waypoints[next_waypoint]) {
