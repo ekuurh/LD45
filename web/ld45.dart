@@ -15,7 +15,6 @@ void main() async {
   ctx = canvas.getContext('2d');
 
   World world = World(Level());
-  world.persons.add(Person([Location(0, 0), Location(2, 1), Location(0, 2)]));
 
   document.onKeyDown.listen(world.player.handle_keydown);
   document.onKeyUp.listen(world.player.handle_keyup);
