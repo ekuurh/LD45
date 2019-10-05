@@ -11,6 +11,7 @@
 sound stuff:
 - add music
 - add fade-fadeout
+- add conversation sounds
 
 think about:
 - what happens if a tree falls on a person?
