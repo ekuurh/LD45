@@ -2,6 +2,7 @@
 - implement intention resolving
 - - including conversations
 - implement Map.from_string
+- Implement player
 
 think about:
 - what happens if a tree falls on a person?

@@ -1,6 +1,8 @@
 import 'utils.dart';
 import 'dart:math';
 import 'dart:html';
+import 'routing.dart';
+import 'map.dart';
 
 const num WALK_TIME = CLOCK_TIME;
 
@@ -17,11 +19,23 @@ class Person {
     next_waypoint = 1;
     is_walking = false;
     location = waypoints[0];
-    next_location = waypoints[0]; //how_to_get_to(waypoints[next_waypoint]);
+    next_location = waypoints[0];
+  }
+
+  Direction get_wanted_direction(Map map) {
+    num next_waypoint_attempt = next_waypoint;
+    do {
+      RoutingResult res = how_to_get_to(location, waypoints[next_waypoint_attempt], map);
+      if(res != RoutingResult.NAN) {
+        return routing_result_to_direction(res);
+      }
+      next_waypoint_attempt = (next_waypoint_attempt + 1) % waypoints.length;
+    } while(next_waypoint_attempt != next_waypoint);
+    return Direction.STAY;
   }
   
   void walk_in_direction(Direction dir) {
-    
+    next_location = location_add(location, dir);
   }
   
   void update(num dt) {
