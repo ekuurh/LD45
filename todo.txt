@@ -9,7 +9,6 @@
 - - also make errors more indicative
 - add obstacles
 - - integrate obstacle falling animations
-- - seperate draw size and obstruct size
 - add mana
 - - add mana bar
 

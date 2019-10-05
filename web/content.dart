@@ -22,7 +22,7 @@ grrg
 
 Level level0 = Level(WorldMap.fromString("""
 rrrrrrrr
-rgggrggr
+rrrgrggr
 rgggrgrr
 rrrrrrrg
 rggrggrg
@@ -34,7 +34,7 @@ rrrrrrrg
 //      Person([Location(3, 0), Location(4, 7)]),
 //      Person([Location(6, 3), Location(2, 7), Location(0, 3)]),
 //      Person([Location(7, 0), Location(6, 7), Location(0, 5)])],
-      [Person([Location(0, 0), Location(5, 3)])],
+      [Person([Location(0, 0), Location(2, 1), Location(5, 3)])],
       [Tuple2(make_house(), Location(2, 2)),
       Tuple2(make_tree1(), Location(3, 3)),
       Tuple2(make_tree2(), Location(4, 3)),
