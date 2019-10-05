@@ -5,44 +5,7 @@ import 'tile.dart';
 import 'map.dart';
 import 'person.dart';
 import 'level.dart';
-
-const num PLAYER_SPEED = 2.0;
-
-class Player {
-  num speed_x, speed_y;
-  num x, y;
-  Player() {
-    speed_x = 0;
-    speed_y = 0;
-    x = 1;
-    y = 1;
-  }
-  
-  void handle_keydown(KeyboardEvent e) {
-    switch (e.key) {
-      case "ArrowRight":
-        speed_x = 1;
-        break;
-      case "ArrowLeft":
-        speed_x = -1;
-    }
-  }
-  void handle_keyup(KeyboardEvent e) {
-    switch (e.key) {
-      case "ArrowRight":
-      case "ArrowLeft":
-        speed_x = 0;
-    }
-  }
-  
-  void update(num dt) {
-  }
-  
-  void draw(CanvasRenderingContext2D ctx) {
-    ctx.fillStyle = "#ffff00";
-    ctx.fillRect((x + 0.1) * TILE_SIZE, (y + 0.1) * TILE_SIZE, TILE_SIZE * 0.8, TILE_SIZE * 0.8);
-  }
-}
+import 'player.dart';
 
 class World {
   Map map;
@@ -51,11 +14,25 @@ class World {
   Player player;
   World(Level level) {
     clock_progress = 0;
-    player = Player();
+    player = Player(this);
     this.map = Map([[make_blue_tile(), make_red_tile()], [make_red_tile(), make_blue_tile()]]);
     List<Location> waypoints = [Location(0,0), Location(1,0), Location(1,1), Location(0,1)];
-    persons = [Person(waypoints), Person(waypoints)];
+    persons = [Person(waypoints)];
     do_routing();
+  }
+  
+  Object closest_object_to(Location p) {
+    num min_dist = 99999999999;
+    Object result = null;
+    int a = min_dist + 0.1;
+    for (Person person in persons) {
+      num dist = Location.distance(person.location, p); // TODO: use interpolated location
+      if (dist < min_dist) {
+        min_dist = dist;
+        result = person;
+      }
+    }
+    return result;
   }
   
   void do_routing() {
@@ -72,6 +49,7 @@ class World {
     }
     for (Person p in persons)
       p.update(dt);
+    player.update(dt);
   }
   
   void draw(CanvasRenderingContext2D ctx) {

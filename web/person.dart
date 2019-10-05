@@ -8,12 +8,14 @@ class Person {
   List<Location> waypoints;
   Location location;
   Location next_location;
+  num belief;
   num walk_progress;
   num next_waypoint;
   bool is_walking;
   
   Person(this.waypoints) {
     walk_progress = 0;
+    belief = 0;
     next_waypoint = 1;
     is_walking = false;
     location = waypoints[0];
@@ -22,6 +24,10 @@ class Person {
   
   void walk_in_direction(Direction dir) {
     
+  }
+  
+  void set_belief(num belief) {
+    this.belief = belief;
   }
   
   void update(num dt) {
@@ -39,7 +45,10 @@ class Person {
     num center_tile_x = 0.5 + interpolate(location.x, next_location.x, walk_progress);
     num center_tile_y = 0.5 + interpolate(location.y, next_location.y, walk_progress);
     
-    ctx.fillStyle = "#808080";
+    if (belief == 0)
+      ctx.fillStyle = "#808080";
+    else
+      ctx.fillStyle = "#ff8080";
     ctx.beginPath();
     ctx.ellipse(center_tile_x * TILE_SIZE, center_tile_y * TILE_SIZE, TILE_SIZE * 0.4, TILE_SIZE * 0.4,
       0, 0, pi * 2, false);
