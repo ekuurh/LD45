@@ -6,9 +6,11 @@
 - - add level-complete screen
 - implement people waiting
 - make levels easier to create
+- - also make errors more indicative
 - trees/statues
 - - falling trees/statues
 - add more shachar tiles
+- add mana
 
 sound stuff:
 - add music

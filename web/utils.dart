@@ -71,3 +71,10 @@ num clamp(num x, num min, num max) {
     
   return x;
 }
+
+bool verbosify(bool condition, String message) {
+  if(!condition) {
+    print(message);
+  }
+  return condition;
+}

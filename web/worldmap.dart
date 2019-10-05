@@ -38,6 +38,7 @@ class WorldMap {
           tiles.add(new_column);
         }
         else {
+          assert(verbosify(tiles[col].length == line, "Non-rectangular level!"));
           tiles[col].add(tile);
         }
         col++;
