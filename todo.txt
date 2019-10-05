@@ -1,5 +1,5 @@
 - implement further intention resolving
-- - buildings
+- - buildings?
 - tweak opinions
 - Level swap stuff
 - - make stuff tint to black, tint back for next level
@@ -13,7 +13,8 @@
 - - add mana bar
 
 sound stuff:
-- add music
+- music additions
+- - change level music with time?
 - add fade-fadeout
 - add conversation sounds
 - add misc sound effects
