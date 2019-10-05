@@ -1,16 +1,12 @@
 import 'dart:html';
+import 'tile.dart';
+import 'world.dart';
+
+CanvasElement canvas;
+CanvasRenderingContext2D ctx;
 
 void main() {
-  querySelector('#sample_text_id')
-    ..text = 'Click me!'
-    ..onClick.listen(reverseText);
-}
-
-void reverseText(MouseEvent event) {
-  var text = querySelector('#sample_text_id').text;
-  var buffer = new StringBuffer();
-  for (int i = text.length - 1; i >= 0; i--) {
-    buffer.write(text[i]);
-  }
-  querySelector('#sample_text_id').text = buffer.toString();
+  canvas = querySelector('#canvas');
+  World world = new World([[make_blue_tile(), make_red_tile()], [make_red_tile(), make_blue_tile()]]);
+  world.draw(canvas);
 }

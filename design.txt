@@ -1,0 +1,30 @@
+class Tile {
+	Person* occupant
+	bool walkable
+}
+
+class Building extends Tile
+
+class Route {
+	vector<Point> waypoints
+}
+
+class Person {
+	Point coordinates
+	Direction direction
+	Route planned_route
+	num next_waypoint
+}
+
+class World {
+	vector2D<Tile*> tiles
+	draw(Canvas* canvas)
+}
+
+Direction how_to_get_to(Point from, Point to, World world)
+
+
+
+
+
+class Player
