@@ -5,7 +5,7 @@ import 'package:tuple/tuple.dart';
 
 num INFINITY = 9999999999;
 
-List<Location> get_walkable_neighbors(Location loc, Map map) {
+List<Location> get_walkable_neighbors(Location loc, WorldMap map) {
   List<Location> options = [];
   if(loc.x > 0) {
     options.add(Location(loc.x-1, loc.y));
@@ -29,7 +29,7 @@ List<Location> get_walkable_neighbors(Location loc, Map map) {
   return res;
 }
 
-RoutingResult how_to_get_to(Location from, Location to, Map map) {
+RoutingResult how_to_get_to(Location from, Location to, WorldMap map) {
   assert((0 <= from.x) && (from.x < map.width));
   assert((0 <= from.y) && (from.y < map.height));
   assert((0 <= to.x) && (to.x < map.width));

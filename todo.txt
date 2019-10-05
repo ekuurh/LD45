@@ -1,8 +1,6 @@
 - implement further intention resolving
-- - conversations
 - - buildings
 - implement opinions
-- implement Map.from_string
 
 think about:
 - what happens if a tree falls on a person?

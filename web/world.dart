@@ -1,3 +1,4 @@
+import 'dart:core';
 import 'dart:html';
 import 'dart:math';
 import 'utils.dart';
@@ -10,25 +11,26 @@ import 'package:tuple/tuple.dart';
 import 'player.dart';
 
 class World {
-  Map map;
+  WorldMap map;
   List<Person> persons;
   num clock_progress;
   Player player;
   World(Level level) {
     clock_progress = 0;
     player = Player(this);
-    this.map = Map.fromString(
+    this.map = WorldMap.fromString(
 """
 rrrg
-rgrg
-rrrg
-rrrg
-gggg
+rgrr
+rrgr
+rrrr
+grrg
 """
     );
-    persons = [Person([Location(0, 0), Location(1, 2)]),
-               Person([Location(2, 0), Location(1, 2)]),
-               Person([Location(1, 3), Location(1, 2)])];
+    persons = [Person([Location(1, 0), Location(1, 2)]),
+               Person([Location(2, 1), Location(0, 2)]),
+               Person([Location(1, 4), Location(0, 0), Location(3, 1)]),
+               Person([Location(0, 0), Location(2, 4), Location(3, 2)])];
     do_routing();
   }
   
@@ -46,9 +48,9 @@ gggg
   }
 
   void do_routing() {
-    var person_to_direction = {};
-    var person_to_desired_location = {};
-    var location_to_desiring_persons = {};
+    Map<Person, Direction> person_to_direction = {};
+    Map<Person, Tuple2<num, num>> person_to_desired_location = {};
+    Map<Tuple2<num, num>, List> location_to_desiring_persons = {};
     for(var person in persons) {
       Direction dir = person.get_desired_direction(map);
       person_to_direction[person] = dir;
@@ -68,15 +70,20 @@ gggg
       if(person_to_direction[person] == Direction.STAY) {
         continue;
       }
+      if(person.state == PersonState.POST_CONVERSATION) {
+        continue;
+      }
       var my_loc = Tuple2<num, num>(person.location.x, person.location.y);
       var wanted_loc = person_to_desired_location[person];
+      if(location_to_desiring_persons[my_loc] == null) {
+        continue;
+      }
       for(Person person2 in location_to_desiring_persons[my_loc]) {
-        if((person2.location.x == wanted_loc.item1) && (person2.location.x == wanted_loc.item2)) {
+        if((person2.location.x == wanted_loc.item1) && (person2.location.y == wanted_loc.item2)) {
           if(person2.state == PersonState.CONVERSING) {
             break;
           }
-          if(person.conversation_buddy == person2) {
-            assert(person2.conversation_buddy == person);
+          if(person2.state == PersonState.POST_CONVERSATION) {
             break;
           }
           start_conversation(person, person2);
@@ -110,30 +117,29 @@ gggg
         }
       }
       empty_locations.add(picked_person.location);
-      print("!!!");
-      print(picked_person);
-      print(person_to_direction[picked_person]);
       picked_person.walk_in_direction(person_to_direction[picked_person]);
     }
 
     // Swap previously conversing pairs:
     for(var person in persons) {
-      if(person_to_direction[person] == Direction.STAY) {
+      if(person.state != PersonState.POST_CONVERSATION) {
         continue;
       }
-      if(person.state != PersonState.POST_CONVERSATION) {
+      if(person_to_direction[person] == Direction.STAY) {
         continue;
       }
       var my_loc = Tuple2<num, num>(person.location.x, person.location.y);
       var wanted_loc = person_to_desired_location[person];
+      if(location_to_desiring_persons[my_loc] == null) {
+        continue;
+      }
       for(Person person2 in location_to_desiring_persons[my_loc]) {
         if(person2.state != PersonState.POST_CONVERSATION) {
           continue;
         }
-        if((person2.location.x == wanted_loc.item1) && (person2.location.x == wanted_loc.item2)) {
+        if((person2.location.x == wanted_loc.item1) && (person2.location.y == wanted_loc.item2)) {
           if(person.conversation_buddy == person2) {
             assert(person2.conversation_buddy == person);
-            print("SWAP@@@@");
             person.walk_in_direction(person_to_direction[person]);
             person2.walk_in_direction(person_to_direction[person2]);
           }
@@ -155,7 +161,6 @@ gggg
       p.update(dt);
     player.update(dt);
     if (clock_progress >= 1.0) {
-      print("HURRAH");
       do_routing();
       clock_progress = 0.0;
     }

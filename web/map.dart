@@ -2,11 +2,11 @@ import 'dart:html';
 import 'utils.dart';
 import 'tile.dart';
 
-class Map {
+class WorldMap {
   List<List<Tile>> tiles;
-  Map(this.tiles);
+  WorldMap(this.tiles);
   
-  Map.fromString(String s) {
+  WorldMap.fromString(String s) {
     int i;
     int line, col;
     tiles = List<List<Tile>>();

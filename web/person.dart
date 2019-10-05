@@ -35,19 +35,19 @@ class Person {
     next_location = waypoints[0];
   }
 
-  Direction get_desired_direction(Map map) {
+  Direction get_desired_direction(WorldMap map) {
     assert(state != PersonState.WALKING); // Since walk should have ended by now
     if(state == PersonState.CONVERSING) {
       return Direction.STAY;
     }
     num next_waypoint_attempt = next_waypoint;
-    print("getting wanted direction");
     do {
       RoutingResult res = how_to_get_to(location, waypoints[next_waypoint_attempt], map);
       if(res != RoutingResult.NAN) {
         next_waypoint = next_waypoint_attempt;
         return routing_result_to_direction(res);
       }
+      print([[location.x, location.y], [waypoints[next_waypoint_attempt].x, waypoints[next_waypoint_attempt].y]]);
       print("WTFFFF");
       next_waypoint_attempt = (next_waypoint_attempt + 1) % waypoints.length;
     } while(next_waypoint_attempt != next_waypoint);
@@ -73,7 +73,7 @@ class Person {
         state = PersonState.STAYING;
         location = next_location;
         walk_progress = 0.0;
-        if(location == waypoints[next_waypoint]) {
+        if((location.x == waypoints[next_waypoint].x) && (location.y == waypoints[next_waypoint].y)) {
           next_waypoint = (next_waypoint + 1) % waypoints.length;
         }
       }
