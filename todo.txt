@@ -9,6 +9,7 @@
 - - also make errors more indicative
 - add obstacles
 - - allow some to fall
+- - add alpha to drawing them
 - add more shachar tiles
 - add mana
 
