@@ -38,7 +38,8 @@ grrg
     num min_dist = 99999999999;
     Object result = null;
     for (Person person in persons) {
-      num dist = Location.distance(person.location, p); // TODO: use interpolated location
+      Location interpolated_loc = person.get_interpolated_location();
+      num dist = Location.distance(Location(interpolated_loc.x, interpolated_loc.y), p);
       if (dist < min_dist) {
         min_dist = dist;
         result = person;

@@ -96,10 +96,16 @@ class Person {
     conversation_progress = 0.0;
     conversation_buddy = buddy;
   }
+
+  Location get_interpolated_location() {
+    return Location(interpolate(location.x, next_location.x, walk_progress),
+                    interpolate(location.y, next_location.y, walk_progress));
+  }
   
   void draw(CanvasRenderingContext2D ctx) {
-    num center_tile_x = 0.5 + interpolate(location.x, next_location.x, walk_progress);
-    num center_tile_y = 0.5 + interpolate(location.y, next_location.y, walk_progress);
+    Location interpolated_loc = get_interpolated_location();
+    num center_tile_x = 0.5 + interpolated_loc.x;
+    num center_tile_y = 0.5 + interpolated_loc.y;
     
     if (belief == 0)
       ctx.fillStyle = "#808080";
