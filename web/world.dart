@@ -17,11 +17,15 @@ class World {
   World(Level level) {
     clock_progress = 0;
     player = Player(this);
-    this.map = Map([[make_road_tile(), make_road_tile(), make_road_tile(), make_road_tile()],
-                    [make_road_tile(),  make_ground_tile(), make_road_tile(), make_road_tile()],
-                    [make_road_tile(), make_road_tile(), make_road_tile(), make_road_tile()]]);
-//    List<Location> waypoints = [Location(0,0), Location(1,0), Location(1,1), Location(0,1)];
-//    persons = [Person(waypoints), Person(waypoints)];
+    this.map = Map.fromString(
+"""
+rrrg
+rgrg
+rrrg
+rrrg
+gggg
+"""
+    );
     persons = [Person([Location(0, 0), Location(1, 2)]),
                Person([Location(2, 0), Location(1, 2)]),
                Person([Location(1, 3), Location(1, 2)])];
