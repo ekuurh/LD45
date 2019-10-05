@@ -31,6 +31,7 @@ class Person {
       }
       next_waypoint_attempt = (next_waypoint_attempt + 1) % waypoints.length;
     } while(next_waypoint_attempt != next_waypoint);
+    next_waypoint = next_waypoint_attempt;
     return Direction.STAY;
   }
   
