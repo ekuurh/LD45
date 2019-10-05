@@ -1,7 +1,9 @@
 - implement further intention resolving
 - - buildings
 - tweak opinions
-- end condition + level swap
+- Level swap stuff
+- - make stuff tint to black, tint back for next level
+- - add level-complete screen
 - implement people waiting
 - make levels easier to create
 - trees/statues
@@ -21,5 +23,5 @@ think about:
 polish:
 - add glow to current target, maximum distance to current target
 - night phase?
-- intro screen?
 - - fade out along with sound fade out
+- nicer end screen

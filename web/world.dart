@@ -10,11 +10,18 @@ import 'dart:collection';
 import 'package:tuple/tuple.dart';
 import 'player.dart';
 
+enum WorldState {
+  ONGOING,
+  LOSE,
+  WIN
+}
+
 class World {
   WorldMap map;
   List<Person> persons;
   num clock_progress;
   Player player;
+  WorldState state;
   World(Level level) {
     clock_progress = 0;
     player = Player(this);
@@ -24,6 +31,7 @@ class World {
       persons.add(Person(person.waypoints));
     }
     do_routing();
+    state = WorldState.ONGOING;
   }
   
   Tuple2<Object, num> closest_object_to(Location p) {
@@ -157,8 +165,17 @@ class World {
       p.update(dt);
     player.update(dt);
     if (clock_progress >= 1.0) {
+      bool level_complete = true;
       do_routing();
       clock_progress = 0.0;
+      for(var person in persons) {
+        if(person.belief <= 0) {
+          level_complete = false;
+        }
+      }
+      if(level_complete) {
+        state = WorldState.WIN;
+      }
     }
   }
   
