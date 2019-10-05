@@ -24,7 +24,6 @@ class World {
   Object closest_object_to(Location p) {
     num min_dist = 99999999999;
     Object result = null;
-    int a = min_dist + 0.1;
     for (Person person in persons) {
       num dist = Location.distance(person.location, p); // TODO: use interpolated location
       if (dist < min_dist) {
