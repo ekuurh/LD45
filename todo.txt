@@ -1,7 +1,6 @@
 - implement further intention resolving
 - - buildings
 - tweak opinions
-- fix suggestion
 - end condition
 - implement people waiting
 - make levels easier to create
