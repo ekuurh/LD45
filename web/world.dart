@@ -77,13 +77,14 @@ class World {
     }
     for(Tuple2<Obstacle, Location> obstacle in obstacles) {
       if(obstacle.item1 is FallingObstacle) {
-        num dist = Location.distance(Location(obstacle.item2.x+obstacle.item1.dimensions.item1/2.0, obstacle.item2.y+obstacle.item1.dimensions.item2/2.0), p);
+        num dist = Location.distance(Location(obstacle.item2.x+(2-obstacle.item1.dimensions.item1)/2.0, obstacle.item2.y+(2-obstacle.item1.dimensions.item2)/2.0), p);
         if (dist < min_dist) {
           min_dist = dist;
           result = obstacle;
         }
       }
     }
+    print(min_dist);
     return Tuple2<Object, num>(result, min_dist);
   }
 

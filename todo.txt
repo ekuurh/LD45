@@ -8,7 +8,7 @@
 - make levels easier to create
 - - also make errors more indicative
 - add obstacles
-- - allow some to fall
+- - integrate obstacle falling animations
 - - seperate draw size and obstruct size
 - add mana
 - - add mana bar

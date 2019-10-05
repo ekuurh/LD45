@@ -42,4 +42,4 @@ rrrrrrrg
       Tuple2(make_bush2(), Location(4, 4))]
 );
 
-List<Level> all_levels = [test_level, level0];
+List<Level> all_levels = [/*test_level, */level0];

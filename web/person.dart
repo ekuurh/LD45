@@ -50,8 +50,6 @@ class Person extends Drawable {
         next_waypoint = next_waypoint_attempt;
         return routing_result_to_direction(res);
       }
-      print([[location.x, location.y], [waypoints[next_waypoint_attempt].x, waypoints[next_waypoint_attempt].y]]);
-      print("WTFFFF");
       next_waypoint_attempt = (next_waypoint_attempt + 1) % waypoints.length;
     } while(next_waypoint_attempt != next_waypoint);
     return Direction.STAY;

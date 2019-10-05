@@ -23,7 +23,6 @@ class Player {
   void perform_action() {
     var loc = Location(x+0.5, y+0.5);
     Tuple2<Object, num> closest = world.closest_object_to(loc);
-    print([closest.item2, MAX_ACTION_DISTANCE]);
     if(closest.item2 > MAX_ACTION_DISTANCE) {
       return;
     }
