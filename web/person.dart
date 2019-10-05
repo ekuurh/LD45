@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:html';
 import 'routing.dart';
 import 'map.dart';
+import 'package:color/color.dart';
 
 const num WALK_TIME = CLOCK_TIME;
 const num CONVERSATION_TIME = 3 * CLOCK_TIME;
@@ -19,6 +20,7 @@ class Person {
   Location location;
   Location next_location;
   num belief;
+  num next_belief;
   num walk_progress;
   num conversation_progress;
   num next_waypoint;
@@ -28,7 +30,8 @@ class Person {
   Person(this.waypoints) {
     walk_progress = 0;
     conversation_progress = 0;
-    belief = 0;
+    belief = -1;
+    next_belief = -1;
     next_waypoint = 1;
     state = PersonState.STAYING;
     location = waypoints[0];
@@ -85,6 +88,7 @@ class Person {
       }
       if(conversation_progress >= 1.0) {
         state = PersonState.POST_CONVERSATION;
+        belief = next_belief;
         conversation_progress = 0.0;
       }
     }
@@ -95,22 +99,26 @@ class Person {
     state = PersonState.CONVERSING;
     conversation_progress = 0.0;
     conversation_buddy = buddy;
+    next_belief = (2*belief + buddy.belief)/3.0;
   }
 
   Location get_interpolated_location() {
     return Location(interpolate(location.x, next_location.x, walk_progress),
                     interpolate(location.y, next_location.y, walk_progress));
   }
+
+  num get_interpolated_belief() {
+    return interpolate(belief, next_belief, conversation_progress);
+  }
   
   void draw(CanvasRenderingContext2D ctx) {
     Location interpolated_loc = get_interpolated_location();
     num center_tile_x = 0.5 + interpolated_loc.x;
     num center_tile_y = 0.5 + interpolated_loc.y;
-    
-    if (belief == 0)
-      ctx.fillStyle = "#808080";
-    else
-      ctx.fillStyle = "#ff8080";
+
+    num interpolated_belief = get_interpolated_belief();
+    ctx.fillStyle = RgbColor(255*(1+interpolated_belief)/2, 255/2, 255*(1-interpolated_belief)/2).toHexColor().toCssString();
+
     ctx.beginPath();
     if(state != PersonState.CONVERSING) {
       ctx.ellipse(

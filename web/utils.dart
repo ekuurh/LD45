@@ -1,7 +1,7 @@
 import 'dart:math';
 
 num TILE_SIZE = 16;
-const num CLOCK_TIME = 1.0;
+const num CLOCK_TIME = 0.3; // 1.0;
 
 enum Direction {
   UP,

@@ -1,6 +1,8 @@
 - implement further intention resolving
 - - buildings
-- implement opinions
+- tweak opinions
+- fix suggestion
+- end condition
 
 think about:
 - what happens if a tree falls on a person?
