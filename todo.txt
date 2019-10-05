@@ -6,6 +6,7 @@
 - make levels easier to create
 - trees/statues
 - - falling trees/statues
+- add more shachar tiles
 
 think about:
 - what happens if a tree falls on a person?
