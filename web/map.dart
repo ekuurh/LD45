@@ -5,10 +5,10 @@ import 'tile.dart';
 class Map {
   List<List<Tile>> tiles;
   Map(this.tiles);
-  void draw(CanvasElement canvas) {
-    for(num x = 0; x < width; x++) {
-      for(num y = 0; y < height; y++) {
-        tiles[x][y].draw(canvas, Point(x, y));
+  void draw(CanvasRenderingContext2D ctx) {
+    for(num x = 0; x < tiles.length; x++) {
+      for(num y = 0; y < tiles[x].length; y++) {
+        tiles[x][y].draw(ctx, Point(x, y));
       }
     }
   }
