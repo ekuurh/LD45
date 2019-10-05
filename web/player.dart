@@ -1,9 +1,12 @@
 import 'dart:html';
+import 'package:tuple/tuple.dart';
+
 import 'utils.dart';
 import 'world.dart';
 import 'person.dart';
 
 const num PLAYER_SPEED = 2.0;
+const num MAX_ACTION_DISTANCE = 0.8;
 
 class Player {
   World world;
@@ -18,9 +21,13 @@ class Player {
   
   void perform_action() {
     var loc = Location(x+0.5, y+0.5);
-    Object closest = world.closest_object_to(loc);
-    if (closest is Person) {
-      Person p = closest;
+    Tuple2<Object, num> closest = world.closest_object_to(loc);
+    print([closest.item2, MAX_ACTION_DISTANCE]);
+    if(closest.item2 > MAX_ACTION_DISTANCE) {
+      return;
+    }
+    if (closest.item1 is Person) {
+      Person p = closest.item1;
       p.set_belief(1);
     }
   }

@@ -26,7 +26,7 @@ class World {
     do_routing();
   }
   
-  Object closest_object_to(Location p) {
+  Tuple2<Object, num> closest_object_to(Location p) {
     num min_dist = 99999999999;
     Object result = null;
     for (Person person in persons) {
@@ -40,7 +40,7 @@ class World {
         result = person;
       }
     }
-    return result;
+    return Tuple2<Object, num>(result, min_dist);
   }
 
   void do_routing() {
