@@ -47,18 +47,41 @@ gggg
 
   void do_routing() {
     var person_to_direction = {};
-    var location_to_interested_persons = {};
+    var person_to_desired_location = {};
+    var location_to_desiring_persons = {};
     for(var person in persons) {
-      Direction dir = person.get_wanted_direction(map);
+      Direction dir = person.get_desired_direction(map);
       person_to_direction[person] = dir;
       var wanted_loc = location_add(person.location, dir);
       var wanted_loc_tup = Tuple2<num, num>(wanted_loc.x, wanted_loc.y);
-      var curr_list = location_to_interested_persons[wanted_loc_tup];
+      var curr_list = location_to_desiring_persons[wanted_loc_tup];
       if(curr_list == null) {
         curr_list = [];
       }
       curr_list.add(person);
-      location_to_interested_persons[wanted_loc_tup] = curr_list;
+      location_to_desiring_persons[wanted_loc_tup] = curr_list;
+      person_to_desired_location[person] = wanted_loc_tup;
+    }
+
+    // Find newly conversing pairs:
+    for(var person in persons) {
+      if(person_to_direction[person] == Direction.STAY) {
+        continue;
+      }
+      var my_loc = Tuple2<num, num>(person.location.x, person.location.y);
+      var wanted_loc = person_to_desired_location[person];
+      for(Person person2 in location_to_desiring_persons[my_loc]) {
+        if((person2.location.x == wanted_loc.item1) && (person2.location.x == wanted_loc.item2)) {
+          if(person2.state == PersonState.CONVERSING) {
+            break;
+          }
+          if(person.conversation_buddy == person2) {
+            assert(person2.conversation_buddy == person);
+            break;
+          }
+          start_conversation(person, person2);
+        }
+      }
     }
 
     var used_locations = HashSet<Tuple2<num, num>>();
@@ -77,11 +100,11 @@ gggg
 
     for(var ind = 0; ind < empty_locations.length; ind++) {
       var curr_location = empty_locations[ind];
-      if(location_to_interested_persons[curr_location] == null) {
+      if(location_to_desiring_persons[curr_location] == null) {
         continue;
       }
-      Person picked_person = location_to_interested_persons[curr_location][0];
-      for(var person in location_to_interested_persons[curr_location]) {
+      Person picked_person = location_to_desiring_persons[curr_location][0];
+      for(var person in location_to_desiring_persons[curr_location]) {
         if(person_to_direction[person] == Direction.STAY) {
           picked_person = person;
         }
@@ -91,6 +114,38 @@ gggg
       print(picked_person);
       print(person_to_direction[picked_person]);
       picked_person.walk_in_direction(person_to_direction[picked_person]);
+    }
+
+    // Swap previously conversing pairs:
+    for(var person in persons) {
+      if(person_to_direction[person] == Direction.STAY) {
+        continue;
+      }
+      if(person.state != PersonState.POST_CONVERSATION) {
+        continue;
+      }
+      var my_loc = Tuple2<num, num>(person.location.x, person.location.y);
+      var wanted_loc = person_to_desired_location[person];
+      for(Person person2 in location_to_desiring_persons[my_loc]) {
+        if(person2.state != PersonState.POST_CONVERSATION) {
+          continue;
+        }
+        if((person2.location.x == wanted_loc.item1) && (person2.location.x == wanted_loc.item2)) {
+          if(person.conversation_buddy == person2) {
+            assert(person2.conversation_buddy == person);
+            print("SWAP@@@@");
+            person.walk_in_direction(person_to_direction[person]);
+            person2.walk_in_direction(person_to_direction[person2]);
+          }
+        }
+      }
+    }
+
+    // Turn off 'post-conversers':
+    for(var person in persons) {
+      if(person.state == PersonState.POST_CONVERSATION) {
+        person.state = PersonState.STAYING;
+      }
     }
   }
   
