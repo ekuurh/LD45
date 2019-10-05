@@ -1,7 +1,7 @@
 import 'dart:html';
 import 'package:tuple/tuple.dart';
-import '../player.dart';
-import '../utils.dart';
+import 'player.dart';
+import 'utils.dart';
 
 class Obstacle {
   ImageElement img;
