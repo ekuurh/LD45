@@ -38,21 +38,21 @@ class FallingObstacle extends Obstacle {
 }
 
 StaticObstacle make_house() {
-  return StaticObstacle(ImageElement(src: 'resources/house_large.png'), Tuple2<num, num>(2, 2), Tuple2<num, num>(2, 1));
+  return StaticObstacle(ImageElement(src: 'resources/images/house_large.png'), Tuple2<num, num>(2, 2), Tuple2<num, num>(2, 1));
 }
 
 StaticObstacle make_tree1() {
-  return StaticObstacle(ImageElement(src: 'resources/tree.bmp'), Tuple2<num, num>(1, 1), Tuple2<num, num>(1, 1));
+  return StaticObstacle(ImageElement(src: 'resources/images/tree.bmp'), Tuple2<num, num>(1, 1), Tuple2<num, num>(1, 1));
 }
 
 FallingObstacle make_tree2() {
-  return FallingObstacle(ImageElement(src: 'resources/tree2.bmp'), Tuple2<num, num>(1, 2), Tuple2<num, num>(1, 2));
+  return FallingObstacle(ImageElement(src: 'resources/images/tree2.bmp'), Tuple2<num, num>(1, 2), Tuple2<num, num>(1, 2));
 }
 
 StaticObstacle make_bush1() {
-  return StaticObstacle(ImageElement(src: 'resources/bush.bmp'), Tuple2<num, num>(1, 1), Tuple2<num, num>(1, 1));
+  return StaticObstacle(ImageElement(src: 'resources/images/bush.bmp'), Tuple2<num, num>(1, 1), Tuple2<num, num>(1, 1));
 }
 
 StaticObstacle make_bush2() {
-  return StaticObstacle(ImageElement(src: 'resources/bush2.bmp'), Tuple2<num, num>(1, 1), Tuple2<num, num>(1, 1));
+  return StaticObstacle(ImageElement(src: 'resources/images/bush2.bmp'), Tuple2<num, num>(1, 1), Tuple2<num, num>(1, 1));
 }

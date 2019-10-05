@@ -16,7 +16,7 @@ bool in_starting_screen;
 void show_starting_screen(CanvasRenderingContext2D ctx) async {
   document.onKeyDown.listen((e) => {in_starting_screen = false});
   in_starting_screen = true;
-  ImageElement splash_screen = ImageElement(src: "resources/op_screen.jpg");
+  ImageElement splash_screen = ImageElement(src: "resources/images/op_screen.jpg");
 
   while (in_starting_screen) {
     await window.animationFrame;
@@ -25,7 +25,7 @@ void show_starting_screen(CanvasRenderingContext2D ctx) async {
 }
 
 void show_ending_screen(CanvasRenderingContext2D ctx) async {
-  ImageElement splash_screen = ImageElement(src: "resources/end_screen.jpg");
+  ImageElement splash_screen = ImageElement(src: "resources/images/end_screen.jpg");
 
   while (true) {
     await window.animationFrame;
