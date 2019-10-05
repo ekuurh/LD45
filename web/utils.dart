@@ -12,3 +12,7 @@ class Point {
   int y;
   Point(this.x, this.y);
 }
+
+num interpolate(num start, num end, num progress) {
+  return start * (1 - progress) + end * progress;
+}

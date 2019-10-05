@@ -1,12 +1,23 @@
 import 'dart:html';
 import 'tile.dart';
-import 'map.dart';
+import 'world.dart';
 
 CanvasElement canvas;
 CanvasRenderingContext2D ctx;
 
-void main() {
+void main() async {
   canvas = querySelector('#canvas');
-  Map world = new Map([[make_blue_tile(), make_red_tile()], [make_red_tile(), make_blue_tile()]]);
-  world.draw(canvas);
+  ctx = canvas.getContext('2d');
+
+  World world = World();
+  
+  num prevTime = await window.animationFrame;
+  while (true) {
+    num time = await window.animationFrame;
+    num dt = (time - prevTime) / 1000.0;  // In seconds
+    prevTime = time;
+    
+    world.update(dt);
+    world.draw(ctx);
+  }
 }
