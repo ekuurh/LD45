@@ -14,23 +14,37 @@ class Obstacle extends Drawable {
         dimensions.item1 * TILE_SIZE, dimensions.item2 * TILE_SIZE);
   }
 
-  void do_action(Player player) {}
+  Tuple2<StaticObstacle, Location> do_action(Player player, Location my_loc) {}
 }
 
 class StaticObstacle extends Obstacle {
   StaticObstacle(ImageElement img, Tuple2<num, num> dimensions) : super(img, dimensions, false);
 }
 
+class FallingObstacle extends Obstacle {
+  FallingObstacle(ImageElement img, Tuple2<num, num> dimensions) : super(img, dimensions, false);
+  Tuple2<StaticObstacle, Location> do_action(Player player, Location my_loc) {
+    print("poof.");
+    if(player.x > my_loc.x) {
+      // anchor by bottom-right
+      return Tuple2(StaticObstacle(img, Tuple2<num, num>(dimensions.item2, dimensions.item1)), my_loc);
+    }
+    // anchor by bottom-left
+    Location new_loc = Location(my_loc.x - dimensions.item1 + dimensions.item2, my_loc.y);
+    return Tuple2(StaticObstacle(img, Tuple2<num, num>(dimensions.item2, dimensions.item1)), new_loc);
+  }
+}
+
 StaticObstacle make_house() {
-  return StaticObstacle(ImageElement(src: 'resources/house_large.bmp'), Tuple2<num, num>(2, 2));
+  return StaticObstacle(ImageElement(src: 'resources/house_large.png'), Tuple2<num, num>(2, 2));
 }
 
 StaticObstacle make_tree1() {
   return StaticObstacle(ImageElement(src: 'resources/tree.bmp'), Tuple2<num, num>(1, 1));
 }
 
-StaticObstacle make_tree2() {
-  return StaticObstacle(ImageElement(src: 'resources/tree2.bmp'), Tuple2<num, num>(1, 1));
+FallingObstacle make_tree2() {
+  return FallingObstacle(ImageElement(src: 'resources/tree2.bmp'), Tuple2<num, num>(1, 2));
 }
 
 StaticObstacle make_bush1() {

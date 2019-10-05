@@ -35,7 +35,9 @@ RoutingResult how_to_get_to(Location from, Location to, WorldMap map, List<List<
   assert((0 <= to.x) && (to.x < map.width));
   assert((0 <= to.y) && (to.y < map.height));
   assert(is_walkable_arr[from.x][from.y]);
-  assert(is_walkable_arr[to.x][to.y]);
+  if(!is_walkable_arr[to.x][to.y]) {
+    return RoutingResult.NAN;
+  }
 
   if((from.x == to.x) && (from.y == to.y)) {
     return RoutingResult.NAN;

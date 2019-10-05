@@ -1,6 +1,7 @@
 import 'dart:html';
 import 'package:tuple/tuple.dart';
 
+import 'obstacle.dart';
 import 'utils.dart';
 import 'world.dart';
 import 'person.dart';
@@ -29,6 +30,19 @@ class Player {
     if (closest.item1 is Person) {
       Person p = closest.item1;
       p.set_belief(1);
+    }
+    if (closest.item1 is Tuple2) {
+      Tuple2<Obstacle, Location> tup = closest.item1;
+      if(tup.item1 is FallingObstacle) {
+        FallingObstacle obstacle = tup.item1;
+        Tuple2<StaticObstacle, Location> new_obstacle = obstacle.do_action(this, tup.item2);
+        for(num ind = 0; ind < world.obstacles.length; ind++) {
+          if(world.obstacles[ind].item1 == obstacle) {
+            world.obstacles[ind] = new_obstacle;
+          }
+        }
+        world.recompute_is_walkable_arr();
+      }
     }
   }
   

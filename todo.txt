@@ -9,14 +9,15 @@
 - - also make errors more indicative
 - add obstacles
 - - allow some to fall
-- - add alpha to drawing them
-- add more shachar tiles
+- - seperate draw size and obstruct size
 - add mana
+- - add mana bar
 
 sound stuff:
 - add music
 - add fade-fadeout
 - add conversation sounds
+- add misc sound effects
 
 think about:
 - what happens if a tree falls on a person?
@@ -27,4 +28,3 @@ polish:
 - add glow to current target, maximum distance to current target
 - night phase?
 - - fade out along with sound fade out
-- nicer end screen

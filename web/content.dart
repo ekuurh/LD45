@@ -37,9 +37,9 @@ rrrrrrrg
       [Person([Location(0, 0), Location(5, 3)])],
       [Tuple2(make_house(), Location(2, 2)),
       Tuple2(make_tree1(), Location(3, 3)),
-      Tuple2(make_tree2(), Location(4, 4)),
+      Tuple2(make_tree2(), Location(4, 3)),
       Tuple2(make_bush1(), Location(3, 4)),
-      Tuple2(make_bush2(), Location(4, 3))]
+      Tuple2(make_bush2(), Location(4, 4))]
 );
 
 List<Level> all_levels = [test_level, level0];

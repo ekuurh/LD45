@@ -29,16 +29,7 @@ class World {
   WorldState state;
   List<List<bool>> is_walkable_arr;
 
-  World(Level level) {
-    clock_progress = 0;
-    player = Player(this);
-    map = level.map;
-    persons = [];
-    for(var person in level.persons) {
-      persons.add(Person(person.waypoints));
-    }
-    state = WorldState.ONGOING;
-    obstacles = level.obstacles;
+  void recompute_is_walkable_arr() {
     is_walkable_arr = List<List<bool>>();
 
     for(num x = 0; x < map.width; x++) {
@@ -54,6 +45,19 @@ class World {
         }
       }
     }
+  }
+
+  World(Level level) {
+    clock_progress = 0;
+    player = Player(this);
+    map = level.map;
+    persons = [];
+    for(var person in level.persons) {
+      persons.add(Person(person.waypoints));
+    }
+    state = WorldState.ONGOING;
+    obstacles = level.obstacles;
+    recompute_is_walkable_arr();
     do_routing();
   }
   
@@ -69,6 +73,15 @@ class World {
       if (dist < min_dist) {
         min_dist = dist;
         result = person;
+      }
+    }
+    for(Tuple2<Obstacle, Location> obstacle in obstacles) {
+      if(obstacle.item1 is FallingObstacle) {
+        num dist = Location.distance(Location(obstacle.item2.x+obstacle.item1.dimensions.item1/2.0, obstacle.item2.y+obstacle.item1.dimensions.item2/2.0), p);
+        if (dist < min_dist) {
+          min_dist = dist;
+          result = obstacle;
+        }
       }
     }
     return Tuple2<Object, num>(result, min_dist);
