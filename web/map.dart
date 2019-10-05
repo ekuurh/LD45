@@ -14,4 +14,7 @@ class Map {
   }
   int get width => tiles.length;
   int get height => tiles[0].length;
+  bool is_valid_location(Location loc) {
+    return ((loc.x >= 0) && (loc.x < width) && (loc.y >= 0) && (loc.y < height));
+  }
 }

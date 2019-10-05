@@ -1,4 +1,5 @@
 import 'dart:html';
+import 'person.dart';
 import 'tile.dart';
 import 'world.dart';
 import 'map.dart';

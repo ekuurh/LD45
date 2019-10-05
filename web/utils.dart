@@ -19,6 +19,23 @@ enum RoutingResult {
   NAN
 }
 
+Direction routing_result_to_direction(RoutingResult res) {
+  assert(res != RoutingResult.NAN);
+  if(res == RoutingResult.DOWN) {
+    return Direction.DOWN;
+  }
+  if(res == RoutingResult.UP) {
+    return Direction.UP;
+  }
+  if(res == RoutingResult.LEFT) {
+    return Direction.LEFT;
+  }
+  if(res == RoutingResult.RIGHT) {
+    return Direction.RIGHT;
+  }
+  throw "WTF4";
+}
+
 class Location {
   num x;
   num y;
@@ -27,6 +44,18 @@ class Location {
   static num distance(Location p1, Location p2) {
     return pow(pow(p1.x-p2.x, 2) + pow(p1.y-p2.y, 2), 0.5);
   }
+}
+
+Location location_add(Location prev, Direction dir) {
+  Location ret;
+  switch(dir) {
+    case Direction.DOWN:  {ret = Location(prev.x, prev.y+1);} break;
+    case Direction.LEFT:  {ret = Location(prev.x-1, prev.y);} break;
+    case Direction.UP:    {ret = Location(prev.x, prev.y-1);} break;
+    case Direction.RIGHT: {ret = Location(prev.x+1, prev.y);} break;
+    case Direction.STAY:  {ret = Location(prev.x,   prev.y);} break;
+  }
+  return ret;
 }
 
 num interpolate(num start, num end, num progress) {

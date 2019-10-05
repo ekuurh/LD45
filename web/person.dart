@@ -1,6 +1,8 @@
 import 'utils.dart';
 import 'dart:math';
 import 'dart:html';
+import 'routing.dart';
+import 'map.dart';
 
 const num WALK_TIME = CLOCK_TIME;
 
@@ -19,11 +21,27 @@ class Person {
     next_waypoint = 1;
     is_walking = false;
     location = waypoints[0];
-    next_location = waypoints[0]; //how_to_get_to(waypoints[next_waypoint]);
+    next_location = waypoints[0];
+  }
+
+  Direction get_wanted_direction(Map map) {
+    num next_waypoint_attempt = next_waypoint;
+    print("getting wanted direction");
+    do {
+      RoutingResult res = how_to_get_to(location, waypoints[next_waypoint_attempt], map);
+      if(res != RoutingResult.NAN) {
+        next_waypoint = next_waypoint_attempt;
+        return routing_result_to_direction(res);
+      }
+      print("WTFFFF");
+      next_waypoint_attempt = (next_waypoint_attempt + 1) % waypoints.length;
+    } while(next_waypoint_attempt != next_waypoint);
+    return Direction.STAY;
   }
   
   void walk_in_direction(Direction dir) {
-    
+    next_location = location_add(location, dir);
+    is_walking = true;
   }
   
   void set_belief(num belief) {
@@ -35,8 +53,14 @@ class Person {
       if (walk_progress < 1.0) {
         walk_progress += dt / WALK_TIME;
         walk_progress = min(walk_progress, 1.0);
-      } else {
+      }
+      if (walk_progress >= 1.0) {
         is_walking = false;
+        location = next_location;
+        walk_progress = 0.0;
+        if(location == waypoints[next_waypoint]) {
+          next_waypoint = (next_waypoint + 1) % waypoints.length;
+        }
       }
     }
   }

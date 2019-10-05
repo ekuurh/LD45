@@ -37,6 +37,10 @@ RoutingResult how_to_get_to(Location from, Location to, Map map) {
   assert(map.tiles[from.x][from.y].is_walkable);
   assert(map.tiles[to.x][to.y].is_walkable);
 
+  if((from.x == to.x) && (from.y == to.y)) {
+    return RoutingResult.NAN;
+  }
+
   var distances = List.generate(map.width, (_) => new List(map.height));
   for(num x = 0; x < map.width; x++) {
     for(num y = 0; y < map.height; y++) {
@@ -49,7 +53,6 @@ RoutingResult how_to_get_to(Location from, Location to, Map map) {
   locations.add(Tuple2<Location, num>(to, 0));
   while(locations.length > 0) {
     var curr = locations.removeFirst();
-    print(curr);
     if(curr.item2 != distances[curr.item1.x][curr.item1.y]) {
       // Location already invalidated
       assert(curr.item2 > distances[curr.item1.x][curr.item1.y]);

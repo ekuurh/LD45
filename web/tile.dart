@@ -14,7 +14,7 @@ class Tile {
 }
 
 Tile make_red_tile() {
-  return Tile(true, "red");
+  return Tile(false, "red");
 }
 Tile make_blue_tile() {
   return Tile(true, "blue");
