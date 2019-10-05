@@ -13,8 +13,8 @@ class Tile {
 }
 
 Tile make_ground_tile() {
-  return Tile(false, ImageElement(src: 'resources/ground_tile.bmp'));
+  return Tile(false, ImageElement(src: 'resources/ground_tile_large.bmp'));
 }
 Tile make_road_tile() {
-  return Tile(true, ImageElement(src: 'resources/road_tile.bmp'));
+  return Tile(true, ImageElement(src: 'resources/road_tile_large.bmp'));
 }
