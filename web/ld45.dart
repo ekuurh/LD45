@@ -3,7 +3,7 @@ import 'dart:math';
 import 'person.dart';
 import 'tile.dart';
 import 'world.dart';
-import 'map.dart';
+import 'worldmap.dart';
 import 'routing.dart';
 import 'utils.dart';
 import 'level.dart';

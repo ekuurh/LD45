@@ -1,5 +1,5 @@
 import 'utils.dart';
-import 'map.dart';
+import 'worldmap.dart';
 import 'package:collection/collection.dart';
 import 'package:tuple/tuple.dart';
 

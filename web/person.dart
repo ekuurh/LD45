@@ -2,7 +2,7 @@ import 'utils.dart';
 import 'dart:math';
 import 'dart:html';
 import 'routing.dart';
-import 'map.dart';
+import 'worldmap.dart';
 import 'package:color/color.dart';
 
 const num WALK_TIME = CLOCK_TIME;

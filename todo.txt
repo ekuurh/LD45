@@ -3,6 +3,8 @@
 - tweak opinions
 - fix suggestion
 - end condition
+- implement levels
+- implement people waiting
 
 think about:
 - what happens if a tree falls on a person?
