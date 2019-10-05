@@ -17,9 +17,9 @@ class World {
   World(Level level) {
     clock_progress = 0;
     player = Player(this);
-    this.map = Map([[make_blue_tile(), make_blue_tile(), make_blue_tile(), make_blue_tile()],
-                    [make_blue_tile(),  make_red_tile(), make_blue_tile(), make_blue_tile()],
-                    [make_blue_tile(), make_blue_tile(), make_blue_tile(), make_blue_tile()]]);
+    this.map = Map([[make_road_tile(), make_road_tile(), make_road_tile(), make_road_tile()],
+                    [make_road_tile(),  make_ground_tile(), make_road_tile(), make_road_tile()],
+                    [make_road_tile(), make_road_tile(), make_road_tile(), make_road_tile()]]);
 //    List<Location> waypoints = [Location(0,0), Location(1,0), Location(1,1), Location(0,1)];
 //    persons = [Person(waypoints), Person(waypoints)];
     persons = [Person([Location(0, 0), Location(1, 2)]),
