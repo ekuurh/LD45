@@ -7,3 +7,5 @@ dev_dependencies:
 #  unittest: any
   build_runner: any
   build_web_compilers: any
+  collection: any
+  tuple: any
