@@ -10,6 +10,18 @@ import 'level.dart';
 
 CanvasElement canvas;
 CanvasRenderingContext2D ctx;
+bool in_starting_screen;
+
+void show_starting_screen(CanvasRenderingContext2D ctx) async {
+  document.onKeyDown.listen((e) => {in_starting_screen = false});
+  in_starting_screen = true;
+  ImageElement splash_screen = ImageElement(src: "resources/op_screen.jpg");
+
+  while (in_starting_screen) {
+    await window.animationFrame;
+    ctx.drawImageScaled(splash_screen, 0, 0, canvas.width, canvas.height);
+  }
+}
 
 void main() async {
   canvas = querySelector('#canvas');
@@ -24,8 +36,7 @@ void main() async {
   num canvas_style_width = body.clientHeight / world.map.height * world.map.width;
   canvas.style.width = '${canvas_style_width}px';
   
-
-  
+  await show_starting_screen(ctx);
 
   document.onKeyDown.listen(world.player.handle_keydown);
   document.onKeyUp.listen(world.player.handle_keyup);
