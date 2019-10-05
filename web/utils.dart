@@ -4,7 +4,8 @@ enum Direction {
   UP,
   DOWN,
   LEFT,
-  RIGHT
+  RIGHT,
+  STAY
 }
 
 enum RoutingResult {

@@ -1,0 +1,5 @@
+- implement intention gathering
+- implement intention resolving
+
+think about:
+- what happens if a tree falls on a person?
