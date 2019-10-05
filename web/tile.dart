@@ -4,18 +4,17 @@ import 'utils.dart';
 
 class Tile {
   bool is_walkable;
-  String color;
+  ImageElement img;
 
-  Tile(this.is_walkable, this.color);
+  Tile(this.is_walkable, this.img);
   void draw(CanvasRenderingContext2D ctx, Location loc) {
-    ctx.fillStyle = color;
-    ctx.fillRect(loc.x * TILE_SIZE, loc.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+    ctx.drawImageScaled(img, loc.x * TILE_SIZE, loc.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
   }
 }
 
-Tile make_red_tile() {
-  return Tile(false, "red");
+Tile make_ground_tile() {
+  return Tile(false, ImageElement(src: 'resources/ground_tile.bmp'));
 }
-Tile make_blue_tile() {
-  return Tile(true, "blue");
+Tile make_road_tile() {
+  return Tile(true, ImageElement(src: 'resources/road_tile.bmp'));
 }

@@ -1,10 +1,15 @@
-- implement intention gathering
-- implement intention resolving
-- - including conversations
-- - including buildings
+- implement further intention resolving
+- - conversations
+- - buildings
+- implement opinions
 - implement Map.from_string
-- implement player
-- implement buildings
 
 think about:
 - what happens if a tree falls on a person?
+
+
+
+polish:
+- night phase?
+- intro screen?
+- - fade out along with sound fade out
