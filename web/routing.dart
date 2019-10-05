@@ -5,7 +5,7 @@ import 'package:tuple/tuple.dart';
 
 num INFINITY = 9999999999;
 
-List<Location> get_walkable_neighbors(Location loc, WorldMap map) {
+List<Location> get_walkable_neighbors(Location loc, WorldMap map, List<List<bool>> is_walkable_arr) {
   List<Location> options = [];
   if(loc.x > 0) {
     options.add(Location(loc.x-1, loc.y));
@@ -22,20 +22,20 @@ List<Location> get_walkable_neighbors(Location loc, WorldMap map) {
   List<Location> res = [];
   for(num ind = 0; ind < options.length; ind++) {
     final curr = options[ind];
-    if(map.tiles[curr.x][curr.y].is_walkable) {
+    if(is_walkable_arr[curr.x][curr.y]) {
       res.add(curr);
     }
   }
   return res;
 }
 
-RoutingResult how_to_get_to(Location from, Location to, WorldMap map) {
+RoutingResult how_to_get_to(Location from, Location to, WorldMap map, List<List<bool>> is_walkable_arr) {
   assert((0 <= from.x) && (from.x < map.width));
   assert((0 <= from.y) && (from.y < map.height));
   assert((0 <= to.x) && (to.x < map.width));
   assert((0 <= to.y) && (to.y < map.height));
-  assert(map.tiles[from.x][from.y].is_walkable);
-  assert(map.tiles[to.x][to.y].is_walkable);
+  assert(is_walkable_arr[from.x][from.y]);
+  assert(is_walkable_arr[to.x][to.y]);
 
   if((from.x == to.x) && (from.y == to.y)) {
     return RoutingResult.NAN;
@@ -58,7 +58,7 @@ RoutingResult how_to_get_to(Location from, Location to, WorldMap map) {
       assert(curr.item2 > distances[curr.item1.x][curr.item1.y]);
       continue;
     }
-    var neighbors = get_walkable_neighbors(curr.item1, map);
+    var neighbors = get_walkable_neighbors(curr.item1, map, is_walkable_arr);
     for(num ind = 0; ind < neighbors.length; ind++) {
       var next = neighbors[ind];
       if(distances[next.x][next.y] > curr.item2 + 1) {
@@ -70,7 +70,7 @@ RoutingResult how_to_get_to(Location from, Location to, WorldMap map) {
   if(distances[from.x][from.y] == INFINITY) {
     return RoutingResult.NAN;
   }
-  var from_neighbors = get_walkable_neighbors(from, map);
+  var from_neighbors = get_walkable_neighbors(from, map, is_walkable_arr);
   for(num ind = 0; ind < from_neighbors.length; ind++) {
     var curr = from_neighbors[ind];
     if(distances[curr.x][curr.y] < distances[from.x][from.y]) {

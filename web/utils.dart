@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'dart:math';
 
 num TILE_SIZE = 16;
@@ -46,6 +47,22 @@ class Location {
   }
 }
 
+num compare_locs(Location first, Location second) {
+  if(first.y < second.y) {
+    return -1;
+  }
+  if(first.y > second.y) {
+    return 1;
+  }
+  if(first.x < second.x) {
+    return -1;
+  }
+  if(first.x > second.x) {
+    return 1;
+  }
+  return 0;
+}
+
 Location location_add(Location prev, Direction dir) {
   Location ret;
   switch(dir) {
@@ -77,4 +94,8 @@ bool verbosify(bool condition, String message) {
     print(message);
   }
   return condition;
+}
+
+class Drawable {
+  void draw(CanvasRenderingContext2D ctx, Location loc) {}
 }

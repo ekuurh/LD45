@@ -2,7 +2,7 @@ import 'dart:html';
 
 import 'utils.dart';
 
-class Tile {
+class Tile extends Drawable {
   bool is_walkable;
   ImageElement img;
 

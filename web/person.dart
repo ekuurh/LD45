@@ -38,14 +38,14 @@ class Person {
     next_location = waypoints[0];
   }
 
-  Direction get_desired_direction(WorldMap map) {
+  Direction get_desired_direction(WorldMap map, List<List<bool>> is_walkable_arr) {
     assert(state != PersonState.WALKING); // Since walk should have ended by now
     if(state == PersonState.CONVERSING) {
       return Direction.STAY;
     }
     num next_waypoint_attempt = next_waypoint;
     do {
-      RoutingResult res = how_to_get_to(location, waypoints[next_waypoint_attempt], map);
+      RoutingResult res = how_to_get_to(location, waypoints[next_waypoint_attempt], map, is_walkable_arr);
       if(res != RoutingResult.NAN) {
         next_waypoint = next_waypoint_attempt;
         return routing_result_to_direction(res);

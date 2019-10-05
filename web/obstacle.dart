@@ -3,14 +3,15 @@ import 'package:tuple/tuple.dart';
 import 'player.dart';
 import 'utils.dart';
 
-class Obstacle {
+class Obstacle extends Drawable {
   ImageElement img;
   Tuple2<num, num> dimensions; // anchored by bottom-right point
   bool is_actionable;
 
   Obstacle(this.img, this.dimensions, this.is_actionable);
   void draw(CanvasRenderingContext2D ctx, Location loc) {
-    ctx.drawImageScaled(img, loc.x * TILE_SIZE, loc.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+    ctx.drawImageScaled(img, (loc.x - dimensions.item1 + 1) * TILE_SIZE, (loc.y - dimensions.item2 + 1) * TILE_SIZE,
+        dimensions.item1 * TILE_SIZE, dimensions.item2 * TILE_SIZE);
   }
 
   void do_action(Player player) {}

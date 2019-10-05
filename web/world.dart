@@ -1,6 +1,9 @@
 import 'dart:core';
 import 'dart:html';
 import 'dart:math';
+import 'package:collection/collection.dart';
+
+import 'obstacle.dart';
 import 'utils.dart';
 import 'tile.dart';
 import 'worldmap.dart';
@@ -9,6 +12,7 @@ import 'level.dart';
 import 'dart:collection';
 import 'package:tuple/tuple.dart';
 import 'player.dart';
+import 'obstacle.dart';
 
 enum WorldState {
   ONGOING,
@@ -19,9 +23,12 @@ enum WorldState {
 class World {
   WorldMap map;
   List<Person> persons;
+  List<Tuple2<Obstacle, Location> > obstacles;
   num clock_progress;
   Player player;
   WorldState state;
+  List<List<bool>> is_walkable_arr;
+
   World(Level level) {
     clock_progress = 0;
     player = Player(this);
@@ -32,6 +39,22 @@ class World {
     }
     do_routing();
     state = WorldState.ONGOING;
+    obstacles = level.obstacles;
+    is_walkable_arr = List<List<bool>>();
+
+    for(num x = 0; x < map.width; x++) {
+      is_walkable_arr.add(List<bool>());
+      for(num y = 0; y < map.height; y++) {
+        is_walkable_arr[x].add(map.tiles[x][y].is_walkable);
+      }
+    }
+    for(Tuple2<Obstacle, Location> obstacle in obstacles) {
+      for(var i = -obstacle.item1.dimensions.item1+1; i <= 0; i++) {
+        for(var j = -obstacle.item1.dimensions.item2+1; j <= 0; j++) {
+          is_walkable_arr[obstacle.item2.x + i][obstacle.item2.y + j] = false;
+        }
+      }
+    }
   }
   
   Tuple2<Object, num> closest_object_to(Location p) {
@@ -56,7 +79,7 @@ class World {
     Map<Person, Tuple2<num, num>> person_to_desired_location = {};
     Map<Tuple2<num, num>, List> location_to_desiring_persons = {};
     for(var person in persons) {
-      Direction dir = person.get_desired_direction(map);
+      Direction dir = person.get_desired_direction(map, is_walkable_arr);
       person_to_direction[person] = dir;
       var wanted_loc = location_add(person.location, dir);
       var wanted_loc_tup = Tuple2<num, num>(wanted_loc.x, wanted_loc.y);
@@ -103,7 +126,7 @@ class World {
     var empty_locations = [];
     for(num x = 0; x < map.width; x++) {
       for(num y = 0; y < map.height; y++) {
-        if((map.tiles[x][y].is_walkable) && (!used_locations.contains(Tuple2<num, num>(x, y)))) {
+        if((is_walkable_arr[x][y]) && (!used_locations.contains(Tuple2<num, num>(x, y)))) {
           empty_locations.add(Tuple2<num, num>(x, y));
         }
       }
@@ -181,8 +204,17 @@ class World {
   
   void draw(CanvasRenderingContext2D ctx) {
     map.draw(ctx);
+    List<Tuple2<Drawable, Location>> objects;
     for (Person p in persons) {
-      p.draw(ctx);
+      objects.add(Tuple2(p, p.location));
+//      p.draw(ctx);
+    }
+    for(Tuple2<Obstacle, Location> obstacle in obstacles) {
+      objects.add(obstacle);
+    }
+    objects.sort((a, b) => compare_locs(a.item2, b.item2));
+    for(var obj in objects) {
+      obj.item1.draw(ctx, obj.item2);
     }
     player.draw(ctx);
   }
