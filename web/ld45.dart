@@ -1,12 +1,12 @@
 import 'dart:html';
 import 'tile.dart';
-import 'world.dart';
+import 'map.dart';
 
 CanvasElement canvas;
 CanvasRenderingContext2D ctx;
 
 void main() {
   canvas = querySelector('#canvas');
-  World world = new World([[make_blue_tile(), make_red_tile()], [make_red_tile(), make_blue_tile()]]);
+  Map world = new Map([[make_blue_tile(), make_red_tile()], [make_red_tile(), make_blue_tile()]]);
   world.draw(canvas);
 }
