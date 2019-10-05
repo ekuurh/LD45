@@ -4,6 +4,7 @@ import 'world.dart';
 import 'map.dart';
 import 'routing.dart';
 import 'utils.dart';
+import 'level.dart';
 
 CanvasElement canvas;
 CanvasRenderingContext2D ctx;
@@ -17,7 +18,10 @@ void main() async {
   map.draw(ctx);
   print(how_to_get_to(Location(0, 0), Location(1, 1), map));
 
-  World world = World();
+  World world = World(Level());
+
+  document.onKeyDown.listen(world.player.handle_keydown);
+  document.onKeyUp.listen(world.player.handle_keyup);
 
   num prevTime = await window.animationFrame;
   while (true) {
