@@ -7,11 +7,10 @@
 - implement people waiting
 - make levels easier to create
 - - also make errors more indicative
-- trees/statues
-- - falling trees/statues
+- add obstacles
+- - allow some to fall
 - add more shachar tiles
 - add mana
-- add draw layers
 
 sound stuff:
 - add music
