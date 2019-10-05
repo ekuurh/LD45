@@ -12,7 +12,7 @@ class World {
   World() {
     clock_progress = 0;
     this.map = Map([[make_blue_tile(), make_red_tile()], [make_red_tile(), make_blue_tile()]]);
-    List<Point> waypoints = [Point(0,0), Point(1,0), Point(1,1), Point(0,1)];
+    List<Location> waypoints = [Location(0,0), Location(1,0), Location(1,1), Location(0,1)];
     persons = [Person(waypoints), Person(waypoints)];
     do_routing();
   }

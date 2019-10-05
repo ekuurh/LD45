@@ -6,11 +6,11 @@ class Tile {
 class Building extends Tile
 
 class Route {
-	vector<Point> waypoints
+	vector<Location> waypoints
 }
 
 class Person {
-	Point coordinates
+	Location coordinates
 	Direction direction
 	Route planned_route
 	num next_waypoint
@@ -21,7 +21,7 @@ class World {
 	draw(Canvas* canvas)
 }
 
-Direction how_to_get_to(Point from, Point to, World world)
+Direction how_to_get_to(Location from, Location to, World world)
 
 
 

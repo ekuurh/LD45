@@ -5,13 +5,22 @@ enum Direction {
   UP,
   DOWN,
   LEFT,
-  RIGHT
+  RIGHT,
+  STAY
 }
 
-class Point {
+enum RoutingResult {
+  UP,
+  DOWN,
+  LEFT,
+  RIGHT,
+  NAN
+}
+
+class Location {
   int x;
   int y;
-  Point(this.x, this.y);
+  Location(this.x, this.y);
 }
 
 num interpolate(num start, num end, num progress) {

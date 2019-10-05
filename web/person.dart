@@ -5,9 +5,9 @@ import 'dart:html';
 const num WALK_TIME = CLOCK_TIME;
 
 class Person {
-  Point location;
-  Point next_location;
-  List<Point> waypoints;
+  List<Location> waypoints;
+  Location location;
+  Location next_location;
   num walk_progress;
   num next_waypoint;
   bool is_walking;
