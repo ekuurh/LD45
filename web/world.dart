@@ -13,6 +13,7 @@ import 'dart:collection';
 import 'package:tuple/tuple.dart';
 import 'player.dart';
 import 'obstacle.dart';
+import 'package:howler/howler.dart';
 
 enum WorldState {
   ONGOING,
@@ -28,6 +29,7 @@ class World {
   Player player;
   WorldState state;
   List<List<bool>> is_walkable_arr;
+  Howl music;
 
   void recompute_is_walkable_arr() {
     is_walkable_arr = List<List<bool>>();
@@ -57,8 +59,13 @@ class World {
     }
     state = WorldState.ONGOING;
     obstacles = level.obstacles;
+    music = level.music;
     recompute_is_walkable_arr();
     do_routing();
+    if(music != null) {
+      music.play();
+      music.fade(0, 0.6, 1000);
+    }
   }
   
   Tuple2<Object, num> closest_object_to(Location p) {
@@ -232,4 +239,9 @@ class World {
     player.draw(ctx);
   }
 
+  void finish() {
+    if(music != null) {
+      music.fade(0.6, 0, 1000);
+    }
+  }
 }

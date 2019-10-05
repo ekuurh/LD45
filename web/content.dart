@@ -5,6 +5,7 @@ import 'obstacle.dart';
 import 'worldmap.dart';
 import 'utils.dart';
 import 'person.dart';
+import 'audio.dart';
 
 Level test_level = Level(WorldMap.fromString("""
 rrrg
@@ -17,7 +18,8 @@ grrg
       Person([Location(2, 1), Location(0, 2)]),
       Person([Location(1, 4), Location(0, 0), Location(3, 1)]),
       Person([Location(0, 0), Location(2, 4), Location(3, 2)])],
-      []
+      [],
+      t_music: village_music1
 );
 
 Level level0 = Level(WorldMap.fromString("""
@@ -39,7 +41,8 @@ rrrrrrrg
       Tuple2(make_tree1(), Location(3, 3)),
       Tuple2(make_tree2(), Location(4, 3)),
       Tuple2(make_bush1(), Location(3, 4)),
-      Tuple2(make_bush2(), Location(4, 4))]
+      Tuple2(make_bush2(), Location(4, 4))],
+    t_music: village_music2
 );
 
-List<Level> all_levels = [/*test_level, */level0];
+List<Level> all_levels = [test_level, level0];

@@ -7,16 +7,19 @@ import 'person.dart';
 import 'utils.dart';
 import 'dart:collection';
 import 'obstacle.dart';
+import 'package:howler/howler.dart';
 
 class Level {
   WorldMap map;
   List<Person> persons;
   List<Tuple2<Obstacle, Location> > obstacles;
+  Howl music;
 
-  Level(WorldMap t_map, List<Person> t_persons, List<Tuple2<Obstacle, Location> > t_obstacles) {
+  Level(WorldMap t_map, List<Person> t_persons, List<Tuple2<Obstacle, Location> > t_obstacles, {Howl t_music = null}) {
     map = t_map;
     persons = t_persons;
     obstacles = t_obstacles;
+    music = t_music;
     HashSet<Tuple2<num, num>> starting_points = HashSet<Tuple2<num, num>>();
     for(Person person in persons) {
       for(Location waypoint in person.waypoints) {

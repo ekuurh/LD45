@@ -8,6 +8,8 @@ import 'routing.dart';
 import 'utils.dart';
 import 'level.dart';
 import 'content.dart';
+import 'audio.dart';
+import 'package:howler/howler.dart';
 
 CanvasElement canvas;
 CanvasRenderingContext2D ctx;
@@ -48,9 +50,12 @@ void main() async {
   var body = querySelector('body');
   ctx = canvas.getContext('2d');
 
+  main_menu_music.play(); // Play sound.
+
   World world;
   
   await show_starting_screen(ctx);
+  main_menu_music.fade(0.6, 0.0, 1000);
 
   num prevTime = await window.animationFrame;
   for(Level level in all_levels) {
@@ -72,6 +77,7 @@ void main() async {
       }
       if (world.state == WorldState.WIN) {
         print("YOU WIN!");
+        world.finish();
         break;
       }
     }
