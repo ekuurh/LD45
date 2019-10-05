@@ -8,6 +8,10 @@
 - - falling trees/statues
 - add more shachar tiles
 
+sound stuff:
+- add music
+- add fade-fadeout
+
 think about:
 - what happens if a tree falls on a person?
 
