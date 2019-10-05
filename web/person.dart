@@ -15,7 +15,7 @@ enum PersonState {
   STAYING
 }
 
-class Person {
+class Person extends Drawable {
   List<Location> waypoints;
   Location location;
   Location next_location;
@@ -111,7 +111,7 @@ class Person {
     return interpolate(belief, next_belief, conversation_progress);
   }
   
-  void draw(CanvasRenderingContext2D ctx) {
+  void draw_impl(CanvasRenderingContext2D ctx) {
     Location interpolated_loc = get_interpolated_location();
     num center_tile_x = 0.5 + interpolated_loc.x;
     num center_tile_y = 0.5 + interpolated_loc.y;
@@ -143,6 +143,11 @@ class Person {
           false);
     }
     ctx.fill();
+  }
+
+  void draw(CanvasRenderingContext2D ctx, Location loc) {
+    assert(verbosify((loc.x == location.x) && (loc.y == location.y), "Weird..."));
+    draw_impl(ctx);
   }
 }
 

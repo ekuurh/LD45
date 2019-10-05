@@ -37,7 +37,6 @@ class World {
     for(var person in level.persons) {
       persons.add(Person(person.waypoints));
     }
-    do_routing();
     state = WorldState.ONGOING;
     obstacles = level.obstacles;
     is_walkable_arr = List<List<bool>>();
@@ -55,6 +54,7 @@ class World {
         }
       }
     }
+    do_routing();
   }
   
   Tuple2<Object, num> closest_object_to(Location p) {
@@ -204,10 +204,9 @@ class World {
   
   void draw(CanvasRenderingContext2D ctx) {
     map.draw(ctx);
-    List<Tuple2<Drawable, Location>> objects;
+    List<Tuple2<Drawable, Location>> objects = List<Tuple2<Drawable, Location>>();
     for (Person p in persons) {
-      objects.add(Tuple2(p, p.location));
-//      p.draw(ctx);
+      objects.add(Tuple2<Drawable, Location>(p, p.location));
     }
     for(Tuple2<Obstacle, Location> obstacle in obstacles) {
       objects.add(obstacle);
