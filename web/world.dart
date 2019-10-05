@@ -30,6 +30,9 @@ class World {
     num min_dist = 99999999999;
     Object result = null;
     for (Person person in persons) {
+      if(person.state == PersonState.CONVERSING) { // We can't convert mid-conversation
+        continue;
+      }
       Location interpolated_loc = person.get_interpolated_location();
       num dist = Location.distance(Location(interpolated_loc.x+0.5, interpolated_loc.y+0.5), p);
       if (dist < min_dist) {
