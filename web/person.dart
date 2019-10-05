@@ -24,19 +24,22 @@ class Person {
 
   Direction get_wanted_direction(Map map) {
     num next_waypoint_attempt = next_waypoint;
+    print("getting wanted direction");
     do {
       RoutingResult res = how_to_get_to(location, waypoints[next_waypoint_attempt], map);
       if(res != RoutingResult.NAN) {
+        next_waypoint = next_waypoint_attempt;
         return routing_result_to_direction(res);
       }
+      print("WTFFFF");
       next_waypoint_attempt = (next_waypoint_attempt + 1) % waypoints.length;
     } while(next_waypoint_attempt != next_waypoint);
-    next_waypoint = next_waypoint_attempt;
     return Direction.STAY;
   }
   
   void walk_in_direction(Direction dir) {
     next_location = location_add(location, dir);
+    is_walking = true;
   }
   
   void update(num dt) {
@@ -44,8 +47,14 @@ class Person {
       if (walk_progress < 1.0) {
         walk_progress += dt / WALK_TIME;
         walk_progress = min(walk_progress, 1.0);
-      } else {
+      }
+      if (walk_progress >= 1.0) {
         is_walking = false;
+        location = next_location;
+        walk_progress = 0.0;
+        if(location == waypoints[next_waypoint]) {
+          next_waypoint = (next_waypoint + 1) % waypoints.length;
+        }
       }
     }
   }

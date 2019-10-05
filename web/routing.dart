@@ -53,7 +53,6 @@ RoutingResult how_to_get_to(Location from, Location to, Map map) {
   locations.add(Tuple2<Location, num>(to, 0));
   while(locations.length > 0) {
     var curr = locations.removeFirst();
-    print(curr);
     if(curr.item2 != distances[curr.item1.x][curr.item1.y]) {
       // Location already invalidated
       assert(curr.item2 > distances[curr.item1.x][curr.item1.y]);

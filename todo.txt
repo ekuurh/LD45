@@ -1,8 +1,10 @@
 - implement intention gathering
 - implement intention resolving
 - - including conversations
+- - including buildings
 - implement Map.from_string
-- Implement player
+- implement player
+- implement buildings
 
 think about:
 - what happens if a tree falls on a person?
