@@ -29,7 +29,7 @@ List<Location> get_neighbors(Location loc, Map map) {
   return res;
 }
 
-Direction how_to_get_to(Location from, Location to, Map map) {
+RoutingResult how_to_get_to(Location from, Location to, Map map) {
   assert((0 <= from.x) && (from.x < map.width));
   assert((0 <= from.y) && (from.y < map.height));
   assert((0 <= to.x) && (to.x < map.width));
@@ -65,23 +65,23 @@ Direction how_to_get_to(Location from, Location to, Map map) {
     }
   }
   if(distances[from.x][from.y] == INFINITY) {
-    throw "WTF1";
+    return RoutingResult.NAN;
   }
   var from_neighbors = get_neighbors(from, map);
   for(num ind = 0; ind < from_neighbors.length; ind++) {
     var curr = from_neighbors[ind];
     if(distances[curr.x][curr.y] < distances[from.x][from.y]) {
       if(curr.x < from.x) {
-        return Direction.LEFT;
+        return RoutingResult.LEFT;
       }
       if(curr.x > from.x) {
-        return Direction.RIGHT;
+        return RoutingResult.RIGHT;
       }
       if(curr.y < from.y) {
-        return Direction.UP;
+        return RoutingResult.UP;
       }
       if(curr.y > from.y) {
-        return Direction.DOWN;
+        return RoutingResult.DOWN;
       }
       throw "WTF2";
     }

@@ -7,6 +7,14 @@ enum Direction {
   RIGHT
 }
 
+enum RoutingResult {
+  UP,
+  DOWN,
+  LEFT,
+  RIGHT,
+  NAN
+}
+
 class Location {
   int x;
   int y;
