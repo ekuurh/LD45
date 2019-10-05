@@ -18,19 +18,11 @@ class World {
   World(Level level) {
     clock_progress = 0;
     player = Player(this);
-    this.map = WorldMap.fromString(
-"""
-rrrg
-rgrr
-rrgr
-rrrr
-grrg
-"""
-    );
-    persons = [Person([Location(1, 0), Location(1, 2)]),
-               Person([Location(2, 1), Location(0, 2)]),
-               Person([Location(1, 4), Location(0, 0), Location(3, 1)]),
-               Person([Location(0, 0), Location(2, 4), Location(3, 2)])];
+    map = level.map;
+    persons = [];
+    for(var person in level.persons) {
+      persons.add(Person(person.waypoints));
+    }
     do_routing();
   }
   

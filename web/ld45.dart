@@ -7,6 +7,7 @@ import 'worldmap.dart';
 import 'routing.dart';
 import 'utils.dart';
 import 'level.dart';
+import 'content.dart';
 
 CanvasElement canvas;
 CanvasRenderingContext2D ctx;
@@ -28,7 +29,7 @@ void main() async {
   var body = querySelector('body');
   ctx = canvas.getContext('2d');
 
-  World world = World(Level());
+  World world = World(test_level);
   TILE_SIZE = (canvas.width / max(world.map.width, world.map.height)).round();
   canvas.width = TILE_SIZE * world.map.width;
   canvas.height = TILE_SIZE * world.map.height;
