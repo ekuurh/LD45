@@ -5,14 +5,14 @@ import 'dart:html';
 const num WALK_TIME = 1.0;
 
 class Person {
-  Point walk_start;
-  Point walk_end;
+  Location walk_start;
+  Location walk_end;
   num walk_progress;
   bool is_walking;
   
   Person() {
-    walk_start = Point(0,0);
-    walk_end = Point(1,0);
+    walk_start = Location(0,0);
+    walk_end = Location(1,0);
     walk_progress = 0;
     is_walking = true;
   }

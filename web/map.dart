@@ -8,7 +8,7 @@ class Map {
   void draw(CanvasRenderingContext2D ctx) {
     for(num x = 0; x < tiles.length; x++) {
       for(num y = 0; y < tiles[x].length; y++) {
-        tiles[x][y].draw(ctx, Point(x, y));
+        tiles[x][y].draw(ctx, Location(x, y));
       }
     }
   }

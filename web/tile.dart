@@ -7,7 +7,7 @@ class Tile {
   String color;
 
   Tile(this.is_walkable, this.color);
-  void draw(CanvasRenderingContext2D ctx, Point loc) {
+  void draw(CanvasRenderingContext2D ctx, Location loc) {
     ctx.fillStyle = color;
     ctx.fillRect(loc.x * TILE_SIZE, loc.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
   }

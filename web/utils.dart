@@ -7,10 +7,10 @@ enum Direction {
   RIGHT
 }
 
-class Point {
+class Location {
   int x;
   int y;
-  Point(this.x, this.y);
+  Location(this.x, this.y);
 }
 
 num interpolate(num start, num end, num progress) {
