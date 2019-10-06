@@ -42,7 +42,7 @@ class Player {
       }
       mana -= SUGGESTION_MANA_USAGE;
       Person p = closest.item1;
-      p.set_belief(1);
+      p.set_belief(MAX_BELIEF);
     }
     if (closest.item1 is Tuple2) {
       Tuple2<Obstacle, Location> tup = closest.item1;

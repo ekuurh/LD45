@@ -54,7 +54,7 @@ class World {
     map = level.map;
     persons = [];
     for(var person in level.persons) {
-      persons.add(Person(person.waypoints));
+      persons.add(Person(person.waypoints, belief: person.belief));
     }
     state = WorldState.ONGOING;
     obstacles = level.obstacles;
@@ -240,6 +240,12 @@ class World {
     }
     player.draw(ctx);
     player.draw_mana(ctx);
+
+    List beliefs = [];
+    for(var person in persons) {
+      beliefs.add(person.belief);
+    }
+    print(beliefs);
   }
 
   void finish() {

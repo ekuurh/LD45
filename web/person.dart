@@ -1,12 +1,15 @@
+import 'package:tuple/tuple.dart';
 import 'utils.dart';
 import 'dart:math';
 import 'dart:html';
 import 'routing.dart';
 import 'worldmap.dart';
 import 'package:color/color.dart';
+import 'belief_table.dart';
 
 const num WALK_TIME = CLOCK_TIME;
 const num CONVERSATION_TIME = 3 * CLOCK_TIME;
+const num MAX_BELIEF = 2;
 
 enum PersonState {
   WALKING,
@@ -27,10 +30,9 @@ class Person extends Drawable {
   Person conversation_buddy;
   PersonState state;
   
-  Person(this.waypoints) {
+  Person(this.waypoints, {this.belief = -1}) {
     walk_progress = 0;
     conversation_progress = 0;
-    belief = -1;
     next_belief = -1;
     next_waypoint = 1;
     state = PersonState.STAYING;
@@ -92,12 +94,12 @@ class Person extends Drawable {
     }
   }
 
-  void start_conversing(Person buddy) {
+  void start_conversing(Person buddy, num new_belief) {
     assert(state == PersonState.STAYING);
     state = PersonState.CONVERSING;
     conversation_progress = 0.0;
     conversation_buddy = buddy;
-    next_belief = (2*belief + buddy.belief)/3.0;
+    next_belief = new_belief;
   }
 
   Location get_interpolated_location() {
@@ -114,8 +116,8 @@ class Person extends Drawable {
     num center_tile_x = 0.5 + interpolated_loc.x;
     num center_tile_y = 0.5 + interpolated_loc.y;
 
-    num interpolated_belief = get_interpolated_belief();
-    ctx.fillStyle = RgbColor(255*(1+interpolated_belief)/2, 255/2, 255*(1-interpolated_belief)/2).toHexColor().toCssString();
+    num normalized_interpolated_belief = get_interpolated_belief() / (MAX_BELIEF * 1.0);
+    ctx.fillStyle = RgbColor(255*(1+normalized_interpolated_belief)/2, 255/2, 255*(1-normalized_interpolated_belief)/2).toHexColor().toCssString();
 
     ctx.beginPath();
     if(state != PersonState.CONVERSING) {
@@ -150,6 +152,18 @@ class Person extends Drawable {
 }
 
 void start_conversation(Person first, Person second) {
-  first.start_conversing(second);
-  second.start_conversing(first);
+  Tuple2<num, num> next_beliefs = null;
+  Tuple2<num, num> belief_tup = Tuple2<num, num>(first.belief, second.belief);
+  if(belief_table.containsKey(belief_tup)) {
+    next_beliefs = belief_table[belief_tup];
+  }
+  Tuple2<num, num> reverse_belief_tup = Tuple2<num, num>(second.belief, first.belief);
+  if(belief_table.containsKey(reverse_belief_tup)) {
+    next_beliefs = Tuple2<num, num>(belief_table[belief_tup].item2, belief_table[reverse_belief_tup].item1);
+  }
+  assert(verbosify(next_beliefs != null, "Don't know what to do when the beliefs are (${first.belief}, ${second
+      .belief})!"));
+
+  first.start_conversing(second, next_beliefs.item1);
+  second.start_conversing(first, next_beliefs.item2);
 }
