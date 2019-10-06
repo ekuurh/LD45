@@ -1,5 +1,3 @@
-- implement further intention resolving
-- - buildings?
 - Level swap stuff (win/lose screen)
 - - make stuff tint to black, tint back for next level
 - obstacles
