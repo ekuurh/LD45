@@ -91,7 +91,7 @@ class Person extends Drawable {
         walk_progress = 0.0;
         if((location.x == waypoints_and_waits[next_waypoint].item1.x) && (location.y == waypoints_and_waits[next_waypoint].item1.y)) {
           next_waypoint = (next_waypoint + 1) % waypoints_and_waits.length;
-          wait_time_left = waypoints_and_waits[next_waypoint].item2;
+          wait_time_left = waypoints_and_waits[next_waypoint].item2 * CLOCK_TIME;
           if(wait_time_left > 0) {
             state = PersonState.WAITING;
           }
