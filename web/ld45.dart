@@ -113,10 +113,11 @@ void main() async {
   var body = querySelector('body');
   ctx = canvas.getContext('2d');
 
+  List to_loads = [level_lose_screen.onLoad.first];
   for(ImageElement element in level_win_screens) {
-    await element.onLoad.first;
+    to_loads.add(element.onLoad.first);
   }
-  await level_lose_screen.onLoad.first;
+  await to_loads;
 
   World world;
 
