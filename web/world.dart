@@ -63,7 +63,10 @@ class World {
       persons.add(Person(person.waypoints_and_waits, belief: person.belief));
     }
     state = WorldState.ONGOING;
-    obstacles = level.obstacles;
+    obstacles = [];
+    for(var obstacle in level.obstacles) {
+      obstacles.add(obstacle);
+    }
     music = level.music;
     recompute_is_walkable_arr();
     if((music != null) && (start_music)) {
