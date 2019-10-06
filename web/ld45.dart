@@ -1,6 +1,7 @@
 import 'dart:html';
 import 'dart:math';
 import 'person.dart';
+import 'resources/resources.dart';
 import 'tile.dart';
 import 'world.dart';
 import 'worldmap.dart';
@@ -36,22 +37,20 @@ void show_starting_screen(CanvasRenderingContext2D ctx) async {
 //  document.onKeyDown.listen((e) => {in_starting_screen = false});
   document.onKeyDown.listen(op_screen_handle_keydown);
   in_starting_screen = true;
-  ImageElement splash_screen = ImageElement(src: "resources/images/op_screen.jpg");
 
   while (in_starting_screen) {
     await window.animationFrame;
-    ctx.drawImageScaled(splash_screen, 0, 0, canvas.width, canvas.height);
+    ctx.drawImageScaled(op_screen_image, 0, 0, canvas.width, canvas.height);
   }
 
   main_menu_music.fade(0.6, 0.0, 1000);
 }
 
 void show_ending_screen(CanvasRenderingContext2D ctx) async {
-  ImageElement splash_screen = ImageElement(src: "resources/images/end_screen.jpg");
 
   while (true) {
     await window.animationFrame;
-    ctx.drawImageScaled(splash_screen, 0, 0, canvas.width, canvas.height);
+    ctx.drawImageScaled(end_screen_image, 0, 0, canvas.width, canvas.height);
   }
 }
 

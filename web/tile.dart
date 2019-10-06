@@ -1,5 +1,6 @@
 import 'dart:html';
 
+import 'resources/resources.dart';
 import 'utils.dart';
 
 class Tile extends Drawable {
@@ -13,8 +14,8 @@ class Tile extends Drawable {
 }
 
 Tile make_ground_tile() {
-  return Tile(false, ImageElement(src: 'resources/images/ground_tile_large.bmp'));
+  return Tile(false, ground_tile_image);
 }
 Tile make_road_tile() {
-  return Tile(true, ImageElement(src: 'resources/images/road_tile_large.bmp'));
+  return Tile(true, road_tile_image);
 }

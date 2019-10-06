@@ -1,6 +1,7 @@
 import 'dart:html';
 import 'package:tuple/tuple.dart';
 import 'player.dart';
+import 'resources/resources.dart';
 import 'utils.dart';
 
 class Obstacle extends Drawable {
@@ -38,23 +39,23 @@ class FallingObstacle extends Obstacle {
 }
 
 StaticObstacle make_house() {
-  return StaticObstacle(ImageElement(src: 'resources/images/house_large.png'), Tuple2<num, num>(2, 2), Tuple2<num, num>(2, 1));
+  return StaticObstacle(house_large_image, Tuple2<num, num>(2, 2), Tuple2<num, num>(2, 1));
 }
 
 StaticObstacle make_tree1() {
-  return StaticObstacle(ImageElement(src: 'resources/images/tree1_large.png'), Tuple2<num, num>(2, 2), Tuple2<num, num>(2, 1));
+  return StaticObstacle(tree1_large_image, Tuple2<num, num>(2, 2), Tuple2<num, num>(2, 1));
 }
 
 FallingObstacle make_tree2() {
-  return FallingObstacle(ImageElement(src: 'resources/images/tree2_large.png'), Tuple2<num, num>(1, 2), Tuple2<num, num>(1, 1));
+  return FallingObstacle(tree2_large_image, Tuple2<num, num>(1, 2), Tuple2<num, num>(1, 1));
 }
 
 StaticObstacle make_bush1() {
-  return StaticObstacle(ImageElement(src: 'resources/images/bush_large.png'), Tuple2<num, num>(2, 2), Tuple2<num, num>(2, 1));
+  return StaticObstacle(bush_large_image, Tuple2<num, num>(2, 2), Tuple2<num, num>(2, 1));
 }
 
 StaticObstacle make_bush2() {
-  return StaticObstacle(ImageElement(src: 'resources/images/bush2.bmp'), Tuple2<num, num>(1, 1), Tuple2<num, num>(1, 1));
+  return StaticObstacle(bush2_image, Tuple2<num, num>(1, 1), Tuple2<num, num>(1, 1));
 }
 
 List<Tuple2<Obstacle, Location>> obstacles_from_string(String s) {

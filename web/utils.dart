@@ -3,8 +3,6 @@ import 'dart:math';
 
 num TILE_SIZE = 16;
 const num CLOCK_TIME = 0.5;
-ImageElement level_win_screen = ImageElement(src: "resources/images/level_win_screen.png");
-ImageElement level_lose_screen = ImageElement(src: "resources/images/level_lose_screen.png");
 bool is_muted=false;
 
 enum Direction {

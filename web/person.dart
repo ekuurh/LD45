@@ -5,14 +5,13 @@ import 'dart:html';
 import 'routing.dart';
 import 'worldmap.dart';
 import 'package:color/color.dart';
+import 'resources/resources.dart';
 import 'belief_table.dart';
 
 const num WALK_TIME = CLOCK_TIME;
 const num CONVERSATION_TIME = 3 * CLOCK_TIME;
 const num MAX_BELIEF = 2;
 const num MANA_EARNED_FROM_CONVERSION = 5;
-
-ImageElement person_image = ImageElement(src: "resources/images/sprite_test.png");
 
 enum PersonState {
   WALKING,

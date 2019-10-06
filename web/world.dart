@@ -3,6 +3,7 @@ import 'dart:html';
 import 'dart:math';
 import 'package:collection/collection.dart';
 import 'obstacle.dart';
+import 'resources/resources.dart';
 import 'utils.dart';
 import 'tile.dart';
 import 'worldmap.dart';
