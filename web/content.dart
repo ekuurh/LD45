@@ -32,7 +32,10 @@ rrrrggrr
 rggrggrr
 rrrrrrrg
 """),
-      [Person([Tuple2<Location, num>(Location(0, 0), 1), Tuple2<Location, num>(Location(2, 1), 1), Tuple2<Location, num>(Location(5, 3), 1)])],
+      pesrons_from_string("""
+0,0;1|2,1;1|5,3;1|-1
+      """),
+//      [Person([Tuple2<Location, num>(Location(0, 0), 1), Tuple2<Location, num>(Location(2, 1), 1), Tuple2<Location, num>(Location(5, 3), 1)])],
       obstacles_from_string("""
 --------
 --------

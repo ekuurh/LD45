@@ -101,3 +101,12 @@ bool verbosify(bool condition, String message) {
 class Drawable {
   void draw(CanvasRenderingContext2D ctx, Location loc) {}
 }
+
+int print_and_fail(String message) {
+  print(message);
+  assert(false);
+}
+
+int verbose_parse_string(String input, String error_message) {
+  return int.parse(input, onError: (jnk) => print_and_fail(error_message));
+}
