@@ -36,8 +36,8 @@ rrrrrrrg
       obstacles_from_string("""
 --------
 --------
---Ht----
-----T---
+--H-----
+---tT---
 ----b---
 --------
 --------
@@ -48,7 +48,7 @@ rrrrrrrg
       Tuple2(make_tree2(), Location(4, 3)),
       Tuple2(make_bush1(), Location(3, 4)),
       Tuple2(make_bush2(), Location(4, 4))]*/, 70,
-    t_music: village_music2
+    t_music: village_alt_music
 );
 
 List<Level> all_levels = [/*test_level, */level0];
