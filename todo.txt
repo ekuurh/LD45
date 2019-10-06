@@ -5,6 +5,7 @@
 - obstacles
 - - integrate obstacle falling animations
 - have new followers generate mana
+- handle fadeyness!
 
 sound stuff:
 - music additions
