@@ -304,8 +304,6 @@ class World {
     ctx.fillRect(0, 0, map.width * TILE_SIZE, map.height * TILE_SIZE);
     ctx.fillStyle = "rgb(0, 0, 0)";
 
-    print(tint_level);
-
     if(state == WorldState.LOSE_SCREEN) {
       if(tint_level == MAX_TINT) {
         draw_winlose_screen(ctx, level_lose_screen);
