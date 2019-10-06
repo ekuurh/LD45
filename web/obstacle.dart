@@ -91,6 +91,9 @@ List<Tuple2<Obstacle, Location>> obstacles_from_string(String s) {
           line++;
           col = -1;
         }} break;
+      case " ":
+        col -= 1;
+        break;
       default:
         {
           print("Obstacle parsing error - unrecognized character '${ch}'!");
