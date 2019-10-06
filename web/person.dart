@@ -120,7 +120,6 @@ class Person extends Drawable {
         if((state == PersonState.STAYING) && (location.x == waypoints_and_waits[next_waypoint].item1.x) && (location.y == waypoints_and_waits[next_waypoint].item1.y)) {
           wait_time_left = waypoints_and_waits[next_waypoint].item2;
           next_waypoint = (next_waypoint + 1) % waypoints_and_waits.length;
-          print(wait_time_left);
           if(wait_time_left > 0) {
             state = PersonState.WAITING;
             update_sprite();

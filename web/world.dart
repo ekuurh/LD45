@@ -278,6 +278,7 @@ class World {
   }
 
   void draw_winlose_screen(CanvasRenderingContext2D ctx, ImageElement element) {
+    element.onLoad.first;
     num scale_bound1 = element.width / (TILE_SIZE * map.width * WINLOSE_SCREEN_MAX_RELATIVE_WIDTH * 1.0);
     num scale_bound2 = element.height / (TILE_SIZE * map.height * WINLOSE_SCREEN_MAX_RELATIVE_HEIGHT * 1.0);
     num scale = max(scale_bound1, scale_bound2);
@@ -285,6 +286,7 @@ class World {
     num actual_height = element.height / scale;
     num center_x = TILE_SIZE * map.width / 2.0;
     num center_y = TILE_SIZE * map.height / 2.0;
+    print([element.width, element.height, map.width, map.height]);
     ctx.drawImageScaled(element, (center_x-(actual_width/2.0)).round(), (center_y-(actual_height/2.0)).round(),
         actual_width, actual_height);
   }

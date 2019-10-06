@@ -25,7 +25,7 @@ bool waiting_for_click_at_start;
 bool in_intro_screen;
 var main_menu_music = get_main_menu_music();
 
-void draw_image_x_scaled(CanvasRenderingContext2D ctx, ImageElement element, var base_y) {
+void draw_image_x_scaled(CanvasRenderingContext2D ctx, ImageElement element, var base_y) async {
   var scale = element.width / canvas.width;
   ctx.drawImageScaled(op_screen_image, 0, base_y, element.width / scale, element.height / scale);
 }
@@ -50,6 +50,8 @@ void show_starting_screen(CanvasRenderingContext2D ctx) async {
   document.onKeyDown.listen(op_screen_handle_keydown);
   waiting_for_click_at_start = true;
   in_intro_screen = true;
+
+  await op_screen_image.onLoad.first;
 
   while (waiting_for_click_at_start) {
     await window.animationFrame;
@@ -110,6 +112,11 @@ void main() async {
   canvas = querySelector('#canvas');
   var body = querySelector('body');
   ctx = canvas.getContext('2d');
+
+  for(ImageElement element in level_win_screens) {
+    await element.onLoad.first;
+  }
+  await level_lose_screen.onLoad.first;
 
   World world;
 

@@ -41,7 +41,7 @@ class RotatingObstacle extends Obstacle {
 
   @override
   void draw(CanvasRenderingContext2D ctx, Location loc) {
-    print(angle);
+//    print(angle);
     ctx.rotate(-angle);
     Location anchored_loc = Location(loc.x - draw_dimensions.item1 + 1, loc.y - draw_dimensions.item2 + 1);
     Location rotated_anchored_loc = anchored_loc.rotate(-angle);
