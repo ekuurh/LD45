@@ -14,11 +14,20 @@ rrgr
 rrrr
 grrg
 """),
-    [Person([Tuple2<Location, num>(Location(1, 0), 1), Tuple2<Location, num>(Location(1, 2), 1)], belief: -2),
-      Person([Tuple2<Location, num>(Location(2, 1), 1), Tuple2<Location, num>(Location(0, 2), 1)], belief: 0),
-      Person([Tuple2<Location, num>(Location(1, 4), 1), Tuple2<Location, num>(Location(0, 0), 1), Tuple2<Location, num>(Location(3, 1), 1)], belief: -1),
-      Person([Tuple2<Location, num>(Location(0, 0), 1), Tuple2<Location, num>(Location(2, 4), 1), Tuple2<Location, num>(Location(3, 2), 1)], belief: -1)],
-      [], 30,
+    pesrons_from_string("""
+1,0;0|1,2;1|-2
+2,1;0|0,2;1|0
+1,4;0|0,0;1|3,1;1|-1
+0,0;0|2,4;0|3,2;1|-1
+      """),
+    obstacles_from_string("""
+----
+----
+----
+----
+----
+      """),
+    30,
       t_music: village_music1
 );
 
@@ -35,7 +44,6 @@ rrrrrrrg
       pesrons_from_string("""
 0,0;1|2,1;1|5,3;1|-1
       """),
-//      [Person([Tuple2<Location, num>(Location(0, 0), 1), Tuple2<Location, num>(Location(2, 1), 1), Tuple2<Location, num>(Location(5, 3), 1)])],
       obstacles_from_string("""
 --------
 --------
@@ -49,4 +57,4 @@ rrrrrrrg
     t_music: village_alt_music
 );
 
-List<Level> all_levels = [/*test_level, */level0];
+List<Level> all_levels = [test_level, level0];
