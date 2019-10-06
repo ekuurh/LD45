@@ -27,3 +27,7 @@ polish:
 - - fade out along with sound fade out
 - nicer mana bar
 - tweak beliefs
+
+final stuff:
+- add copyright for howler
+- publish
