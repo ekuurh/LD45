@@ -26,6 +26,8 @@ polish:
 - graphics for mute button?
 - scrolling intro screen
 - - with text appearing in the bottom all fancily
+- have mana bar above
+- have top houses not be cropped
 
 final stuff:
 - add copyright for howler
