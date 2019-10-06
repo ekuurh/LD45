@@ -45,7 +45,7 @@ class Person extends Drawable {
     next_location = location;
   }
 
-  Direction get_desired_direction(WorldMap map, List<List<bool>> is_walkable_arr) {
+  Direction get_desired_direction(WorldMap map, List<List<bool>> is_walkable_arr, Location rounded_player_loc) {
     assert(state != PersonState.WALKING); // Since walk should have ended by now
     if(state == PersonState.CONVERSING) {
       return Direction.STAY;
@@ -54,8 +54,12 @@ class Person extends Drawable {
       return Direction.STAY;
     }
     if(state == PersonState.POSSESSED) {
-      // TODO: handle possessed move will
-      return Direction.STAY;
+      RoutingResult res = how_to_get_to(location, rounded_player_loc, map, is_walkable_arr);
+//      print([[location.x, location.y], [rounded_player_loc.x, rounded_player_loc.y], res]);
+      if(res == RoutingResult.NAN) {
+        return Direction.STAY;
+      }
+      return routing_result_to_direction(res);
     }
     num next_waypoint_attempt = next_waypoint;
     do {
@@ -101,9 +105,11 @@ class Person extends Drawable {
       }
       if (walk_progress >= 1.0) {
         location = next_location;
-        state = PersonState.STAYING;
+        if(state == PersonState.WALKING) {
+          state = PersonState.STAYING;
+        }
         walk_progress = 0.0;
-        if((location.x == waypoints_and_waits[next_waypoint].item1.x) && (location.y == waypoints_and_waits[next_waypoint].item1.y)) {
+        if((state == PersonState.WALKING) && (location.x == waypoints_and_waits[next_waypoint].item1.x) && (location.y == waypoints_and_waits[next_waypoint].item1.y)) {
           next_waypoint = (next_waypoint + 1) % waypoints_and_waits.length;
           wait_time_left = waypoints_and_waits[next_waypoint].item2 * CLOCK_TIME;
           if(wait_time_left > 0) {
@@ -126,7 +132,7 @@ class Person extends Drawable {
   }
 
   void start_conversing(Person buddy, num new_belief) {
-    assert(state == PersonState.STAYING);
+    assert((state == PersonState.STAYING) || (state == PersonState.POSSESSED));
     state = PersonState.CONVERSING;
     conversation_progress = 0.0;
     conversation_buddy = buddy;
@@ -143,6 +149,7 @@ class Person extends Drawable {
   }
 
   void possess() {
+    print("POSSESSED!");
     state = PersonState.POSSESSED;
   }
 
@@ -252,7 +259,6 @@ List<Person> pesrons_from_string(String s) {
       int pos1 = verbose_parse_string(pos[1], "ERROR in person - could not parse number '${pos[1]}'");
       int tmp1 = verbose_parse_string(tmp[1], "ERROR in person - could not parse number '${tmp[1]}'");
       waypoints_and_waits.add(Tuple2<Location, num>(Location(pos0, pos1), tmp1));
-      print([pos0, pos1, tmp1]);
     }
     ret.add(Person(waypoints_and_waits, belief: belief));
   }

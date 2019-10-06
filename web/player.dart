@@ -16,7 +16,7 @@ const num INTERACTION_MANA_USAGE = 10;
 const num POSSESSION_INITIAL_MANA_USAGE = 10;
 const num POSSESSION_CONTINUOUS_MANA_USAGE = 5;
 
-const Duration spacebar_time_until_possessing = Duration(milliseconds: 500);
+const Duration spacebar_time_until_possessing = Duration(milliseconds: 200);
 
 DateTime spacebar_start_time;
 
@@ -153,6 +153,13 @@ class Player {
       case " ":
         {
           if(possession_targeted_player != null) {
+            if(possession_targeted_player.state != PersonState.POSSESSED) {
+              // Possession broken by conversation
+              is_possessing = false;
+              possession_targeted_player = null;
+              spacebar_start_time = null;
+              break;
+            }
             if(is_possessing) {
               possession_targeted_player.unpossess();
               is_possessing = false;
@@ -176,7 +183,15 @@ class Player {
     y = clamp(y, 0, world.map.height - 1);
     if(possession_targeted_player != null) {
       if (is_possessing) {
-        mana -= dt * POSSESSION_CONTINUOUS_MANA_USAGE;
+        if(mana < dt * POSSESSION_CONTINUOUS_MANA_USAGE) {
+          possession_targeted_player.unpossess();
+          is_possessing = false;
+          possession_targeted_player = null;
+          spacebar_start_time = null;
+        }
+        else {
+          mana -= dt * POSSESSION_CONTINUOUS_MANA_USAGE;
+        }
       }
       else {
         if (DateTime.now().difference(spacebar_start_time) >

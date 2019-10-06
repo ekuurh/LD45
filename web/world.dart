@@ -65,7 +65,6 @@ class World {
     obstacles = level.obstacles;
     music = level.music;
     recompute_is_walkable_arr();
-    do_routing();
     if((music != null) && (start_music)) {
       music.play();
       music.fade(0, 0.6, 1000);
@@ -74,6 +73,7 @@ class World {
     clock_progress = 0;
     starting_mana = level.starting_mana;
     player = Player(this); // last in init since it uses "this"
+    do_routing();
   }
   
   Tuple2<Object, num> closest_object_to(Location p) {
@@ -99,16 +99,16 @@ class World {
         }
       }
     }
-    print(min_dist);
     return Tuple2<Object, num>(result, min_dist);
   }
 
   void do_routing() {
+    Location rounded_player_loc = Location(player.x.round(), player.y.round());
     Map<Person, Direction> person_to_direction = {};
     Map<Person, Tuple2<num, num>> person_to_desired_location = {};
     Map<Tuple2<num, num>, List> location_to_desiring_persons = {};
     for(var person in persons) {
-      Direction dir = person.get_desired_direction(map, is_walkable_arr);
+      Direction dir = person.get_desired_direction(map, is_walkable_arr, rounded_player_loc);
       person_to_direction[person] = dir;
       var wanted_loc = location_add(person.location, dir);
       var wanted_loc_tup = Tuple2<num, num>(wanted_loc.x, wanted_loc.y);
