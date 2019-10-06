@@ -9,8 +9,6 @@
 - - also make errors more indicative
 - add obstacles
 - - integrate obstacle falling animations
-- add mana
-- - add mana bar
 - add possession/follow
 
 sound stuff:
@@ -31,3 +29,4 @@ polish:
 - add glow to current target, maximum distance to current target
 - night phase?
 - - fade out along with sound fade out
+- nicer mana bar
