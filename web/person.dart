@@ -15,11 +15,12 @@ enum PersonState {
   WALKING,
   CONVERSING,
   POST_CONVERSATION,
-  STAYING
+  STAYING,
+  WAITING
 }
 
 class Person extends Drawable {
-  List<Location> waypoints;
+  List<Tuple2<Location, num>> waypoints_and_waits;
   Location location;
   Location next_location;
   num belief;
@@ -27,17 +28,19 @@ class Person extends Drawable {
   num walk_progress;
   num conversation_progress;
   num next_waypoint;
+  num wait_time_left;
   Person conversation_buddy;
   PersonState state;
   
-  Person(this.waypoints, {this.belief = -1}) {
+  Person(this.waypoints_and_waits, {this.belief = -1}) {
     walk_progress = 0;
     conversation_progress = 0;
     next_belief = -1;
     next_waypoint = 1;
+    wait_time_left = 0;
     state = PersonState.STAYING;
-    location = waypoints[0];
-    next_location = waypoints[0];
+    location = waypoints_and_waits[0].item1;
+    next_location = location;
   }
 
   Direction get_desired_direction(WorldMap map, List<List<bool>> is_walkable_arr) {
@@ -45,14 +48,18 @@ class Person extends Drawable {
     if(state == PersonState.CONVERSING) {
       return Direction.STAY;
     }
+    if(state == PersonState.WAITING) {
+      return Direction.STAY;
+    }
+    assert(verbosify(state == PersonState.STAYING, "Internal error #1"));
     num next_waypoint_attempt = next_waypoint;
     do {
-      RoutingResult res = how_to_get_to(location, waypoints[next_waypoint_attempt], map, is_walkable_arr);
+      RoutingResult res = how_to_get_to(location, waypoints_and_waits[next_waypoint_attempt].item1, map, is_walkable_arr);
       if(res != RoutingResult.NAN) {
         next_waypoint = next_waypoint_attempt;
         return routing_result_to_direction(res);
       }
-      next_waypoint_attempt = (next_waypoint_attempt + 1) % waypoints.length;
+      next_waypoint_attempt = (next_waypoint_attempt + 1) % waypoints_and_waits.length;
     } while(next_waypoint_attempt != next_waypoint);
     return Direction.STAY;
   }
@@ -67,17 +74,28 @@ class Person extends Drawable {
   }
   
   void update(num dt) {
+    if(state == PersonState.WAITING) {
+      wait_time_left -= dt;
+      if(wait_time_left <= 0.0) {
+        wait_time_left = 0.0;
+        state = PersonState.STAYING;
+      }
+    }
     if (state == PersonState.WALKING) {
       if (walk_progress < 1.0) {
         walk_progress += dt / WALK_TIME;
         walk_progress = min(walk_progress, 1.0);
       }
       if (walk_progress >= 1.0) {
-        state = PersonState.STAYING;
         location = next_location;
+        state = PersonState.STAYING;
         walk_progress = 0.0;
-        if((location.x == waypoints[next_waypoint].x) && (location.y == waypoints[next_waypoint].y)) {
-          next_waypoint = (next_waypoint + 1) % waypoints.length;
+        if((location.x == waypoints_and_waits[next_waypoint].item1.x) && (location.y == waypoints_and_waits[next_waypoint].item1.y)) {
+          next_waypoint = (next_waypoint + 1) % waypoints_and_waits.length;
+          wait_time_left = waypoints_and_waits[next_waypoint].item2;
+          if(wait_time_left > 0) {
+            state = PersonState.WAITING;
+          }
         }
       }
     }

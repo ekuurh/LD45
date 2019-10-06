@@ -14,10 +14,10 @@ rrgr
 rrrr
 grrg
 """),
-    [Person([Location(1, 0), Location(1, 2)], belief: -2),
-      Person([Location(2, 1), Location(0, 2)], belief: 0),
-      Person([Location(1, 4), Location(0, 0), Location(3, 1)], belief: -1),
-      Person([Location(0, 0), Location(2, 4), Location(3, 2)], belief: -1)],
+    [Person([Tuple2<Location, num>(Location(1, 0), 1), Tuple2<Location, num>(Location(1, 2), 1)], belief: -2),
+      Person([Tuple2<Location, num>(Location(2, 1), 1), Tuple2<Location, num>(Location(0, 2), 1)], belief: 0),
+      Person([Tuple2<Location, num>(Location(1, 4), 1), Tuple2<Location, num>(Location(0, 0), 1), Tuple2<Location, num>(Location(3, 1), 1)], belief: -1),
+      Person([Tuple2<Location, num>(Location(0, 0), 1), Tuple2<Location, num>(Location(2, 4), 1), Tuple2<Location, num>(Location(3, 2), 1)], belief: -1)],
       [], 30,
       t_music: village_music1
 );
@@ -32,11 +32,7 @@ rrrrggrr
 rggrggrr
 rrrrrrrg
 """),
-//     [Person([Location(1, 0), Location(7, 2), Location(0, 3)]),
-//      Person([Location(3, 0), Location(4, 7)]),
-//      Person([Location(6, 3), Location(2, 7), Location(0, 3)]),
-//      Person([Location(7, 0), Location(6, 7), Location(0, 5)])],
-      [Person([Location(0, 0), Location(2, 1), Location(5, 3)])],
+      [Person([Tuple2<Location, num>(Location(0, 0), 1), Tuple2<Location, num>(Location(2, 1), 1), Tuple2<Location, num>(Location(5, 3), 1)])],
       [Tuple2(make_house(), Location(2, 2)),
       Tuple2(make_tree1(), Location(3, 3)),
       Tuple2(make_tree2(), Location(4, 3)),

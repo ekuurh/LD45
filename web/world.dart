@@ -54,7 +54,7 @@ class World {
     map = level.map;
     persons = [];
     for(var person in level.persons) {
-      persons.add(Person(person.waypoints, belief: person.belief));
+      persons.add(Person(person.waypoints_and_waits, belief: person.belief));
     }
     state = WorldState.ONGOING;
     obstacles = level.obstacles;
