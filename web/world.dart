@@ -51,6 +51,10 @@ class World {
     }
   }
 
+  void update_mute() {
+    music.mute(is_muted);
+  }
+
   World(Level level, bool start_music) {
     map = level.map;
     persons = [];
@@ -65,6 +69,7 @@ class World {
     if((music != null) && (start_music)) {
       music.play();
       music.fade(0, 0.6, 1000);
+      update_mute();
     }
     clock_progress = 0;
     starting_mana = level.starting_mana;

@@ -5,7 +5,6 @@
 - obstacles
 - - integrate obstacle falling animations
 - add possession/follow
-- add restart button
 - add mute button?
 - have new followers generate mana
 

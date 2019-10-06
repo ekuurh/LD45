@@ -14,9 +14,27 @@ import 'package:howler/howler.dart';
 CanvasElement canvas;
 CanvasRenderingContext2D ctx;
 bool in_starting_screen;
+var main_menu_music = get_main_menu_music();
+
+void op_screen_handle_keydown(KeyboardEvent e) {
+  if(!in_starting_screen) {
+    return;
+  }
+  if((e.key == 'm') || (e.key == 'M')) {
+    is_muted = !is_muted;
+    main_menu_music.mute(is_muted);
+  }
+  else {
+    in_starting_screen = false;
+  }
+}
 
 void show_starting_screen(CanvasRenderingContext2D ctx) async {
-  document.onKeyDown.listen((e) => {in_starting_screen = false});
+//  var main_menu_music = get_main_menu_music();
+  main_menu_music.play(); // Play sound.
+
+//  document.onKeyDown.listen((e) => {in_starting_screen = false});
+  document.onKeyDown.listen(op_screen_handle_keydown);
   in_starting_screen = true;
   ImageElement splash_screen = ImageElement(src: "resources/images/op_screen.jpg");
 
@@ -24,6 +42,8 @@ void show_starting_screen(CanvasRenderingContext2D ctx) async {
     await window.animationFrame;
     ctx.drawImageScaled(splash_screen, 0, 0, canvas.width, canvas.height);
   }
+
+  main_menu_music.fade(0.6, 0.0, 1000);
 }
 
 void show_ending_screen(CanvasRenderingContext2D ctx) async {
@@ -50,14 +70,9 @@ void main() async {
   var body = querySelector('body');
   ctx = canvas.getContext('2d');
 
-  var main_menu_music = get_main_menu_music();
-
-  main_menu_music.play(); // Play sound.
-
   World world;
   
   await show_starting_screen(ctx);
-  main_menu_music.fade(0.6, 0.0, 1000);
 
   num prevTime = await window.animationFrame;
   var level_ind = 0;

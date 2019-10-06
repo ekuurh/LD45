@@ -89,8 +89,25 @@ class Player {
         world.force_restart();
         break;
       case " ":
-        perform_action();
-        e.preventDefault();
+        {
+          perform_action();
+          e.preventDefault();
+        }
+        break;
+      case "m":
+        {
+          is_muted = !is_muted;
+          print(is_muted);
+          world.update_mute();
+        }
+        break;
+      case "M":
+        {
+          is_muted = !is_muted;
+          print(is_muted);
+          world.update_mute();
+        }
+        break;
     }
   }
   
