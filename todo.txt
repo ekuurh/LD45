@@ -2,9 +2,6 @@
 - - buildings?
 - Level swap stuff (win/lose screen)
 - - make stuff tint to black, tint back for next level
-- make levels easier to create
-- - add persons_from_string
-- - also make errors more indicative
 - obstacles
 - - integrate obstacle falling animations
 - add possession/follow
