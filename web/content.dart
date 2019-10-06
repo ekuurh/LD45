@@ -8,49 +8,48 @@ import 'utils.dart';
 import 'person.dart';
 import 'audio.dart';
 
-Level test_level = Level(WorldMap.fromString("""
-rrr
-ggr
-rrr
+
+Level levelIntro = Level(WorldMap.fromString("""
+GGGggGGGGggGGGG
+RRgRRgRRgRRgGGg
+GRRRRRrrrrrrrrg
+GRgGRRRRGggRrrg
+GRRRRrRRrrrRRRG
+GRGRRrrrrRRRRRG
+gRGRRrrrrRRRRRG
+ggGgGGgGrGgGggG
+gggggGGgRRGgggG
+GGGGGgGgRRGGGgg
+
+
 """),
     pesrons_from_string("""
-0,0;1|2,2;0|-2
-2,2;1|1,2;0|2
+
+1,6;4|3,6;2|0
+10,6;1|3,6;10|0
+2,4;1|6,2;1|0
+13,2;5|6,2;2|0
+5,2;3|10,2;3|0
+
+
       """),
     obstacles_from_string("""
----
----
----
+--t--t--t--tT-t
+-H--H--H--H-t-t
+--------------T
+T--b-----------
+-------H-------
+T------------H-
+T--------------
+-t-tT-------t-t
+TT-t-t-b--t-T-t
+T-tT-t-t-H-t-tT
+
       """),
-    30, level_win_screens[6],
+    30, level_win_screens[2],
       t_music: get_village_music1()
 );
 
-Level level0 = Level(WorldMap.fromString("""
-RRRRRRRR
-rrrGrGGr
-rGGGrGrr
-rrrrrrrg
-rggrggrg
-rrrrggrr
-rggrggrr
-rrrrrrrg
-"""),
-      pesrons_from_string("""
-0,0;1|2,1;1|5,3;1|0
-      """),
-      obstacles_from_string("""
---------
---------
---H-----
----tT---
-----b---
---------
---------
---------
-      """), 70, level_win_screens[0],
-    t_music: get_village_music1()
-);
 
 Level level11 = Level(WorldMap.fromString("""
 ggggggggggg
@@ -66,7 +65,7 @@ ggggggggggg
 
 """),
     pesrons_from_string("""
-1,1;1|9,2;6|-1
+1,1;6|9,2;1|-1
 3,6;2|1,8;2|-1
 5,2;2|5,4;2|0
 
@@ -93,8 +92,8 @@ gggggggggggg
 grrrgrgggggg
 grrrrrrrrrgg
 grgggrrrrggg
-grgggrrrrrrg
-grrrggggrrrg
+grgggrrGrggg
+grrrggggrrgg
 grrrrrrggrrg
 grrrggrggrrg
 grrrggrrrrrg
@@ -104,7 +103,7 @@ gggggggggggg
     pesrons_from_string("""
 
 3,1;2|9,2;2|1
-10,6;0|7,3;1|-1
+10,6;1|7,3;0|-1
 1,7;1|10,7;1|-1
 
       """),
@@ -113,7 +112,7 @@ gggggggggggg
 ----T-------
 ------------
 -----------H
-----H-H-----
+----H-HT----
 -----t-t---H
 ------------
 -------T----
@@ -121,9 +120,11 @@ gggggggggggg
 ------------
 
       """),
-    30,
+    30, level_win_screens[2],
       t_music: get_village_music1()
 );
 
-List<Level> all_levels = [level2];
+
+
+List<Level> all_levels = [levelIntro, level2];
 
