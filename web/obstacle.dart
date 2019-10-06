@@ -42,15 +42,15 @@ StaticObstacle make_house() {
 }
 
 StaticObstacle make_tree1() {
-  return StaticObstacle(ImageElement(src: 'resources/images/tree.bmp'), Tuple2<num, num>(1, 1), Tuple2<num, num>(1, 1));
+  return StaticObstacle(ImageElement(src: 'resources/images/tree1_large.png'), Tuple2<num, num>(2, 2), Tuple2<num, num>(2, 1));
 }
 
 FallingObstacle make_tree2() {
-  return FallingObstacle(ImageElement(src: 'resources/images/tree2.bmp'), Tuple2<num, num>(1, 2), Tuple2<num, num>(1, 2));
+  return FallingObstacle(ImageElement(src: 'resources/images/tree2_large.png'), Tuple2<num, num>(1, 2), Tuple2<num, num>(1, 1));
 }
 
 StaticObstacle make_bush1() {
-  return StaticObstacle(ImageElement(src: 'resources/images/bush.bmp'), Tuple2<num, num>(1, 1), Tuple2<num, num>(1, 1));
+  return StaticObstacle(ImageElement(src: 'resources/images/bush_large.png'), Tuple2<num, num>(2, 2), Tuple2<num, num>(2, 1));
 }
 
 StaticObstacle make_bush2() {
