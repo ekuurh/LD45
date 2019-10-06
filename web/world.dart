@@ -127,9 +127,9 @@ class World {
 
     // Find newly conversing pairs:
     for(var person in persons) {
-      if(person_to_direction[person] == Direction.STAY) {
-        continue;
-      }
+//      if(person_to_direction[person] == Direction.STAY) {
+//        continue;
+//      }
       if(person.state == PersonState.POST_CONVERSATION) {
         continue;
       }
@@ -138,8 +138,13 @@ class World {
       if(location_to_desiring_persons[my_loc] == null) {
         continue;
       }
+      print("ABC");
+      print([person.location.x, person.location.y]);
       for(Person person2 in location_to_desiring_persons[my_loc]) {
-        if((person2.location.x == wanted_loc.item1) && (person2.location.y == wanted_loc.item2)) {
+        if(person == person2) {
+          continue;
+        }
+        if(((person2.location.x == wanted_loc.item1) && (person2.location.y == wanted_loc.item2)) || (person_to_direction[person] == Direction.STAY)) {
           if(person2.state == PersonState.CONVERSING) {
             break;
           }

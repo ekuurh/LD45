@@ -7,6 +7,23 @@ import 'utils.dart';
 import 'person.dart';
 import 'audio.dart';
 
+Level test_level = Level(WorldMap.fromString("""
+rrr
+ggr
+rrr
+"""),
+    pesrons_from_string("""
+0,0;1|2,2;0|-2
+2,2;1|1,2;0|2
+      """),
+    obstacles_from_string("""
+---
+---
+---
+      """),
+    30,
+      t_music: get_village_music1()
+);
 
 Level level0 = Level(WorldMap.fromString("""
 rrrrrrrr

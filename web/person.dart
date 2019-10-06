@@ -117,9 +117,10 @@ class Person extends Drawable {
           update_sprite();
         }
         walk_progress = 0.0;
-        if((state == PersonState.WALKING) && (location.x == waypoints_and_waits[next_waypoint].item1.x) && (location.y == waypoints_and_waits[next_waypoint].item1.y)) {
+        if((state == PersonState.STAYING) && (location.x == waypoints_and_waits[next_waypoint].item1.x) && (location.y == waypoints_and_waits[next_waypoint].item1.y)) {
           next_waypoint = (next_waypoint + 1) % waypoints_and_waits.length;
           wait_time_left = waypoints_and_waits[next_waypoint].item2 * CLOCK_TIME;
+          print(wait_time_left);
           if(wait_time_left > 0) {
             state = PersonState.WAITING;
             update_sprite();
@@ -143,11 +144,12 @@ class Person extends Drawable {
   }
 
   num start_conversing(Person buddy, num new_belief) {
-    assert((state == PersonState.STAYING) || (state == PersonState.POSSESSED));
+    assert((state == PersonState.STAYING) || (state == PersonState.POSSESSED) || (state == PersonState.WAITING));
     if(state == PersonState.POSSESSED) {
       unpossess();
     }
     state = PersonState.CONVERSING;
+    wait_time_left = 0.0; // prematurely end any wait there might have been
     conversation_progress = 0.0;
     conversation_buddy = buddy;
     next_belief = new_belief;

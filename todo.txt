@@ -16,9 +16,6 @@ sound stuff:
 - - tree falling
 - - suggestion
 
-think about:
-- what happens if a tree falls on a person?
-
 polish:
 - add glow to current target
 - - fade out along with sound fade out
