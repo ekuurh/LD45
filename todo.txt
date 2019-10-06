@@ -10,6 +10,7 @@ sound stuff:
 - add sound effects
 - - tree falling
 - - suggestion
+- - possession
 
 polish:
 - add glow to current target
@@ -18,7 +19,6 @@ polish:
 - scrolling intro screen
 - - with text appearing at the bottom all fancily
 - have mana bar above
-- have top houses not be cropped
 
 final stuff:
 - add copyright for howler
