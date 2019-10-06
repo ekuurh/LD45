@@ -6,8 +6,6 @@ bugfixes:
 - win screen not in center
 
 sound stuff:
-- music additions
-- - change level music with time?
 - add conversation sounds
 - add sound effects
 - - tree falling
