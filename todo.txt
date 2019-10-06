@@ -2,12 +2,11 @@
 - - make stuff tint to black, tint back for next level
 - obstacles
 - - integrate obstacle falling animations
-- handle fadeyness!
+- solve fadeyness bug!
 
 sound stuff:
 - music additions
 - - change level music with time?
-- add fade-fadeout
 - add conversation sounds
 - add sound effects
 - - tree falling
