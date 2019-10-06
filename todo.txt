@@ -1,8 +1,7 @@
 - implement further intention resolving
 - - buildings?
-- Level swap stuff
+- Level swap stuff (win/lose screen)
 - - make stuff tint to black, tint back for next level
-- - add level-complete screen
 - make levels easier to create
 - - add obstacles_from_string
 - - add waypoints_from_string
