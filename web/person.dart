@@ -188,3 +188,27 @@ void start_conversation(Person first, Person second) {
   first.start_conversing(second, next_beliefs.item1);
   second.start_conversing(first, next_beliefs.item2);
 }
+
+List<Person> pesrons_from_string(String s) {
+  List<Person> ret = List<Person>();
+  for(String line in s.split('\n')) {
+    String curr = line;
+    curr.replaceAll(' ', '');
+    if(curr.length == 0) {
+      continue;
+    }
+    List<Tuple2<Location, num> > waypoints_and_waits = [];
+    List<String> parts = curr.split('|');
+    assert(verbosify(parts.length >= 2, "Error in person parsing"));
+    num belief = int.parse(parts.removeLast());
+    for(String part in parts) {
+      List<String> tmp = part.split('-');
+      assert(verbosify(tmp.length == 2, "Error in person parsing"));
+      List<String> pos = tmp[0].split(',');
+      assert(verbosify(pos.length == 2, "Error in person parsing"));
+      waypoints_and_waits.add(Tuple2<Location, num>(Location(int.parse(pos[0]), int.parse(pos[1])), int.parse(tmp[1])));
+    }
+    ret.add(Person(waypoints_and_waits, belief: belief));
+  }
+  return ret;
+}
