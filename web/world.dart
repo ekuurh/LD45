@@ -215,6 +215,15 @@ class World {
       }
     }
   }
+
+  bool is_free_location(Location loc) { // Returns whether no one is planning to go to th at location
+    for(Person person in persons) {
+      if((person.next_location.x == loc.x) && (person.next_location.y == loc.y)) {
+        return false;
+      }
+    }
+    return true;
+  }
   
   void update(num dt) {
     clock_progress += dt / CLOCK_TIME;

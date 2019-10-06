@@ -2,7 +2,11 @@
 - - make stuff tint to black, tint back for next level
 - obstacles
 - - integrate obstacle falling animations
-- solve fadeyness bug!
+- allow waiting people to converse, prematurely ending their wait
+
+bugfixes:
+- solve fadyness!
+- you can do an action in a win/lose screen
 
 sound stuff:
 - music additions
@@ -28,4 +32,5 @@ polish:
 
 final stuff:
 - add copyright for howler
+- remove prints
 - publish

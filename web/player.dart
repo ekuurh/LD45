@@ -68,11 +68,15 @@ class Player {
           // Not enough mana
           return;
         }
+        Tuple3<bool, Obstacle, Location> new_obstacle = obstacle.do_action(this, tup.item2);
+        if(!new_obstacle.item1) {
+          // Could not fall
+          return;
+        }
         mana -= INTERACTION_MANA_USAGE;
-        Tuple2<StaticObstacle, Location> new_obstacle = obstacle.do_action(this, tup.item2);
         for(num ind = 0; ind < world.obstacles.length; ind++) {
           if(world.obstacles[ind].item1 == obstacle) {
-            world.obstacles[ind] = new_obstacle;
+            world.obstacles[ind] = Tuple2<Obstacle, Location>(new_obstacle.item2, new_obstacle.item3);
           }
         }
         world.recompute_is_walkable_arr();
