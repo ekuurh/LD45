@@ -4,7 +4,6 @@
 
 bugfixes:
 - solve fadyness!
-- next-level-space becomes suggestion-space
 
 sound stuff:
 - music additions
@@ -16,12 +15,10 @@ sound stuff:
 
 polish:
 - add glow to current target
-- - fade out along with sound fade out
 - nicer mana bar
-- tweak beliefs
 - graphics for mute button?
 - scrolling intro screen
-- - with text appearing in the bottom all fancily
+- - with text appearing at the bottom all fancily
 - have mana bar above
 - have top houses not be cropped
 

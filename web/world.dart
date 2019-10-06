@@ -18,8 +18,8 @@ import 'package:howler/howler.dart';
 const num TINT_TIME = 0.3;
 const num MAX_TINT = 0.5;
 
-const num LOSE_SCREEN_MAX_RELATIVE_WIDTH = 0.8;
-const num LOSE_SCREEN_MAX_RELATIVE_HEIGHT = 0.2;
+const num WINLOSE_SCREEN_MAX_RELATIVE_WIDTH = 0.8;
+const num WINLOSE_SCREEN_MAX_RELATIVE_HEIGHT = 0.4;
 
 enum WorldState {
   ONGOING,
@@ -41,6 +41,7 @@ class World {
   Howl music;
   num starting_mana;
   num tint_level;
+  ImageElement win_screen;
 
   void recompute_is_walkable_arr() {
     is_walkable_arr = List<List<bool>>();
@@ -66,6 +67,7 @@ class World {
 
   World(Level level, bool start_music) {
     map = level.map;
+    win_screen = level.win_screen;
     persons = [];
     for(var person in level.persons) {
       persons.add(Person(person.waypoints_and_waits, belief: person.belief));
@@ -269,6 +271,18 @@ class World {
       }
     }
   }
+
+  void draw_winlose_screen(CanvasRenderingContext2D ctx, ImageElement element) {
+    num scale_bound1 = element.width / (TILE_SIZE * map.width * WINLOSE_SCREEN_MAX_RELATIVE_WIDTH * 1.0);
+    num scale_bound2 = element.height / (TILE_SIZE * map.height * WINLOSE_SCREEN_MAX_RELATIVE_HEIGHT * 1.0);
+    num scale = max(scale_bound1, scale_bound2);
+    num actual_width = element.width / scale;
+    num actual_height = element.height / scale;
+    num center_x = TILE_SIZE * map.width / 2.0;
+    num center_y = TILE_SIZE * map.width / 2.0;
+    ctx.drawImageScaled(element, (center_x-(actual_width/2.0)).round(), (center_y-(actual_height/2.0)).round(),
+        actual_width, actual_height);
+  }
   
   void draw(CanvasRenderingContext2D ctx) {
     map.draw(ctx);
@@ -294,14 +308,14 @@ class World {
 
     if(state == WorldState.LOSE_SCREEN) {
       if(tint_level == MAX_TINT) {
-        ctx.drawImageScaled(level_lose_screen, 0, 0, TILE_SIZE * map.width,
-            TILE_SIZE * map.height);
+        draw_winlose_screen(ctx, level_lose_screen);
+//        ctx.drawImageScaled(level_lose_screen, 0, 0, TILE_SIZE * map.width,
+//            TILE_SIZE * map.height);
       }
     }
     if(state == WorldState.WIN_SCREEN) {
       if(tint_level == MAX_TINT) {
-        ctx.drawImageScaled(level_win_screen, 0, 0, TILE_SIZE * map.width,
-            TILE_SIZE * map.height);
+        draw_winlose_screen(ctx, win_screen);
       }
     }
   }

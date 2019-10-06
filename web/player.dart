@@ -60,6 +60,9 @@ class Player {
       if(p.belief < 0) {
         return;
       }
+      if(p.belief == 2) {
+        return;
+      }
       mana -= SUGGESTION_MANA_USAGE;
       p.set_belief(MAX_BELIEF);
     }
