@@ -144,6 +144,9 @@ class World {
       if(person.state == PersonState.POST_CONVERSATION) {
         continue;
       }
+      if(person.state == PersonState.CONVERSING) {
+        continue;
+      }
       var my_loc = Tuple2<num, num>(person.location.x, person.location.y);
       var wanted_loc = person_to_desired_location[person];
       if(location_to_desiring_persons[my_loc] == null) {

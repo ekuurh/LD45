@@ -144,7 +144,8 @@ class Person extends Drawable {
   }
 
   num start_conversing(Person buddy, num new_belief) {
-    assert((state == PersonState.STAYING) || (state == PersonState.POSSESSED) || (state == PersonState.WAITING));
+    assert(verbosify((state == PersonState.STAYING) || (state == PersonState.POSSESSED) || (state == PersonState.WAITING),
+                     "Trying to start a conversation when I am ${state}"));
     if(state == PersonState.POSSESSED) {
       unpossess();
     }
