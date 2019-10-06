@@ -42,12 +42,7 @@ rrrrrrrg
 --------
 --------
 --------
-      """)
-/*      [Tuple2(make_house(), Location(2, 2)),
-      Tuple2(make_tree1(), Location(3, 3)),
-      Tuple2(make_tree2(), Location(4, 3)),
-      Tuple2(make_bush1(), Location(3, 4)),
-      Tuple2(make_bush2(), Location(4, 4))]*/, 70,
+      """), 70,
     t_music: village_alt_music
 );
 
