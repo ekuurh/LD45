@@ -1,5 +1,5 @@
 import 'dart:html';
-import 'dart:math';
+import 'dart:math' as math;
 
 num TILE_SIZE = 16;
 const num REGULAR_CLOCK_TIME = 0.5;
@@ -46,7 +46,13 @@ class Location {
   Location(this.x, this.y);
   
   static num distance(Location p1, Location p2) {
-    return pow(pow(p1.x-p2.x, 2) + pow(p1.y-p2.y, 2), 0.5);
+    return math.pow(math.pow(p1.x-p2.x, 2) + math.pow(p1.y-p2.y, 2), 0.5);
+  }
+  
+  Location rotate(num angle) {
+    num sina = math.sin(angle);
+    num cosa = math.cos(angle);
+    return Location(cosa * x + sina * y, - sina * x + cosa * y);
   }
 }
 

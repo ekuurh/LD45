@@ -22,6 +22,7 @@ const num OPENING_TEXT_STAY_TIME = 7.0;
 CanvasElement canvas;
 CanvasRenderingContext2D ctx;
 bool waiting_for_click_at_start;
+bool in_intro_screen;
 var main_menu_music = get_main_menu_music();
 
 void draw_image_x_scaled(CanvasRenderingContext2D ctx, ImageElement element, var base_y) {
@@ -30,14 +31,14 @@ void draw_image_x_scaled(CanvasRenderingContext2D ctx, ImageElement element, var
 }
 
 void op_screen_handle_keydown(KeyboardEvent e) {
-  if(!waiting_for_click_at_start) {
+  if(!in_intro_screen) {
     return;
   }
   if((e.key == 'm') || (e.key == 'M')) {
     is_muted = !is_muted;
     main_menu_music.mute(is_muted);
   }
-  else {
+  else if (waiting_for_click_at_start){
     waiting_for_click_at_start = false;
   }
 }
@@ -48,6 +49,7 @@ void show_starting_screen(CanvasRenderingContext2D ctx) async {
 //  document.onKeyDown.listen((e) => {in_starting_screen = false});
   document.onKeyDown.listen(op_screen_handle_keydown);
   waiting_for_click_at_start = true;
+  in_intro_screen = true;
 
   while (waiting_for_click_at_start) {
     await window.animationFrame;
@@ -82,6 +84,7 @@ void show_starting_screen(CanvasRenderingContext2D ctx) async {
     ctx.fillStyle = "rgb(0, 0, 0)";
   }
 
+  in_intro_screen = false;
   main_menu_music.fade(0.6, 0.0, 1000);
 }
 

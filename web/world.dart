@@ -243,6 +243,8 @@ class World {
     clock_progress += dt / CLOCK_TIME;
     for (Person p in persons)
       p.update(dt);
+    for (Tuple2<Obstacle, Location> ob in obstacles)
+      ob.item1.update(dt);
     player.update(dt);
     if (clock_progress >= 1.0) {
       do_routing();
@@ -339,6 +341,7 @@ class World {
     }
     if(has_won) {
       state = WorldState.WIN_SCREEN;
+      CLOCK_TIME = REGULAR_CLOCK_TIME;
       return;
     }
     bool has_lost_for_lack_of_mana = true;
@@ -359,6 +362,7 @@ class World {
     if(has_lost_for_lack_of_mana || has_lost_for_negative_global_opinion) {
       state = WorldState.LOSE_SCREEN;
       document.onKeyDown.listen((e) => {state = WorldState.LOSE});
+      CLOCK_TIME = REGULAR_CLOCK_TIME;
       return;
     }
   }
