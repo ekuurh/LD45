@@ -92,7 +92,11 @@ class FallingObstacle extends Obstacle {
     }
     for(num i = 1-ret.item1.occupy_dimensions.item1; i <= 1; i++) {
       for(num j = 1-ret.item1.occupy_dimensions.item2; j <= 1; j++) {
-        if(!player.world.is_free_location(Location(ret.item2.x + i, ret.item2.y + j))) {
+        Location loc = Location(ret.item2.x + i, ret.item2.y + j);
+        if(!player.world.map.is_valid_location(loc)) {
+          return Tuple3<bool, Obstacle, Location>(false, null, null);
+        }
+        if(!player.world.is_free_location(loc)) {
           return Tuple3<bool, Obstacle, Location>(false, null, null);
         }
       }
