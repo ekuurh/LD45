@@ -26,6 +26,7 @@ polish:
 - tweak beliefs
 - graphics for mute button?
 - scrolling intro screen
+- - with text appearing in the bottom all fancily
 
 final stuff:
 - add copyright for howler
