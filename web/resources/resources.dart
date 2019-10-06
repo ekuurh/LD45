@@ -5,8 +5,15 @@ import '../dynamic_sprite.dart';
 ImageElement op_screen_image = ImageElement(src: "resources/images/op_screen.jpg");
 ImageElement end_screen_image = ImageElement(src: "resources/images/end_screen.jpg");
 
-ImageElement level_win_screen = ImageElement(src: "resources/images/level_win_screen.png");
 ImageElement level_lose_screen = ImageElement(src: "resources/images/level_lose_screen.png");
+List<ImageElement> level_win_screens = [
+  ImageElement(src: "resources/images/level_win_screen_1.png"),
+  ImageElement(src: "resources/images/level_win_screen_2.png"),
+  ImageElement(src: "resources/images/level_win_screen_3.png"),
+  ImageElement(src: "resources/images/level_win_screen_4.png"),
+  ImageElement(src: "resources/images/level_win_screen_5.png"),
+  ImageElement(src: "resources/images/level_win_screen_6.png"),
+  ImageElement(src: "resources/images/level_win_screen_7.png")];
 
 ImageElement light_road_tile_image = ImageElement(src: 'resources/images/road_tile_large_light.bmp');
 ImageElement light_ground_tile_image = ImageElement(src: 'resources/images/ground_tile_large_light.jpg');
