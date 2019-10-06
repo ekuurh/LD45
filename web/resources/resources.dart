@@ -1,4 +1,6 @@
 import 'dart:html';
+import 'package:tuple/tuple.dart';
+import '../dynamic_sprite.dart';
 
 ImageElement op_screen_image = ImageElement(src: "resources/images/op_screen.jpg");
 ImageElement end_screen_image = ImageElement(src: "resources/images/end_screen.jpg");
@@ -16,3 +18,11 @@ ImageElement tree1_large_image = ImageElement(src: 'resources/images/tree1_large
 ImageElement tree2_large_image = ImageElement(src: 'resources/images/tree2_large.png');
 ImageElement bush_large_image = ImageElement(src: 'resources/images/bush_large.png');
 ImageElement bush2_image = ImageElement(src: 'resources/images/bush2.bmp');
+
+Map<Tuple2<bool, num>, DynamicSprite> person_sprites;
+
+void make_person_sprites() {
+  for (var amount_possessed = 0; amount_possessed < 10; amount_possessed++) {
+    print(1);
+  }
+}

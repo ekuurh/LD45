@@ -31,6 +31,6 @@ class DynamicSprite extends Drawable{
 
 DynamicSprite make_person_sprite(bool is_walking, bool is_possessed, num belief) {
   if((!is_walking) && (!is_possessed)) {
-
+//    return DynamicSprite([])
   }
 }
