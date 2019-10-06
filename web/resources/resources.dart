@@ -19,10 +19,4 @@ ImageElement tree2_large_image = ImageElement(src: 'resources/images/tree2_large
 ImageElement bush_large_image = ImageElement(src: 'resources/images/bush_large.png');
 ImageElement bush2_image = ImageElement(src: 'resources/images/bush2.bmp');
 
-Map<Tuple2<bool, num>, DynamicSprite> person_sprites;
-
-void make_person_sprites() {
-  for (var amount_possessed = 0; amount_possessed < 10; amount_possessed++) {
-    print(1);
-  }
-}
+Map<Tuple3<bool, bool, num>, DynamicSprite> person_sprites; // (is_walking, is_possessed, belief) -> dynamic sprite

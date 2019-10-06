@@ -211,6 +211,7 @@ class World {
     for(var person in persons) {
       if(person.state == PersonState.POST_CONVERSATION) {
         person.state = PersonState.STAYING;
+        person.update_sprite();
       }
     }
   }

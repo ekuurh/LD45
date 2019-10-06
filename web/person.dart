@@ -1,4 +1,5 @@
 import 'package:tuple/tuple.dart';
+import 'dynamic_sprite.dart';
 import 'utils.dart';
 import 'dart:math';
 import 'dart:html';
@@ -34,6 +35,7 @@ class Person extends Drawable {
   num wait_time_left;
   Person conversation_buddy;
   PersonState state;
+  DynamicSprite sprite;
   
   Person(this.waypoints_and_waits, {this.belief = -1}) {
     walk_progress = 0;
@@ -44,6 +46,7 @@ class Person extends Drawable {
     state = PersonState.STAYING;
     location = waypoints_and_waits[0].item1;
     next_location = location;
+    update_sprite();
   }
 
   Direction get_desired_direction(WorldMap map, List<List<bool>> is_walkable_arr, Location rounded_player_loc) {
@@ -79,10 +82,12 @@ class Person extends Drawable {
     if(state != PersonState.POSSESSED) {
       state = PersonState.WALKING;
     }
+    update_sprite();
   }
   
   void set_belief(num belief) {
     this.belief = belief;
+    update_sprite();
   }
   
   void update(num dt) {
@@ -91,6 +96,7 @@ class Person extends Drawable {
       if(wait_time_left <= 0.0) {
         wait_time_left = 0.0;
         state = PersonState.STAYING;
+        update_sprite();
       }
     }
     if ((state == PersonState.WALKING) || (state == PersonState.POSSESSED)) {
@@ -108,6 +114,7 @@ class Person extends Drawable {
         location = next_location;
         if(state == PersonState.WALKING) {
           state = PersonState.STAYING;
+          update_sprite();
         }
         walk_progress = 0.0;
         if((state == PersonState.WALKING) && (location.x == waypoints_and_waits[next_waypoint].item1.x) && (location.y == waypoints_and_waits[next_waypoint].item1.y)) {
@@ -115,6 +122,7 @@ class Person extends Drawable {
           wait_time_left = waypoints_and_waits[next_waypoint].item2 * CLOCK_TIME;
           if(wait_time_left > 0) {
             state = PersonState.WAITING;
+            update_sprite();
           }
         }
       }
@@ -128,12 +136,17 @@ class Person extends Drawable {
         state = PersonState.POST_CONVERSATION;
         belief = next_belief;
         conversation_progress = 0.0;
+        update_sprite();
       }
     }
+    sprite.update(dt);
   }
 
   num start_conversing(Person buddy, num new_belief) {
     assert((state == PersonState.STAYING) || (state == PersonState.POSSESSED));
+    if(state == PersonState.POSSESSED) {
+      unpossess();
+    }
     state = PersonState.CONVERSING;
     conversation_progress = 0.0;
     conversation_buddy = buddy;
@@ -141,6 +154,7 @@ class Person extends Drawable {
     if((belief <= 0) && (new_belief > 0)) {
       return MANA_EARNED_FROM_CONVERSION;
     }
+    update_sprite();
     return 0;
   }
 
@@ -156,6 +170,15 @@ class Person extends Drawable {
   void possess() {
     print("POSSESSED!");
     state = PersonState.POSSESSED;
+    update_sprite();
+  }
+
+  bool am_walking() {
+    return ((location.x != next_location.x) || (location.y != next_location.y));
+  }
+
+  void update_sprite() {
+    sprite = get_person_sprite(am_walking(), state == PersonState.POSSESSED, belief);
   }
 
   void unpossess() {
@@ -165,57 +188,59 @@ class Person extends Drawable {
     else {
       state = PersonState.STAYING;
     }
+    update_sprite();
   }
   
   void draw_impl(CanvasRenderingContext2D ctx) {
     Location interpolated_loc = get_interpolated_location();
+    sprite.draw(ctx, interpolated_loc);
 //    ctx.drawImageScaled(person_image, interpolated_loc.x * TILE_SIZE, interpolated_loc.y * TILE_SIZE,
 //        TILE_SIZE, TILE_SIZE);
 
-    num center_tile_x = 0.5 + interpolated_loc.x;
-    num center_tile_y = 0.5 + interpolated_loc.y;
-
-    num normalized_interpolated_belief = get_interpolated_belief() / (MAX_BELIEF * 1.0);
-    ctx.fillStyle = RgbColor(255*(1+normalized_interpolated_belief)/2, 255/2, 255*(1-normalized_interpolated_belief)/2).toHexColor().toCssString();
-
-    ctx.beginPath();
-    if(state != PersonState.CONVERSING) {
-      ctx.ellipse(
-          center_tile_x * TILE_SIZE,
-          center_tile_y * TILE_SIZE,
-          TILE_SIZE * 0.4,
-          TILE_SIZE * 0.4,
-          0,
-          0,
-          pi * 2,
-          false);
-    }
-    else {
-      ctx.ellipse(
-          center_tile_x * TILE_SIZE,
-          center_tile_y * TILE_SIZE,
-          TILE_SIZE * 0.2,
-          TILE_SIZE * 0.2,
-          0,
-          0,
-          pi * 2,
-          false);
-    }
-    ctx.fill();
-    if(state == PersonState.POSSESSED) {
-      ctx.fillStyle = "rgb(0, 255, 0)";
-      ctx.beginPath();
-      ctx.ellipse(
-          center_tile_x * TILE_SIZE,
-          center_tile_y * TILE_SIZE,
-          TILE_SIZE * 0.1,
-          TILE_SIZE * 0.1,
-          0,
-          0,
-          pi * 2,
-          false);
-      ctx.fill();
-    }
+//    num center_tile_x = 0.5 + interpolated_loc.x;
+//    num center_tile_y = 0.5 + interpolated_loc.y;
+//
+//    num normalized_interpolated_belief = get_interpolated_belief() / (MAX_BELIEF * 1.0);
+//    ctx.fillStyle = RgbColor(255*(1+normalized_interpolated_belief)/2, 255/2, 255*(1-normalized_interpolated_belief)/2).toHexColor().toCssString();
+//
+//    ctx.beginPath();
+//    if(state != PersonState.CONVERSING) {
+//      ctx.ellipse(
+//          center_tile_x * TILE_SIZE,
+//          center_tile_y * TILE_SIZE,
+//          TILE_SIZE * 0.4,
+//          TILE_SIZE * 0.4,
+//          0,
+//          0,
+//          pi * 2,
+//          false);
+//    }
+//    else {
+//      ctx.ellipse(
+//          center_tile_x * TILE_SIZE,
+//          center_tile_y * TILE_SIZE,
+//          TILE_SIZE * 0.2,
+//          TILE_SIZE * 0.2,
+//          0,
+//          0,
+//          pi * 2,
+//          false);
+//    }
+//    ctx.fill();
+//    if(state == PersonState.POSSESSED) {
+//      ctx.fillStyle = "rgb(0, 255, 0)";
+//      ctx.beginPath();
+//      ctx.ellipse(
+//          center_tile_x * TILE_SIZE,
+//          center_tile_y * TILE_SIZE,
+//          TILE_SIZE * 0.1,
+//          TILE_SIZE * 0.1,
+//          0,
+//          0,
+//          pi * 2,
+//          false);
+//      ctx.fill();
+//    }
   }
 
   void draw(CanvasRenderingContext2D ctx, Location loc) {

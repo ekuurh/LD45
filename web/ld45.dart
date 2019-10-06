@@ -1,5 +1,6 @@
 import 'dart:html';
 import 'dart:math';
+import 'dynamic_sprite.dart';
 import 'person.dart';
 import 'resources/resources.dart';
 import 'tile.dart';
@@ -70,6 +71,8 @@ void main() async {
   ctx = canvas.getContext('2d');
 
   World world;
+
+  make_person_sprites();
   
   await show_starting_screen(ctx);
 
