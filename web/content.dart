@@ -8,24 +8,18 @@ import 'person.dart';
 import 'audio.dart';
 
 Level test_level = Level(WorldMap.fromString("""
-rrrg
-rgrr
-rrgr
-rrrr
-grrg
+rrr
+ggr
+rrr
 """),
     pesrons_from_string("""
-1,0;0|1,2;1|-2
-2,1;0|0,2;1|0
-1,4;0|0,0;1|3,1;1|-1
-0,0;0|2,4;0|3,2;1|-1
+0,0;1|2,2;0|-2
+2,2;1|1,2;0|2
       """),
     obstacles_from_string("""
-----
-----
-----
-----
-----
+---
+---
+---
       """),
     30,
       t_music: get_village_music1()
