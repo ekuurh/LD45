@@ -82,6 +82,12 @@ class Player {
         speed_y = -PLAYER_SPEED;
         e.preventDefault();
         break;
+      case "r":
+        world.force_restart();
+        break;
+      case "R":
+        world.force_restart();
+        break;
       case " ":
         perform_action();
         e.preventDefault();

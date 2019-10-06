@@ -242,6 +242,10 @@ class World {
     }
   }
 
+  void force_restart() {
+    state = WorldState.LOSE;
+  }
+
   void finish() {
     if(music != null) {
       music.fade(0.6, 0, 1000);
