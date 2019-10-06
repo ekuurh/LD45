@@ -2,6 +2,7 @@
 - - make stuff tint to black, tint back for next level
 - obstacles
 - - integrate obstacle falling animations
+- animations!
 - handle fadeyness!
 
 sound stuff:
