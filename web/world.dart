@@ -257,6 +257,7 @@ class World {
     }
     if(has_won) {
       state = WorldState.WIN_SCREEN;
+      document.onKeyDown.listen((e) => {state = WorldState.WIN});
       return;
     }
     bool has_lost = true;
@@ -270,6 +271,7 @@ class World {
     }
     if(has_lost) {
       state = WorldState.LOSE_SCREEN;
+      document.onKeyDown.listen((e) => {state = WorldState.LOSE});
       return;
     }
   }

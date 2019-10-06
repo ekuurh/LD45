@@ -58,12 +58,14 @@ void main() async {
   main_menu_music.fade(0.6, 0.0, 1000);
 
   num prevTime = await window.animationFrame;
-  for(Level level in all_levels) {
-    world = World(level);
+  var level_ind = 0;
+  while(level_ind < all_levels.length) {
+    world = World(all_levels[level_ind]);
     canvas = adjust_canvas_and_tile_size(world, canvas, body);
     document.onKeyDown.listen(world.player.handle_keydown);
     document.onKeyUp.listen(world.player.handle_keyup);
     while (true) {
+
       num time = await window.animationFrame;
       num dt = (time - prevTime) / 1000.0; // In seconds
       prevTime = time;
@@ -72,12 +74,13 @@ void main() async {
       world.draw(ctx);
       if (world.state == WorldState.LOSE) {
         print("YOU LOSE!");
-        world = World(level);
-        continue;
+        world.finish();
+        break;
       }
       if (world.state == WorldState.WIN) {
         print("YOU WIN!");
         world.finish();
+        level_ind += 1;
         break;
       }
     }
