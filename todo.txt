@@ -25,6 +25,7 @@ polish:
 - nicer mana bar
 - tweak beliefs
 - graphics for mute button?
+- scrolling intro screen
 
 final stuff:
 - add copyright for howler

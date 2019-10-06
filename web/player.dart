@@ -177,8 +177,8 @@ class Player {
   
   void update(num dt) {
     update_key_mutex.acquire();
-    x += speed_x * dt;
-    y += speed_y * dt;
+    x += speed_x * dt / CLOCK_TIME;
+    y += speed_y * dt / CLOCK_TIME;
     x = clamp(x, 0, world.map.width - 1);
     y = clamp(y, 0, world.map.height - 1);
     if(possession_targeted_player != null) {
