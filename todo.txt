@@ -11,13 +11,16 @@
 - - integrate obstacle falling animations
 - add mana
 - - add mana bar
+- add possession/follow
 
 sound stuff:
 - music additions
 - - change level music with time?
 - add fade-fadeout
 - add conversation sounds
-- add misc sound effects
+- add sound effects
+- - tree falling
+- - suggestion
 
 think about:
 - what happens if a tree falls on a person?

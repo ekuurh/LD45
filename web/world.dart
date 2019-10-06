@@ -30,6 +30,7 @@ class World {
   WorldState state;
   List<List<bool>> is_walkable_arr;
   Howl music;
+  num starting_mana;
 
   void recompute_is_walkable_arr() {
     is_walkable_arr = List<List<bool>>();
@@ -50,8 +51,6 @@ class World {
   }
 
   World(Level level) {
-    clock_progress = 0;
-    player = Player(this);
     map = level.map;
     persons = [];
     for(var person in level.persons) {
@@ -66,6 +65,9 @@ class World {
       music.play();
       music.fade(0, 0.6, 1000);
     }
+    clock_progress = 0;
+    starting_mana = level.starting_mana;
+    player = Player(this); // last in init since it uses "this"
   }
   
   Tuple2<Object, num> closest_object_to(Location p) {
@@ -237,6 +239,7 @@ class World {
       obj.item1.draw(ctx, obj.item2);
     }
     player.draw(ctx);
+    player.draw_mana(ctx);
   }
 
   void finish() {

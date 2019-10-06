@@ -14,12 +14,14 @@ class Level {
   List<Person> persons;
   List<Tuple2<Obstacle, Location> > obstacles;
   Howl music;
+  num starting_mana;
 
-  Level(WorldMap t_map, List<Person> t_persons, List<Tuple2<Obstacle, Location> > t_obstacles, {Howl t_music = null}) {
+  Level(WorldMap t_map, List<Person> t_persons, List<Tuple2<Obstacle, Location> > t_obstacles, num t_starting_mana, {Howl t_music = null}) {
     map = t_map;
     persons = t_persons;
     obstacles = t_obstacles;
     music = t_music;
+    starting_mana = t_starting_mana;
     HashSet<Tuple2<num, num>> starting_points = HashSet<Tuple2<num, num>>();
     for(Person person in persons) {
       for(Location waypoint in person.waypoints) {

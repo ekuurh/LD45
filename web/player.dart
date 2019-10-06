@@ -13,11 +13,17 @@ class Player {
   World world;
   num speed_x, speed_y;
   num x, y;
+  num mana;
+  Location mana_bar_loc, mana_bar_size;
+
   Player(this.world) {
     speed_x = 0;
     speed_y = 0;
     x = 1;
     y = 1;
+    mana = world.starting_mana;
+    mana_bar_loc = Location(world.map.width / 15.0, world.map.height / 15.0);
+    mana_bar_size = Location(world.map.width / 2.5, world.map.height / 8.0);
   }
   
   void perform_action() {
@@ -92,5 +98,25 @@ class Player {
     ctx.fillStyle = "#ffff00";
     ctx.fillRect(((x + 0.1) * TILE_SIZE).round(), ((y + 0.1) * TILE_SIZE).round(),
       (TILE_SIZE * 0.8).round(), (TILE_SIZE * 0.8).round());
+  }
+
+  void draw_mana(CanvasRenderingContext2D ctx) {
+    // mana back
+    ctx.fillStyle = "rgb(30, 30, 30, 0.1)";
+    Location absolute_mana_pos = Location((mana_bar_loc.x * TILE_SIZE).round(), (mana_bar_loc.y * TILE_SIZE).round());
+    Location absolute_mana_size = Location((mana_bar_size.x * TILE_SIZE).round(), (mana_bar_size.y * TILE_SIZE).round());
+    ctx.fillRect(absolute_mana_pos.x, absolute_mana_pos.y, absolute_mana_size.x, absolute_mana_size.y);
+
+    // mana content
+    ctx.fillStyle = "rgb(200, 30, 200, 0.85)";
+    ctx.fillRect(absolute_mana_pos.x, absolute_mana_pos.y, (absolute_mana_size.x * mana/100.0).round(), absolute_mana_size.y);
+
+    // mana outline
+    ctx.strokeStyle = "rgb(30, 30, 30, 0.85)";
+    ctx.lineWidth = (absolute_mana_size.y / 8.0);
+    ctx.strokeRect(absolute_mana_pos.x, absolute_mana_pos.y, absolute_mana_size.x, absolute_mana_size.y);
+
+    ctx.fillStyle = "rgb(0, 0, 0, 1)";
+    ctx.strokeStyle = "rgb(0, 0, 0, 1)";
   }
 }
