@@ -5,7 +5,6 @@
 
 bugfixes:
 - solve fadyness!
-- you can do an action in a win/lose screen
 
 sound stuff:
 - music additions
