@@ -13,8 +13,6 @@ polish:
 - add glow to current target
 - nicer mana bar
 - graphics for mute button?
-- scrolling intro screen
-- - with text appearing at the bottom all fancily
 - have mana bar above
 
 final stuff:
