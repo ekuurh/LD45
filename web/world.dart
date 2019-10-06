@@ -15,6 +15,9 @@ import 'player.dart';
 import 'obstacle.dart';
 import 'package:howler/howler.dart';
 
+const TINT_TIME = 1.0;
+const MAX_TINT = 0.5;
+
 enum WorldState {
   ONGOING,
   LOSE_SCREEN,
@@ -33,6 +36,7 @@ class World {
   List<List<bool>> is_walkable_arr;
   Howl music;
   num starting_mana;
+  num tint_level;
 
   void recompute_is_walkable_arr() {
     is_walkable_arr = List<List<bool>>();
@@ -78,6 +82,7 @@ class World {
     starting_mana = level.starting_mana;
     player = Player(this); // last in init since it uses "this"
     do_routing();
+    tint_level = 0.0;
   }
   
   Tuple2<Object, num> closest_object_to(Location p) {
@@ -138,8 +143,6 @@ class World {
       if(location_to_desiring_persons[my_loc] == null) {
         continue;
       }
-      print("ABC");
-      print([person.location.x, person.location.y]);
       for(Person person2 in location_to_desiring_persons[my_loc]) {
         if(person == person2) {
           continue;
@@ -240,6 +243,20 @@ class World {
       clock_progress = 0.0;
       check_win_condition();
     }
+    if(state != WorldState.ONGOING) {
+      if(tint_level < MAX_TINT) {
+        tint_level += dt * CLOCK_TIME * MAX_TINT / TINT_TIME;
+        if (tint_level >= MAX_TINT) {
+          tint_level = MAX_TINT;
+          if(state == WorldState.WIN_SCREEN) {
+            document.onKeyDown.listen((e) => {state = WorldState.WIN});
+          }
+          if(state == WorldState.LOSE_SCREEN) {
+            document.onKeyDown.listen((e) => {state = WorldState.LOSE});
+          }
+        }
+      }
+    }
   }
   
   void draw(CanvasRenderingContext2D ctx) {
@@ -257,11 +274,23 @@ class World {
     }
     player.draw(ctx);
     player.draw_mana(ctx);
+
+    ctx.fillStyle = "rgb(0, 0, 0," + tint_level.toString() + ")";
+    print(ctx.fillStyle);
+    ctx.fillRect(0, 0, map.width * TILE_SIZE, map.height * TILE_SIZE);
+    ctx.fillStyle = "rgb(0, 0, 0)";
+
     if(state == WorldState.LOSE_SCREEN) {
-      ctx.drawImageScaled(level_lose_screen, 0, 0, TILE_SIZE * map.width, TILE_SIZE * map.height);
+      if(tint_level == MAX_TINT) {
+        ctx.drawImageScaled(level_lose_screen, 0, 0, TILE_SIZE * map.width,
+            TILE_SIZE * map.height);
+      }
     }
     if(state == WorldState.WIN_SCREEN) {
-      ctx.drawImageScaled(level_win_screen, 0, 0, TILE_SIZE * map.width, TILE_SIZE * map.height);
+      if(tint_level == MAX_TINT) {
+        ctx.drawImageScaled(level_win_screen, 0, 0, TILE_SIZE * map.width,
+            TILE_SIZE * map.height);
+      }
     }
   }
 
@@ -286,7 +315,6 @@ class World {
     }
     if(has_won) {
       state = WorldState.WIN_SCREEN;
-      document.onKeyDown.listen((e) => {state = WorldState.WIN});
       return;
     }
     bool has_lost = true;

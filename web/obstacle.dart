@@ -27,7 +27,6 @@ class FallingObstacle extends Obstacle {
   FallingObstacle(ImageElement img, Tuple2<num, num> draw_dimensions, Tuple2<num, num> occupy_dimensions) : super(img, draw_dimensions, occupy_dimensions, false);
   Tuple3<bool, Obstacle, Location> do_action(Player player, Location my_loc) {
     Tuple2<Obstacle, Location> ret;
-    print("poof.");
     Tuple2<num, num> new_dimension_tup = Tuple2<num, num>(draw_dimensions.item2, draw_dimensions.item1);
     if(player.x > my_loc.x - (draw_dimensions.item1 - 1) / 2) {
       // anchor by bottom-right
@@ -44,7 +43,6 @@ class FallingObstacle extends Obstacle {
     for(num i = 1-ret.item1.occupy_dimensions.item1; i <= 1; i++) {
       for(num j = 1-ret.item1.occupy_dimensions.item2; j <= 1; j++) {
         if(!player.world.is_free_location(Location(ret.item2.x + i, ret.item2.y + j))) {
-          print("no poof!");
           return Tuple3<bool, Obstacle, Location>(false, null, null);
         }
       }
