@@ -34,9 +34,13 @@ class Level {
       starting_points.add(loc_tup);
     }
     for(var obstacle_with_loc in obstacles) {
-      Tuple2<num, num> loc_tup = Tuple2<num, num>(obstacle_with_loc.item2.x, obstacle_with_loc.item2.y);
-      assert(verbosify(!starting_points.contains(loc_tup), "Double occupancy of tile (${loc_tup.item1}, ${loc_tup.item2})!"));
-      starting_points.add(loc_tup);
+      for(num curr_x = obstacle_with_loc.item2.x - obstacle_with_loc.item1.occupy_dimensions.item1 + 1; curr_x <= obstacle_with_loc.item2.x; curr_x++) {
+        for(num curr_y = obstacle_with_loc.item2.y - obstacle_with_loc.item1.occupy_dimensions.item2 + 1; curr_y <= obstacle_with_loc.item2.y; curr_y++) {
+          Tuple2<num, num> loc_tup = Tuple2<num, num>(curr_x, curr_y);
+          assert(verbosify(!starting_points.contains(loc_tup), "Double occupancy of tile (${loc_tup.item1}, ${loc_tup.item2})!"));
+          starting_points.add(loc_tup);
+        }
+      }
     }
   }
 }

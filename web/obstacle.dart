@@ -80,7 +80,7 @@ List<Tuple2<Obstacle, Location>> obstacles_from_string(String s) {
       case "b":
         current = make_bush1();
         break;
-      case "b":
+      case "B":
         current = make_bush2();
         break;
       case "-":
@@ -98,4 +98,5 @@ List<Tuple2<Obstacle, Location>> obstacles_from_string(String s) {
     }
     col++;
   }
+  return ret;
 }

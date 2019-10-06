@@ -33,12 +33,22 @@ rggrggrr
 rrrrrrrg
 """),
       [Person([Tuple2<Location, num>(Location(0, 0), 1), Tuple2<Location, num>(Location(2, 1), 1), Tuple2<Location, num>(Location(5, 3), 1)])],
-      [Tuple2(make_house(), Location(2, 2)),
+      obstacles_from_string("""
+--------
+--------
+--Ht----
+----T---
+----b---
+--------
+--------
+--------
+      """)
+/*      [Tuple2(make_house(), Location(2, 2)),
       Tuple2(make_tree1(), Location(3, 3)),
       Tuple2(make_tree2(), Location(4, 3)),
       Tuple2(make_bush1(), Location(3, 4)),
-      Tuple2(make_bush2(), Location(4, 4))], 70,
+      Tuple2(make_bush2(), Location(4, 4))]*/, 70,
     t_music: village_music2
 );
 
-List<Level> all_levels = [test_level, level0];
+List<Level> all_levels = [/*test_level, */level0];
