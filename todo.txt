@@ -5,7 +5,6 @@
 - obstacles
 - - integrate obstacle falling animations
 - add possession/follow
-- add mute button?
 - have new followers generate mana
 
 sound stuff:
@@ -26,6 +25,7 @@ polish:
 - - fade out along with sound fade out
 - nicer mana bar
 - tweak beliefs
+- graphics for mute button?
 
 final stuff:
 - add copyright for howler
