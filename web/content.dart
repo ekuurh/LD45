@@ -87,49 +87,42 @@ ggggggggggg
       t_music: get_village_alt_music()
 );
 
-Level level12 = Level(WorldMap.fromString("""
+Level level2 = Level(WorldMap.fromString("""
 gggggggggggg
-grrrrrrrrrrg
-grrrgrrrrrrg
 grrrgrgggggg
 grrrrrrrrrgg
 grgggrrrrggg
-grgrrrrrrrrg
+grgggrrrrrrg
 grrrggggrrrg
-grrrrrrgrrrg
+grrrrrrggrrg
 grrrggrggrrg
 grrrggrrrrrg
 gggggggggggg
 
 """),
     pesrons_from_string("""
-1,1;2|6,1;2|-2
-10,1;2|6,1;3|-2
-3,2;2|9,4;2|1
-10,8;0|7,5;1|-1
-1,9;1|10,9;1|-1
 
+3,1;2|9,2;2|1
+10,6;0|7,3;1|-1
+1,7;1|10,7;1|-1
 
       """),
     obstacles_from_string("""
 -H-H-H-H-H-H
-------------
-----------b-
 ----T-------
 ------------
 -----------H
-------T-----
------t-t----
+----H-H-----
+-----t-t---H
 ------------
 -------T----
 -----H------
 ------------
 
-
       """),
-    100,
-      t_music: get_village_alt_music()
+    30,
+      t_music: get_village_music1()
 );
 
-List<Level> all_levels = [level0, level11, level12];
+List<Level> all_levels = [level2];
 
