@@ -85,6 +85,9 @@ class Player {
   }
   
   void handle_keydown(KeyboardEvent e) {
+    if(world.state != WorldState.ONGOING) {
+      return;
+    }
     update_key_mutex.acquire();
     switch (e.key) {
       case "ArrowRight":
@@ -147,6 +150,9 @@ class Player {
   }
   
   void handle_keyup(KeyboardEvent e) {
+    if(world.state != WorldState.ONGOING) {
+      return;
+    }
     update_key_mutex.acquire();
     switch (e.key) {
       case "ArrowRight":
