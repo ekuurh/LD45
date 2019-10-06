@@ -1,6 +1,5 @@
 import 'dart:core';
 import 'dart:html';
-import 'dart:io';
 import 'dart:math';
 import 'package:collection/collection.dart';
 import 'obstacle.dart';
@@ -250,7 +249,6 @@ class World {
     if(music != null) {
       print("!@#");
       music.fade(0.6, 0, 3000);
-//      sleep(Duration(milliseconds: 1000));
       print("weirder");
     }
     else {
