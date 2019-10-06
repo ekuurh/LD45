@@ -2,6 +2,7 @@ import 'package:tuple/tuple.dart';
 
 import 'level.dart';
 import 'obstacle.dart';
+import 'resources/resources.dart';
 import 'worldmap.dart';
 import 'utils.dart';
 import 'person.dart';
@@ -21,7 +22,7 @@ rrr
 ---
 ---
       """),
-    30,
+    30, level_win_screens[6],
       t_music: get_village_music1()
 );
 
@@ -47,7 +48,7 @@ rrrrrrrg
 --------
 --------
 --------
-      """), 70,
+      """), 70, level_win_screens[0],
     t_music: get_village_music1()
 );
 
@@ -83,7 +84,7 @@ ggggggggggg
 -----------
 
       """),
-    60,
+    60, level_win_screens[1],
       t_music: get_village_alt_music()
 );
 

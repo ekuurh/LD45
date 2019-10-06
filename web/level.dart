@@ -1,5 +1,5 @@
+import 'dart:html';
 import 'package:tuple/tuple.dart';
-
 import 'obstacle.dart';
 import 'world.dart';
 import 'worldmap.dart';
@@ -15,13 +15,15 @@ class Level {
   List<Tuple2<Obstacle, Location> > obstacles;
   Howl music;
   num starting_mana;
+  ImageElement win_screen;
 
-  Level(WorldMap t_map, List<Person> t_persons, List<Tuple2<Obstacle, Location> > t_obstacles, num t_starting_mana, {Howl t_music = null}) {
+  Level(WorldMap t_map, List<Person> t_persons, List<Tuple2<Obstacle, Location> > t_obstacles, num t_starting_mana, ImageElement t_win_screen, {Howl t_music = null}) {
     map = t_map;
     persons = t_persons;
     obstacles = t_obstacles;
     music = t_music;
     starting_mana = t_starting_mana;
+    win_screen = t_win_screen;
     HashSet<Tuple2<num, num>> starting_points = HashSet<Tuple2<num, num>>();
     for(Person person in persons) {
       for(Tuple2<Location, num> waypoint_and_wait in person.waypoints_and_waits) {
