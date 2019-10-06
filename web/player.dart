@@ -9,6 +9,9 @@ import 'person.dart';
 const num PLAYER_SPEED = 2.0;
 const num MAX_ACTION_DISTANCE = 0.8;
 
+const num SUGGESTION_MANA_USAGE = 20;
+const num INTERACTION_MANA_USAGE = 10;
+
 class Player {
   World world;
   num speed_x, speed_y;
@@ -33,6 +36,11 @@ class Player {
       return;
     }
     if (closest.item1 is Person) {
+      if(mana < SUGGESTION_MANA_USAGE) {
+        // Not enough mana
+        return;
+      }
+      mana -= SUGGESTION_MANA_USAGE;
       Person p = closest.item1;
       p.set_belief(1);
     }
@@ -40,6 +48,11 @@ class Player {
       Tuple2<Obstacle, Location> tup = closest.item1;
       if(tup.item1 is FallingObstacle) {
         FallingObstacle obstacle = tup.item1;
+        if(mana < INTERACTION_MANA_USAGE) {
+          // Not enough mana
+          return;
+        }
+        mana -= INTERACTION_MANA_USAGE;
         Tuple2<StaticObstacle, Location> new_obstacle = obstacle.do_action(this, tup.item2);
         for(num ind = 0; ind < world.obstacles.length; ind++) {
           if(world.obstacles[ind].item1 == obstacle) {
