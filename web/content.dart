@@ -26,9 +26,9 @@ rrr
 );
 
 Level level0 = Level(WorldMap.fromString("""
-rrrrrrrr
-rrrgrggr
-rgggrgrr
+RRRRRRRR
+rrrGrGGr
+rGGGrGrr
 rrrrrrrg
 rggrggrg
 rrrrggrr
@@ -36,7 +36,7 @@ rggrggrr
 rrrrrrrg
 """),
       pesrons_from_string("""
-0,0;1|2,1;1|5,3;1|-1
+0,0;1|2,1;1|5,3;1|0
       """),
       obstacles_from_string("""
 --------

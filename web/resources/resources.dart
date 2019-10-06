@@ -8,8 +8,10 @@ ImageElement end_screen_image = ImageElement(src: "resources/images/end_screen.j
 ImageElement level_win_screen = ImageElement(src: "resources/images/level_win_screen.png");
 ImageElement level_lose_screen = ImageElement(src: "resources/images/level_lose_screen.png");
 
-ImageElement ground_tile_image = ImageElement(src: 'resources/images/ground_tile_large.bmp');
-ImageElement road_tile_image = ImageElement(src: 'resources/images/road_tile_large.bmp');
+ImageElement light_road_tile_image = ImageElement(src: 'resources/images/road_tile_large_light.bmp');
+ImageElement light_ground_tile_image = ImageElement(src: 'resources/images/ground_tile_large_light.jpg');
+ImageElement dark_road_tile_image = ImageElement(src: 'resources/images/road_tile_large_dark.jpg');
+ImageElement dark_ground_tile_image = ImageElement(src: 'resources/images/ground_tile_large_dark.bmp');
 
 ImageElement person_image = ImageElement(src: "resources/images/sprite_test.png");
 
