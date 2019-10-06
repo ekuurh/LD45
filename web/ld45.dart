@@ -13,13 +13,24 @@ import 'content.dart';
 import 'audio.dart';
 import 'package:howler/howler.dart';
 
+const num OPENING_SCROLL_TIME = 4.0;
+const num OPENING_SCROLL_SPEED = 200.0;
+
+const num OPENING_TEXT_TINT_TIME = 3.0;
+const num OPENING_TEXT_STAY_TIME = 6.0;
+
 CanvasElement canvas;
 CanvasRenderingContext2D ctx;
-bool in_starting_screen;
+bool waiting_for_click_at_start;
 var main_menu_music = get_main_menu_music();
 
+void draw_image_x_scaled(CanvasRenderingContext2D ctx, ImageElement element, var base_y) {
+  var scale = element.width / canvas.width;
+  ctx.drawImageScaled(op_screen_image, 0, base_y, element.width / scale, element.height / scale);
+}
+
 void op_screen_handle_keydown(KeyboardEvent e) {
-  if(!in_starting_screen) {
+  if(!waiting_for_click_at_start) {
     return;
   }
   if((e.key == 'm') || (e.key == 'M')) {
@@ -27,7 +38,7 @@ void op_screen_handle_keydown(KeyboardEvent e) {
     main_menu_music.mute(is_muted);
   }
   else {
-    in_starting_screen = false;
+    waiting_for_click_at_start = false;
   }
 }
 
@@ -37,11 +48,37 @@ void show_starting_screen(CanvasRenderingContext2D ctx) async {
 
 //  document.onKeyDown.listen((e) => {in_starting_screen = false});
   document.onKeyDown.listen(op_screen_handle_keydown);
-  in_starting_screen = true;
+  waiting_for_click_at_start = true;
 
-  while (in_starting_screen) {
+  while (waiting_for_click_at_start) {
     await window.animationFrame;
-    ctx.drawImageScaled(op_screen_image, 0, 0, canvas.width, canvas.height);
+    draw_image_x_scaled(ctx, op_screen_image, 0);
+//    ctx.drawImageScaled(op_screen_image, 0, 0, canvas.width, canvas.height);
+  }
+
+  num op_screen_y = 0;
+  num startTime = await window.animationFrame;
+  num time = startTime;
+  while (time - startTime < OPENING_SCROLL_TIME * 1000) {
+    time = await window.animationFrame;
+    num tot = (time - startTime) / 1000.0; // In seconds
+
+    op_screen_y = -tot*tot*OPENING_SCROLL_SPEED;
+    draw_image_x_scaled(ctx, op_screen_image, op_screen_y);
+  }
+
+  startTime = await window.animationFrame;
+  while (time - startTime < (OPENING_TEXT_TINT_TIME + OPENING_TEXT_STAY_TIME) * 1000) {
+    time = await window.animationFrame;
+    num tot = (time - startTime) / 1000.0; // In seconds
+    
+    num tint_level = 1 - min(tot / OPENING_TEXT_TINT_TIME, 1);
+
+    ctx.drawImageScaled(intro_image, 0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "rgb(0, 0, 0," + tint_level.toString() + ")";
+    ctx.fillRect(0, 0, canvas.width, canvas.width * TILE_SIZE);
+    ctx.fillStyle = "rgb(0, 0, 0)";
   }
 
   main_menu_music.fade(0.6, 0.0, 1000);
@@ -93,13 +130,11 @@ void main() async {
       world.update(dt);
       world.draw(ctx);
       if (world.state == WorldState.LOSE) {
-        print("YOU LOSE!");
         world.finish(false);
         just_lost = true;
         break;
       }
       if (world.state == WorldState.WIN) {
-        print("YOU WIN!");
         world.finish(true);
         just_lost = false;
         level_ind += 1;
@@ -107,6 +142,5 @@ void main() async {
       }
     }
   }
-  print("you beat all the levels!");
   show_ending_screen(ctx);
 }

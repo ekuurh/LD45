@@ -34,3 +34,5 @@ List<ImageElement> player_images = [
   ImageElement(src: 'resources/images/player_3.png'),
   ImageElement(src: 'resources/images/player_4.png')
 ];
+
+ImageElement intro_image = ImageElement(src: 'resources/images/intro.jpg');

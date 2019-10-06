@@ -9,8 +9,8 @@ import 'package:color/color.dart';
 import 'resources/resources.dart';
 import 'belief_table.dart';
 
-const num WALK_TIME = CLOCK_TIME;
-const num CONVERSATION_TIME = 3 * CLOCK_TIME;
+const num WALK_TIME = 1;
+const num CONVERSATION_TIME = 3;
 const num MAX_BELIEF = 2;
 const num MANA_EARNED_FROM_CONVERSION = 5;
 
@@ -92,7 +92,7 @@ class Person extends Drawable {
   
   void update(num dt) {
     if(state == PersonState.WAITING) {
-      wait_time_left -= dt;
+      wait_time_left -= dt / CLOCK_TIME;
       if(wait_time_left <= 0.0) {
         wait_time_left = 0.0;
         state = PersonState.STAYING;
@@ -107,7 +107,7 @@ class Person extends Drawable {
         return;
       }
       if (walk_progress < 1.0) {
-        walk_progress += dt / WALK_TIME;
+        walk_progress += dt / (WALK_TIME * CLOCK_TIME);
         walk_progress = min(walk_progress, 1.0);
       }
       if (walk_progress >= 1.0) {
@@ -119,7 +119,7 @@ class Person extends Drawable {
         walk_progress = 0.0;
         if((state == PersonState.STAYING) && (location.x == waypoints_and_waits[next_waypoint].item1.x) && (location.y == waypoints_and_waits[next_waypoint].item1.y)) {
           next_waypoint = (next_waypoint + 1) % waypoints_and_waits.length;
-          wait_time_left = waypoints_and_waits[next_waypoint].item2 * CLOCK_TIME;
+          wait_time_left = waypoints_and_waits[next_waypoint].item2;
           print(wait_time_left);
           if(wait_time_left > 0) {
             state = PersonState.WAITING;
@@ -130,7 +130,7 @@ class Person extends Drawable {
     }
     if(state == PersonState.CONVERSING) {
       if (conversation_progress < 1.0) {
-        conversation_progress += dt / CONVERSATION_TIME;
+        conversation_progress += dt / (CONVERSATION_TIME * CLOCK_TIME);
         conversation_progress = min(conversation_progress, 1.0);
       }
       if(conversation_progress >= 1.0) {

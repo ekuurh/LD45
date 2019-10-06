@@ -2,7 +2,9 @@ import 'dart:html';
 import 'dart:math';
 
 num TILE_SIZE = 16;
-const num CLOCK_TIME = 0.5;
+const num REGULAR_CLOCK_TIME = 0.5;
+const num FAST_CLOCK_TIME = 0.2;
+num CLOCK_TIME = REGULAR_CLOCK_TIME;
 bool is_muted=false;
 
 enum Direction {

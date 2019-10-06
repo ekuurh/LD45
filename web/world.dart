@@ -279,7 +279,7 @@ class World {
     num actual_width = element.width / scale;
     num actual_height = element.height / scale;
     num center_x = TILE_SIZE * map.width / 2.0;
-    num center_y = TILE_SIZE * map.width / 2.0;
+    num center_y = TILE_SIZE * map.height / 2.0;
     ctx.drawImageScaled(element, (center_x-(actual_width/2.0)).round(), (center_y-(actual_height/2.0)).round(),
         actual_width, actual_height);
   }
@@ -303,8 +303,6 @@ class World {
     ctx.fillStyle = "rgb(0, 0, 0," + tint_level.toString() + ")";
     ctx.fillRect(0, 0, map.width * TILE_SIZE, map.height * TILE_SIZE);
     ctx.fillStyle = "rgb(0, 0, 0)";
-
-    print(tint_level);
 
     if(state == WorldState.LOSE_SCREEN) {
       if(tint_level == MAX_TINT) {
