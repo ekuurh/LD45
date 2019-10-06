@@ -6,10 +6,9 @@
 - - add obstacles_from_string
 - - add waypoints_from_string
 - - also make errors more indicative
-- add obstacles
+- obstacles
 - - integrate obstacle falling animations
 - add possession/follow
-- add level failure
 - add restart button
 - add mute button?
 

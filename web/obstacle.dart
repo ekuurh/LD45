@@ -56,3 +56,46 @@ StaticObstacle make_bush1() {
 StaticObstacle make_bush2() {
   return StaticObstacle(ImageElement(src: 'resources/images/bush2.bmp'), Tuple2<num, num>(1, 1), Tuple2<num, num>(1, 1));
 }
+
+List<Tuple2<Obstacle, Location>> obstacles_from_string(String s) {
+  int i;
+  int line, col;
+  List<Tuple2<Obstacle, Location>> ret = List<Tuple2<Obstacle, Location>>();
+  line = 0;
+  col = 0;
+  for (i = 0; i < s.length; i++) {
+    String ch = s[i];
+    Obstacle current = null;
+    switch (ch) {
+      case "H":
+// Road
+        current = make_house();
+        break;
+      case "t":
+        current = make_tree1();
+        break;
+      case "T":
+        current = make_tree2();
+        break;
+      case "b":
+        current = make_bush1();
+        break;
+      case "b":
+        current = make_bush2();
+        break;
+      case "-":
+        break;
+      case "\n":
+        {if (col != 0) {
+// Ignore lines with no tiles
+          line++;
+          col = -1;
+        }} break;
+    }
+
+    if (current != null) {
+      ret.add(Tuple2<Obstacle, Location>(current, Location(col, line)));
+    }
+    col++;
+  }
+}

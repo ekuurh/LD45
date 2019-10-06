@@ -24,11 +24,13 @@ class WorldMap {
           tile = make_ground_tile();
           break;
         case "\n":
-          if (col != 0) {
+          {if (col != 0) {
             // Ignore lines with no tiles
             line++;
             col = 0;
-          }
+          }} break;
+        default:
+          {print("Unrecognized character in map!"); assert(false);}break;
       }
       
       if (tile != null) {
