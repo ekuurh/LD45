@@ -11,6 +11,8 @@
 - - integrate obstacle falling animations
 - add possession/follow
 - add level failure
+- add restart button
+- add mute button?
 
 sound stuff:
 - music additions

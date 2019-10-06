@@ -3,6 +3,8 @@ import 'dart:math';
 
 num TILE_SIZE = 16;
 const num CLOCK_TIME = 1.0;
+ImageElement level_win_screen = ImageElement(src: "resources/images/level_win_screen.png");
+ImageElement level_lose_screen = ImageElement(src: "resources/images/level_lose_screen.png");
 
 enum Direction {
   UP,

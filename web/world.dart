@@ -17,7 +17,9 @@ import 'package:howler/howler.dart';
 
 enum WorldState {
   ONGOING,
+  LOSE_SCREEN,
   LOSE,
+  WIN_SCREEN,
   WIN
 }
 
@@ -211,17 +213,9 @@ class World {
       p.update(dt);
     player.update(dt);
     if (clock_progress >= 1.0) {
-      bool level_complete = true;
       do_routing();
       clock_progress = 0.0;
-      for(var person in persons) {
-        if(person.belief <= 0) {
-          level_complete = false;
-        }
-      }
-      if(level_complete) {
-        state = WorldState.WIN;
-      }
+      check_win_condition();
     }
   }
   
@@ -240,17 +234,43 @@ class World {
     }
     player.draw(ctx);
     player.draw_mana(ctx);
-
-    List beliefs = [];
-    for(var person in persons) {
-      beliefs.add(person.belief);
+    if(state == WorldState.LOSE_SCREEN) {
+      ctx.drawImageScaled(level_lose_screen, 0, 0, TILE_SIZE * map.width, TILE_SIZE * map.height);
     }
-    print(beliefs);
+    if(state == WorldState.WIN_SCREEN) {
+      ctx.drawImageScaled(level_win_screen, 0, 0, TILE_SIZE * map.width, TILE_SIZE * map.height);
+    }
   }
 
   void finish() {
     if(music != null) {
       music.fade(0.6, 0, 1000);
+    }
+  }
+
+  void check_win_condition() {
+    bool has_won = true;
+    for(var person in persons) {
+      if(person.belief <= 0) {
+        has_won = false;
+      }
+    }
+    if(has_won) {
+      state = WorldState.WIN_SCREEN;
+      return;
+    }
+    bool has_lost = true;
+    if(player.mana >= SUGGESTION_MANA_USAGE) {
+      has_lost = false;
+    }
+    for(var person in persons) {
+      if(person.belief > 0) {
+        has_lost = false;
+      }
+    }
+    if(has_lost) {
+      state = WorldState.LOSE_SCREEN;
+      return;
     }
   }
 }

@@ -51,7 +51,6 @@ class Person extends Drawable {
     if(state == PersonState.WAITING) {
       return Direction.STAY;
     }
-    assert(verbosify(state == PersonState.STAYING, "Internal error #1"));
     num next_waypoint_attempt = next_waypoint;
     do {
       RoutingResult res = how_to_get_to(location, waypoints_and_waits[next_waypoint_attempt].item1, map, is_walkable_arr);
@@ -177,7 +176,7 @@ void start_conversation(Person first, Person second) {
   }
   Tuple2<num, num> reverse_belief_tup = Tuple2<num, num>(second.belief, first.belief);
   if(belief_table.containsKey(reverse_belief_tup)) {
-    next_beliefs = Tuple2<num, num>(belief_table[belief_tup].item2, belief_table[reverse_belief_tup].item1);
+    next_beliefs = Tuple2<num, num>(belief_table[reverse_belief_tup].item2, belief_table[reverse_belief_tup].item1);
   }
   assert(verbosify(next_beliefs != null, "Don't know what to do when the beliefs are (${first.belief}, ${second
       .belief})!"));
