@@ -10,6 +10,8 @@ import 'belief_table.dart';
 const num WALK_TIME = CLOCK_TIME;
 const num CONVERSATION_TIME = 3 * CLOCK_TIME;
 const num MAX_BELIEF = 2;
+const num MANA_EARNED_FROM_CONVERSION = 5;
+
 ImageElement person_image = ImageElement(src: "resources/images/sprite_test.png");
 
 enum PersonState {
@@ -131,12 +133,16 @@ class Person extends Drawable {
     }
   }
 
-  void start_conversing(Person buddy, num new_belief) {
+  num start_conversing(Person buddy, num new_belief) {
     assert((state == PersonState.STAYING) || (state == PersonState.POSSESSED));
     state = PersonState.CONVERSING;
     conversation_progress = 0.0;
     conversation_buddy = buddy;
     next_belief = new_belief;
+    if((belief <= 0) && (new_belief > 0)) {
+      return MANA_EARNED_FROM_CONVERSION;
+    }
+    return 0;
   }
 
   Location get_interpolated_location() {
@@ -219,7 +225,7 @@ class Person extends Drawable {
   }
 }
 
-void start_conversation(Person first, Person second) {
+int start_conversation(Person first, Person second) {
   Tuple2<num, num> next_beliefs = null;
   Tuple2<num, num> belief_tup = Tuple2<num, num>(first.belief, second.belief);
   if(belief_table.containsKey(belief_tup)) {
@@ -232,8 +238,10 @@ void start_conversation(Person first, Person second) {
   assert(verbosify(next_beliefs != null, "Don't know what to do when the beliefs are (${first.belief}, ${second
       .belief})!"));
 
-  first.start_conversing(second, next_beliefs.item1);
-  second.start_conversing(first, next_beliefs.item2);
+  var mana_earned = 0;
+  mana_earned += first.start_conversing(second, next_beliefs.item1);
+  mana_earned += second.start_conversing(first, next_beliefs.item2);
+  return mana_earned;
 }
 
 List<Person> pesrons_from_string(String s) {

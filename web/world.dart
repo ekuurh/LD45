@@ -142,7 +142,7 @@ class World {
           if(person2.state == PersonState.POST_CONVERSATION) {
             break;
           }
-          start_conversation(person, person2);
+          player.mana += start_conversation(person, person2);
         }
       }
     }
