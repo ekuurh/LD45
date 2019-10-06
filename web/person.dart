@@ -17,7 +17,8 @@ enum PersonState {
   CONVERSING,
   POST_CONVERSATION,
   STAYING,
-  WAITING
+  WAITING,
+  POSSESSED
 }
 
 class Person extends Drawable {
@@ -52,6 +53,10 @@ class Person extends Drawable {
     if(state == PersonState.WAITING) {
       return Direction.STAY;
     }
+    if(state == PersonState.POSSESSED) {
+      // TODO: handle possessed move will
+      return Direction.STAY;
+    }
     num next_waypoint_attempt = next_waypoint;
     do {
       RoutingResult res = how_to_get_to(location, waypoints_and_waits[next_waypoint_attempt].item1, map, is_walkable_arr);
@@ -66,7 +71,9 @@ class Person extends Drawable {
   
   void walk_in_direction(Direction dir) {
     next_location = location_add(location, dir);
-    state = PersonState.WALKING;
+    if(state != PersonState.POSSESSED) {
+      state = PersonState.WALKING;
+    }
   }
   
   void set_belief(num belief) {
@@ -81,7 +88,13 @@ class Person extends Drawable {
         state = PersonState.STAYING;
       }
     }
-    if (state == PersonState.WALKING) {
+    if ((state == PersonState.WALKING) || (state == PersonState.POSSESSED)) {
+      if(state == PersonState.WALKING) {
+        assert(verbosify((location.x != next_location.x) || (location.y != next_location.y), "Internal error #2"));
+      }
+      if((state == PersonState.POSSESSED) && (location.x == next_location.x) && (location.y == next_location.y)) {
+        return;
+      }
       if (walk_progress < 1.0) {
         walk_progress += dt / WALK_TIME;
         walk_progress = min(walk_progress, 1.0);
@@ -128,6 +141,19 @@ class Person extends Drawable {
   num get_interpolated_belief() {
     return interpolate(belief, next_belief, conversation_progress);
   }
+
+  void possess() {
+    state = PersonState.POSSESSED;
+  }
+
+  void unpossess() {
+    if(walk_progress != 0.0) {
+      state = PersonState.WALKING;
+    }
+    else {
+      state = PersonState.STAYING;
+    }
+  }
   
   void draw_impl(CanvasRenderingContext2D ctx) {
     Location interpolated_loc = get_interpolated_location();
@@ -164,6 +190,20 @@ class Person extends Drawable {
           false);
     }
     ctx.fill();
+    if(state == PersonState.POSSESSED) {
+      ctx.fillStyle = "rgb(0, 255, 0)";
+      ctx.beginPath();
+      ctx.ellipse(
+          center_tile_x * TILE_SIZE,
+          center_tile_y * TILE_SIZE,
+          TILE_SIZE * 0.1,
+          TILE_SIZE * 0.1,
+          0,
+          0,
+          pi * 2,
+          false);
+      ctx.fill();
+    }
   }
 
   void draw(CanvasRenderingContext2D ctx, Location loc) {

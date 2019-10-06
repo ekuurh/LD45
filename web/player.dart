@@ -5,6 +5,7 @@ import 'obstacle.dart';
 import 'utils.dart';
 import 'world.dart';
 import 'person.dart';
+import 'package:mutex/mutex.dart';
 
 const num PLAYER_SPEED = 2.0;
 const num MAX_ACTION_DISTANCE = 0.8;
@@ -12,12 +13,22 @@ const num MAX_ACTION_DISTANCE = 0.8;
 const num SUGGESTION_MANA_USAGE = 20;
 const num INTERACTION_MANA_USAGE = 10;
 
+const num POSSESSION_INITIAL_MANA_USAGE = 10;
+const num POSSESSION_CONTINUOUS_MANA_USAGE = 5;
+
+const Duration spacebar_time_until_possessing = Duration(milliseconds: 500);
+
+DateTime spacebar_start_time;
+
 class Player {
   World world;
   num speed_x, speed_y;
   num x, y;
   num mana;
+  bool is_possessing;
   Location mana_bar_loc, mana_bar_size;
+  Person possession_targeted_player;
+  Mutex update_key_mutex;
 
   Player(this.world) {
     speed_x = 0;
@@ -27,6 +38,8 @@ class Player {
     mana = world.starting_mana;
     mana_bar_loc = Location(world.map.width / 15.0, world.map.height / 15.0);
     mana_bar_size = Location(world.map.width / 2.5, world.map.height / 8.0);
+    is_possessing = false;
+    update_key_mutex = new Mutex();
   }
   
   void perform_action() {
@@ -65,6 +78,7 @@ class Player {
   }
   
   void handle_keydown(KeyboardEvent e) {
+    update_key_mutex.acquire();
     switch (e.key) {
       case "ArrowRight":
         speed_x =PLAYER_SPEED;
@@ -90,28 +104,43 @@ class Player {
         break;
       case " ":
         {
-          perform_action();
+          if(possession_targeted_player != null) {
+            // Already pressed
+            break;
+          }
+          var loc = Location(x+0.5, y+0.5);
+          Tuple2<Object, num> closest = world.closest_object_to(loc);
+          if(closest.item2 > MAX_ACTION_DISTANCE) {
+            break;
+          }
+          if ((closest.item1 is Person) && (mana >= POSSESSION_INITIAL_MANA_USAGE)) {
+            Person person = closest.item1;
+            if(person.belief > 0) {
+              possession_targeted_player = closest.item1;
+              spacebar_start_time = DateTime.now();
+            }
+          }
           e.preventDefault();
         }
         break;
       case "m":
         {
           is_muted = !is_muted;
-          print(is_muted);
           world.update_mute();
         }
         break;
       case "M":
         {
           is_muted = !is_muted;
-          print(is_muted);
           world.update_mute();
         }
         break;
     }
+    update_key_mutex.release();
   }
   
   void handle_keyup(KeyboardEvent e) {
+    update_key_mutex.acquire();
     switch (e.key) {
       case "ArrowRight":
       case "ArrowLeft":
@@ -120,14 +149,45 @@ class Player {
       case "ArrowUp":
       case "ArrowDown":
         speed_y = 0;
+        break;
+      case " ":
+        {
+          if(possession_targeted_player != null) {
+            if(is_possessing) {
+              possession_targeted_player.unpossess();
+              is_possessing = false;
+            }
+            possession_targeted_player = null;
+            spacebar_start_time = null;
+            break;
+          }
+          perform_action();
+        }
+        break;
     }
+    update_key_mutex.release();
   }
   
   void update(num dt) {
+    update_key_mutex.acquire();
     x += speed_x * dt;
     y += speed_y * dt;
     x = clamp(x, 0, world.map.width - 1);
     y = clamp(y, 0, world.map.height - 1);
+    if(possession_targeted_player != null) {
+      if (is_possessing) {
+        mana -= dt * POSSESSION_CONTINUOUS_MANA_USAGE;
+      }
+      else {
+        if (DateTime.now().difference(spacebar_start_time) >
+            spacebar_time_until_possessing) {
+          possession_targeted_player.possess();
+          is_possessing = true;
+          mana -= POSSESSION_INITIAL_MANA_USAGE;
+        }
+      }
+    }
+    update_key_mutex.release();
   }
   
   void draw(CanvasRenderingContext2D ctx) {

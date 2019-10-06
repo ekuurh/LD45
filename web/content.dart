@@ -27,7 +27,7 @@ grrg
 ----
 ----
       """),
-    30,
+    100,
       t_music: get_village_music1()
 );
 
