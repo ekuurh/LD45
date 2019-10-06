@@ -3,7 +3,6 @@
 - Level swap stuff
 - - make stuff tint to black, tint back for next level
 - - add level-complete screen
-- implement people waiting
 - make levels easier to create
 - - also make errors more indicative
 - add obstacles
@@ -21,8 +20,6 @@ sound stuff:
 
 think about:
 - what happens if a tree falls on a person?
-
-
 
 polish:
 - add glow to current target, maximum distance to current target
