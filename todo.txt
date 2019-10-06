@@ -4,7 +4,6 @@
 
 bugfixes:
 - solve fadyness!
-- next-level-space becomes suggestion-space
 
 sound stuff:
 - music additions
