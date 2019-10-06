@@ -4,7 +4,6 @@
 - - integrate obstacle falling animations
 - animations!
 - handle fadeyness!
-- add conversation animation
 
 sound stuff:
 - music additions
