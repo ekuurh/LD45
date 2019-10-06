@@ -31,21 +31,29 @@ class RotatingObstacle extends Obstacle {
   num rotation_speed;
   num end_angle;
   bool done_rotating;
+  Location anchor;
   RotatingObstacle(ImageElement img, Tuple2<num, num> draw_dimensions, Tuple2<num, num> occupy_dimensions,
-                   num start_angle, num t_end_angle, {num rotation_time = 2.0}) : super(img, draw_dimensions, occupy_dimensions, false) {
+                   num start_angle, num t_end_angle, {num rotation_time = 2.0, Location t_anchor = null}) : super(img, draw_dimensions, occupy_dimensions, false) {
     angle = start_angle;
     end_angle = t_end_angle;
     rotation_speed = (end_angle - start_angle)/rotation_time;
     done_rotating = false;
+    if(t_anchor == null) {
+//      anchor = Location(0, 0);
+        anchor = Location(0.5, 0.5);
+    }
+    else {
+      anchor = t_anchor;
+    }
   }
 
   @override
   void draw(CanvasRenderingContext2D ctx, Location loc) {
 //    print(angle);
     ctx.rotate(-angle);
-    Location anchored_loc = Location(loc.x - draw_dimensions.item1 + 1, loc.y - draw_dimensions.item2 + 1);
-    Location rotated_anchored_loc = anchored_loc.rotate(-angle);
-    Location rotated_loc = Location(rotated_anchored_loc.x + draw_dimensions.item1 - 1, rotated_anchored_loc.y + draw_dimensions.item2 - 1);
+    Location rotated_anchor = anchor.rotate(angle);
+    Location rotated_unanchored_loc = loc.rotate(-angle);
+    Location rotated_loc = Location(rotated_unanchored_loc.x - rotated_anchor.x + anchor.x, rotated_unanchored_loc.y - rotated_anchor.y + anchor.y);
     super.draw(ctx, rotated_loc);
     ctx.rotate(angle);
   }
@@ -114,7 +122,7 @@ StaticObstacle make_tree1() {
 }
 
 FallingObstacle make_tree2() {
-  return FallingObstacle(tree2_large_image, Tuple2<num, num>(1, 2), Tuple2<num, num>(1, 1));
+  return FallingObstacle(tree2_large_image, Tuple2<num, num>(1, 1), Tuple2<num, num>(1, 1));
 }
 
 StaticObstacle make_bush1() {
