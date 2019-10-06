@@ -17,7 +17,7 @@ const num OPENING_SCROLL_TIME = 4.0;
 const num OPENING_SCROLL_SPEED = 200.0;
 
 const num OPENING_TEXT_TINT_TIME = 3.0;
-const num OPENING_TEXT_STAY_TIME = 6.0;
+const num OPENING_TEXT_STAY_TIME = 7.0;
 
 CanvasElement canvas;
 CanvasRenderingContext2D ctx;
@@ -44,7 +44,6 @@ void op_screen_handle_keydown(KeyboardEvent e) {
 
 void show_starting_screen(CanvasRenderingContext2D ctx) async {
 //  var main_menu_music = get_main_menu_music();
-  print(["Music status:", main_menu_music.play()]); // Play sound.
 
 //  document.onKeyDown.listen((e) => {in_starting_screen = false});
   document.onKeyDown.listen(op_screen_handle_keydown);
@@ -55,6 +54,8 @@ void show_starting_screen(CanvasRenderingContext2D ctx) async {
     draw_image_x_scaled(ctx, op_screen_image, 0);
 //    ctx.drawImageScaled(op_screen_image, 0, 0, canvas.width, canvas.height);
   }
+
+  main_menu_music.play();
 
   num op_screen_y = 0;
   num startTime = await window.animationFrame;
