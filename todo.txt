@@ -4,6 +4,8 @@
 - - make stuff tint to black, tint back for next level
 - - add level-complete screen
 - make levels easier to create
+- - add obstacles_from_string
+- - add waypoints_from_string
 - - also make errors more indicative
 - add obstacles
 - - integrate obstacle falling animations
