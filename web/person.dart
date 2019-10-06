@@ -10,6 +10,7 @@ import 'belief_table.dart';
 const num WALK_TIME = CLOCK_TIME;
 const num CONVERSATION_TIME = 3 * CLOCK_TIME;
 const num MAX_BELIEF = 2;
+ImageElement person_image = ImageElement(src: "resources/images/sprite_test.png");
 
 enum PersonState {
   WALKING,
@@ -130,36 +131,39 @@ class Person extends Drawable {
   
   void draw_impl(CanvasRenderingContext2D ctx) {
     Location interpolated_loc = get_interpolated_location();
-    num center_tile_x = 0.5 + interpolated_loc.x;
-    num center_tile_y = 0.5 + interpolated_loc.y;
+    ctx.drawImageScaled(person_image, interpolated_loc.x * TILE_SIZE, interpolated_loc.y * TILE_SIZE,
+        TILE_SIZE, TILE_SIZE);
 
-    num normalized_interpolated_belief = get_interpolated_belief() / (MAX_BELIEF * 1.0);
-    ctx.fillStyle = RgbColor(255*(1+normalized_interpolated_belief)/2, 255/2, 255*(1-normalized_interpolated_belief)/2).toHexColor().toCssString();
-
-    ctx.beginPath();
-    if(state != PersonState.CONVERSING) {
-      ctx.ellipse(
-          center_tile_x * TILE_SIZE,
-          center_tile_y * TILE_SIZE,
-          TILE_SIZE * 0.4,
-          TILE_SIZE * 0.4,
-          0,
-          0,
-          pi * 2,
-          false);
-    }
-    else {
-      ctx.ellipse(
-          center_tile_x * TILE_SIZE,
-          center_tile_y * TILE_SIZE,
-          TILE_SIZE * 0.2,
-          TILE_SIZE * 0.2,
-          0,
-          0,
-          pi * 2,
-          false);
-    }
-    ctx.fill();
+//    num center_tile_x = 0.5 + interpolated_loc.x;
+//    num center_tile_y = 0.5 + interpolated_loc.y;
+//
+//    num normalized_interpolated_belief = get_interpolated_belief() / (MAX_BELIEF * 1.0);
+//    ctx.fillStyle = RgbColor(255*(1+normalized_interpolated_belief)/2, 255/2, 255*(1-normalized_interpolated_belief)/2).toHexColor().toCssString();
+//
+//    ctx.beginPath();
+//    if(state != PersonState.CONVERSING) {
+//      ctx.ellipse(
+//          center_tile_x * TILE_SIZE,
+//          center_tile_y * TILE_SIZE,
+//          TILE_SIZE * 0.4,
+//          TILE_SIZE * 0.4,
+//          0,
+//          0,
+//          pi * 2,
+//          false);
+//    }
+//    else {
+//      ctx.ellipse(
+//          center_tile_x * TILE_SIZE,
+//          center_tile_y * TILE_SIZE,
+//          TILE_SIZE * 0.2,
+//          TILE_SIZE * 0.2,
+//          0,
+//          0,
+//          pi * 2,
+//          false);
+//    }
+//    ctx.fill();
   }
 
   void draw(CanvasRenderingContext2D ctx, Location loc) {
