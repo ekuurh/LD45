@@ -1,8 +1,8 @@
 import 'dart:core';
 import 'dart:html';
+import 'dart:io';
 import 'dart:math';
 import 'package:collection/collection.dart';
-
 import 'obstacle.dart';
 import 'utils.dart';
 import 'tile.dart';
@@ -248,7 +248,13 @@ class World {
 
   void finish() {
     if(music != null) {
-      music.fade(0.6, 0, 1000);
+      print("!@#");
+      music.fade(0.6, 0, 3000);
+//      sleep(Duration(milliseconds: 1000));
+      print("weirder");
+    }
+    else {
+      print("weird");
     }
   }
 

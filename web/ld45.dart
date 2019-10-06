@@ -50,6 +50,8 @@ void main() async {
   var body = querySelector('body');
   ctx = canvas.getContext('2d');
 
+  var main_menu_music = get_main_menu_music();
+
   main_menu_music.play(); // Play sound.
 
   World world;

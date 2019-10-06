@@ -28,7 +28,7 @@ grrg
 ----
       """),
     30,
-      t_music: village_music1
+      t_music: get_village_music1()
 );
 
 Level level0 = Level(WorldMap.fromString("""
@@ -54,7 +54,7 @@ rrrrrrrg
 --------
 --------
       """), 70,
-    t_music: village_alt_music
+    t_music: get_village_alt_music()
 );
 
 List<Level> all_levels = [test_level, level0];
