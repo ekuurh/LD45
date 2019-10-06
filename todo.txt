@@ -1,5 +1,6 @@
 - obstacles
 - - integrate obstacle falling animations
+- can only influence twice
 
 bugfixes:
 - solve fadyness!

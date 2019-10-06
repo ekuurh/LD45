@@ -26,9 +26,9 @@ rrr
 );
 
 Level level0 = Level(WorldMap.fromString("""
-rrrrrrrr
-rrrgrggr
-rgggrgrr
+RRRRRRRR
+rrrGrGGr
+rGGGrGrr
 rrrrrrrg
 rggrggrg
 rrrrggrr

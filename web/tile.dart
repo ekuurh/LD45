@@ -13,9 +13,18 @@ class Tile extends Drawable {
   }
 }
 
-Tile make_ground_tile() {
-  return Tile(false, ground_tile_image);
+Tile make_dark_ground_tile() {
+  return Tile(false, dark_ground_tile_image);
 }
-Tile make_road_tile() {
-  return Tile(true, road_tile_image);
+
+Tile make_dark_road_tile() {
+  return Tile(true, dark_road_tile_image);
+}
+
+Tile make_light_ground_tile() {
+  return Tile(false, light_ground_tile_image);
+}
+
+Tile make_light_road_tile() {
+  return Tile(true, light_road_tile_image);
 }

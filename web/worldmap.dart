@@ -18,10 +18,17 @@ class WorldMap {
       switch (ch) {
         case "r":
           // Road
-          tile = make_road_tile();
+          tile = make_light_road_tile();
+          break;
+        case "R":
+        // Road
+          tile = make_dark_road_tile();
           break;
         case "g":
-          tile = make_ground_tile();
+          tile = make_light_ground_tile();
+          break;
+        case "G":
+          tile = make_dark_ground_tile();
           break;
         case "\n":
           {if (col != 0) {
