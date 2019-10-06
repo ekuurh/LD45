@@ -4,6 +4,7 @@
 
 bugfixes:
 - solve fadyness!
+- win screen not in center
 
 sound stuff:
 - music additions
