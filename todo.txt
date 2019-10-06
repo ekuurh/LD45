@@ -1,10 +1,9 @@
-- Level swap stuff (win/lose screen)
-- - make stuff tint to black, tint back for next level
 - obstacles
 - - integrate obstacle falling animations
 
 bugfixes:
 - solve fadyness!
+- next-level-space becomes suggestion-space
 
 sound stuff:
 - music additions

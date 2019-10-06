@@ -56,8 +56,11 @@ class Player {
         // Not enough mana
         return;
       }
-      mana -= SUGGESTION_MANA_USAGE;
       Person p = closest.item1;
+      if(p.belief < 0) {
+        return;
+      }
+      mana -= SUGGESTION_MANA_USAGE;
       p.set_belief(MAX_BELIEF);
     }
     if (closest.item1 is Tuple2) {

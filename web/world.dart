@@ -15,15 +15,19 @@ import 'player.dart';
 import 'obstacle.dart';
 import 'package:howler/howler.dart';
 
-const TINT_TIME = 1.0;
-const MAX_TINT = 0.5;
+const num TINT_TIME = 0.3;
+const num MAX_TINT = 0.5;
+
+const num LOSE_SCREEN_MAX_RELATIVE_WIDTH = 0.8;
+const num LOSE_SCREEN_MAX_RELATIVE_HEIGHT = 0.2;
 
 enum WorldState {
   ONGOING,
   LOSE_SCREEN,
   LOSE,
   WIN_SCREEN,
-  WIN
+  WIN,
+  BOOTING
 }
 
 class World {
@@ -66,7 +70,8 @@ class World {
     for(var person in level.persons) {
       persons.add(Person(person.waypoints_and_waits, belief: person.belief));
     }
-    state = WorldState.ONGOING;
+    state = WorldState.BOOTING;
+    tint_level = MAX_TINT;
     obstacles = [];
     for(var obstacle in level.obstacles) {
       obstacles.add(obstacle);
@@ -82,7 +87,6 @@ class World {
     starting_mana = level.starting_mana;
     player = Player(this); // last in init since it uses "this"
     do_routing();
-    tint_level = 0.0;
   }
   
   Tuple2<Object, num> closest_object_to(Location p) {
@@ -243,7 +247,14 @@ class World {
       clock_progress = 0.0;
       check_win_condition();
     }
-    if(state != WorldState.ONGOING) {
+    if(state == WorldState.BOOTING) {
+      tint_level -= dt * CLOCK_TIME * MAX_TINT / TINT_TIME;
+      if(tint_level <= 0.0) {
+        tint_level = 0.0;
+        state = WorldState.ONGOING;
+      }
+    }
+    if((state == WorldState.WIN_SCREEN) || (state == WorldState.LOSE_SCREEN)) {
       if(tint_level < MAX_TINT) {
         tint_level += dt * CLOCK_TIME * MAX_TINT / TINT_TIME;
         if (tint_level >= MAX_TINT) {
@@ -276,9 +287,10 @@ class World {
     player.draw_mana(ctx);
 
     ctx.fillStyle = "rgb(0, 0, 0," + tint_level.toString() + ")";
-    print(ctx.fillStyle);
     ctx.fillRect(0, 0, map.width * TILE_SIZE, map.height * TILE_SIZE);
     ctx.fillStyle = "rgb(0, 0, 0)";
+
+    print(tint_level);
 
     if(state == WorldState.LOSE_SCREEN) {
       if(tint_level == MAX_TINT) {
@@ -317,16 +329,22 @@ class World {
       state = WorldState.WIN_SCREEN;
       return;
     }
-    bool has_lost = true;
+    bool has_lost_for_lack_of_mana = true;
     if(player.mana >= SUGGESTION_MANA_USAGE) {
-      has_lost = false;
+      has_lost_for_lack_of_mana = false;
     }
     for(var person in persons) {
       if(person.belief > 0) {
-        has_lost = false;
+        has_lost_for_lack_of_mana = false;
       }
     }
-    if(has_lost) {
+    bool has_lost_for_negative_global_opinion = true;
+    for(var person in persons) {
+      if(person.belief >= 0) {
+        has_lost_for_negative_global_opinion = false;
+      }
+    }
+    if(has_lost_for_lack_of_mana || has_lost_for_negative_global_opinion) {
       state = WorldState.LOSE_SCREEN;
       document.onKeyDown.listen((e) => {state = WorldState.LOSE});
       return;
