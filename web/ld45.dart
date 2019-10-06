@@ -44,7 +44,7 @@ void op_screen_handle_keydown(KeyboardEvent e) {
 
 void show_starting_screen(CanvasRenderingContext2D ctx) async {
 //  var main_menu_music = get_main_menu_music();
-  main_menu_music.play(); // Play sound.
+  print(["Music status:", main_menu_music.play()]); // Play sound.
 
 //  document.onKeyDown.listen((e) => {in_starting_screen = false});
   document.onKeyDown.listen(op_screen_handle_keydown);
