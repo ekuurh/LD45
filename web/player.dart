@@ -151,6 +151,16 @@ class Player {
           world.update_mute();
         }
         break;
+      case "f":
+        {
+          CLOCK_TIME = FAST_CLOCK_TIME;
+        }
+        break;
+      case "F":
+        {
+          CLOCK_TIME = FAST_CLOCK_TIME;
+        }
+        break;
     }
     update_key_mutex.release();
   }
@@ -188,6 +198,16 @@ class Player {
             break;
           }
           perform_action();
+        }
+        break;
+      case "f":
+        {
+          CLOCK_TIME = REGULAR_CLOCK_TIME;
+        }
+        break;
+      case "F":
+        {
+          CLOCK_TIME = REGULAR_CLOCK_TIME;
         }
         break;
     }
