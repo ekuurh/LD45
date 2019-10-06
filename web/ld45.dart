@@ -61,8 +61,9 @@ void main() async {
 
   num prevTime = await window.animationFrame;
   var level_ind = 0;
+  bool just_lost = false;
   while(level_ind < all_levels.length) {
-    world = World(all_levels[level_ind]);
+    world = World(all_levels[level_ind], !just_lost);
     canvas = adjust_canvas_and_tile_size(world, canvas, body);
     document.onKeyDown.listen(world.player.handle_keydown);
     document.onKeyUp.listen(world.player.handle_keyup);
@@ -76,12 +77,14 @@ void main() async {
       world.draw(ctx);
       if (world.state == WorldState.LOSE) {
         print("YOU LOSE!");
-        world.finish();
+        world.finish(false);
+        just_lost = true;
         break;
       }
       if (world.state == WorldState.WIN) {
         print("YOU WIN!");
-        world.finish();
+        world.finish(true);
+        just_lost = false;
         level_ind += 1;
         break;
       }

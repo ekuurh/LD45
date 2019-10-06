@@ -51,7 +51,7 @@ class World {
     }
   }
 
-  World(Level level) {
+  World(Level level, bool start_music) {
     map = level.map;
     persons = [];
     for(var person in level.persons) {
@@ -62,7 +62,7 @@ class World {
     music = level.music;
     recompute_is_walkable_arr();
     do_routing();
-    if(music != null) {
+    if((music != null) && (start_music)) {
       music.play();
       music.fade(0, 0.6, 1000);
     }
@@ -245,14 +245,11 @@ class World {
     state = WorldState.LOSE;
   }
 
-  void finish() {
-    if(music != null) {
-      print("!@#");
-      music.fade(0.6, 0, 3000);
-      print("weirder");
-    }
-    else {
-      print("weird");
+  void finish(bool fade_music) {
+    if(fade_music) {
+      if (music != null) {
+        music.fade(0.6, 0, 3000);
+      }
     }
   }
 
