@@ -20,7 +20,6 @@ think about:
 
 polish:
 - add glow to current target
-- night phase?
 - - fade out along with sound fade out
 - nicer mana bar
 - tweak beliefs
