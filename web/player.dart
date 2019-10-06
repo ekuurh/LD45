@@ -1,6 +1,7 @@
 import 'dart:html';
 import 'package:tuple/tuple.dart';
 
+import 'dynamic_sprite.dart';
 import 'obstacle.dart';
 import 'utils.dart';
 import 'world.dart';
@@ -29,6 +30,7 @@ class Player {
   Location mana_bar_loc, mana_bar_size;
   Person possession_targeted_player;
   Mutex update_key_mutex;
+  DynamicSprite sprite;
 
   Player(this.world) {
     speed_x = 0;
@@ -40,6 +42,7 @@ class Player {
     mana_bar_size = Location(world.map.width / 2.5, world.map.height / 8.0);
     is_possessing = false;
     update_key_mutex = new Mutex();
+    sprite = make_player_sprite();
   }
   
   void perform_action() {
@@ -203,12 +206,14 @@ class Player {
       }
     }
     update_key_mutex.release();
+    sprite.update(dt);
   }
   
   void draw(CanvasRenderingContext2D ctx) {
-    ctx.fillStyle = "#ffff00";
-    ctx.fillRect(((x + 0.1) * TILE_SIZE).round(), ((y + 0.1) * TILE_SIZE).round(),
-      (TILE_SIZE * 0.8).round(), (TILE_SIZE * 0.8).round());
+//    ctx.fillStyle = "#ffff00";
+//    ctx.fillRect(((x + 0.1) * TILE_SIZE).round(), ((y + 0.1) * TILE_SIZE).round(),
+//      (TILE_SIZE * 0.8).round(), (TILE_SIZE * 0.8).round());
+    sprite.draw(ctx, Location(x, y));
   }
 
   void draw_mana(CanvasRenderingContext2D ctx) {
