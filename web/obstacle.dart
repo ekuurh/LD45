@@ -148,7 +148,7 @@ StaticObstacle make_tree1() {
 }
 
 FallingObstacle make_tree2() {
-  return FallingObstacle([tree2_large_image, tree2_large_right_image, tree2_large_left_image], Tuple2<num, num>(1, 2), Tuple2<num, num>(1, 1));
+  return FallingObstacle([tree2_large_image, tree2_large_left_image, tree2_large_right_image], Tuple2<num, num>(1, 2), Tuple2<num, num>(1, 1));
 }
 
 StaticObstacle make_bush1() {
