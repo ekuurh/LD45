@@ -47,6 +47,7 @@ ImageElement intro_image = ImageElement(src: 'resources/images/intro.png');
 ImageElement instruction_image = ImageElement(src: 'resources/images/instructions.png');
 
 List<PersonaSounds> all_persona_sounds;
+List<ImageElement> all_manabars;
 
 void make_all_persona_sounds() {
   all_persona_sounds = [];
@@ -65,4 +66,11 @@ void make_all_persona_sounds() {
     curr.add('resources/audio/convo Convo_3' + ind.toString() + '.wav');
   }
   all_persona_sounds.add(PersonaSounds(curr));
+}
+
+void make_all_manabars() {
+  all_manabars = [];
+  for(num ind = 0; ind <= 10; ind++) {
+    all_manabars.add(ImageElement(src: 'resources/images/mana_bar_' + (ind*10).toString() + '.png'));
+  }
 }

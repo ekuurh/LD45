@@ -3,6 +3,7 @@ import 'package:tuple/tuple.dart';
 import 'dart:math' as math;
 import 'dynamic_sprite.dart';
 import 'obstacle.dart';
+import 'resources/resources.dart';
 import 'utils.dart';
 import 'world.dart';
 import 'person.dart';
@@ -202,12 +203,14 @@ class Player {
           if(possession_targeted_player != null) {
             if(possession_targeted_player.state != PersonState.POSSESSED) {
               // Possession broken by conversation
+              mana = (mana/10).ceil() * 10;
               is_possessing = false;
               possession_targeted_player = null;
               spacebar_start_time = null;
               break;
             }
             if(is_possessing) {
+              mana = (mana/10).ceil() * 10;
               possession_targeted_player.unpossess();
               is_possessing = false;
             }
@@ -242,12 +245,13 @@ class Player {
       if (is_possessing) {
         if(mana < dt * POSSESSION_CONTINUOUS_MANA_USAGE) {
           possession_targeted_player.unpossess();
+          mana = (mana/10).ceil() * 10;
           is_possessing = false;
           possession_targeted_player = null;
           spacebar_start_time = null;
         }
         else {
-          mana -= dt * POSSESSION_CONTINUOUS_MANA_USAGE;
+          mana -= dt * POSSESSION_CONTINUOUS_MANA_USAGE / CLOCK_TIME;
         }
       }
       else {
@@ -275,19 +279,20 @@ class Player {
     ctx.fillStyle = "rgb(30, 30, 30, 0.1)";
     Location absolute_mana_pos = Location((mana_bar_loc.x * TILE_SIZE).round(), (mana_bar_loc.y * TILE_SIZE).round());
     Location absolute_mana_size = Location((mana_bar_size.x * TILE_SIZE).round(), (mana_bar_size.y * TILE_SIZE).round());
-    ctx.fillRect(absolute_mana_pos.x, absolute_mana_pos.y, absolute_mana_size.x, absolute_mana_size.y);
-
-    // mana content
-    ctx.fillStyle = "rgb(200, 30, 200, 0.85)";
-    ctx.fillRect(absolute_mana_pos.x, absolute_mana_pos.y, (absolute_mana_size.x * mana/100.0).round(), absolute_mana_size.y);
-
-    // mana outline
-    ctx.strokeStyle = "rgb(30, 30, 30, 0.85)";
-    ctx.lineWidth = (absolute_mana_size.y / 8.0);
-    ctx.strokeRect(absolute_mana_pos.x, absolute_mana_pos.y, absolute_mana_size.x, absolute_mana_size.y);
-
-    ctx.fillStyle = "rgb(0, 0, 0, 1)";
-    ctx.strokeStyle = "rgb(0, 0, 0, 1)";
+//    ctx.fillRect(absolute_mana_pos.x, absolute_mana_pos.y, absolute_mana_size.x, absolute_mana_size.y);
+//
+//    // mana content
+//    ctx.fillStyle = "rgb(200, 30, 200, 0.85)";
+//    ctx.fillRect(absolute_mana_pos.x, absolute_mana_pos.y, (absolute_mana_size.x * mana/100.0).round(), absolute_mana_size.y);
+//
+//    // mana outline
+//    ctx.strokeStyle = "rgb(30, 30, 30, 0.85)";
+//    ctx.lineWidth = (absolute_mana_size.y / 8.0);
+//    ctx.strokeRect(absolute_mana_pos.x, absolute_mana_pos.y, absolute_mana_size.x, absolute_mana_size.y);
+//
+//    ctx.fillStyle = "rgb(0, 0, 0, 1)";
+//    ctx.strokeStyle = "rgb(0, 0, 0, 1)";
+    ctx.drawImageScaled(all_manabars[(mana/10).ceil()], absolute_mana_pos.x, absolute_mana_pos.y, absolute_mana_size.x, absolute_mana_size.y);
   }
 
   void draw_suggestion_orbs(CanvasRenderingContext2D ctx) {

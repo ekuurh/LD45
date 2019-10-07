@@ -148,6 +148,7 @@ void main() async {
 
   make_person_sprites();
   make_all_persona_sounds();
+  make_all_manabars();
   
   await show_starting_screen(ctx);
 
