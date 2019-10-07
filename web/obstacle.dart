@@ -1,23 +1,21 @@
 import 'dart:html';
 import 'package:tuple/tuple.dart';
 import 'audio.dart';
-import 'dynamic_sprite.dart';
 import 'player.dart';
 import 'resources/resources.dart';
 import 'utils.dart';
 import 'dart:math' as math;
 
 class Obstacle extends Drawable {
-  DynamicSprite img;
+  ImageElement img;
   Tuple2<num, num> draw_dimensions; // anchored by bottom-right point
   Tuple2<num, num> occupy_dimensions; // anchored by bottom-right point
   bool is_actionable;
 
   Obstacle(this.img, this.draw_dimensions, this.occupy_dimensions, this.is_actionable);
   void draw(CanvasRenderingContext2D ctx, Location loc) {
-    img.draw(ctx, loc);
-//    ctx.drawImageScaled(img, (loc.x - draw_dimensions.item1 + 1) * TILE_SIZE, (loc.y - draw_dimensions.item2 + 1) * TILE_SIZE,
-//        draw_dimensions.item1 * TILE_SIZE, draw_dimensions.item2 * TILE_SIZE);
+    ctx.drawImageScaled(img, (loc.x - draw_dimensions.item1 + 1) * TILE_SIZE, (loc.y - draw_dimensions.item2 + 1) * TILE_SIZE,
+        draw_dimensions.item1 * TILE_SIZE, draw_dimensions.item2 * TILE_SIZE);
   }
 
   Tuple3<bool, Obstacle, Location> do_action(Player player, Location my_loc) {}
@@ -26,7 +24,7 @@ class Obstacle extends Drawable {
 }
 
 class StaticObstacle extends Obstacle {
-  StaticObstacle(DynamicSprite img, Tuple2<num, num> draw_dimensions, Tuple2<num, num> occupy_dimensions) : super(img, draw_dimensions, occupy_dimensions, false);
+  StaticObstacle(ImageElement img, Tuple2<num, num> draw_dimensions, Tuple2<num, num> occupy_dimensions) : super(img, draw_dimensions, occupy_dimensions, false);
 }
 
 class RotatingObstacle extends Obstacle {
@@ -38,7 +36,7 @@ class RotatingObstacle extends Obstacle {
   num tot_time;
   num rotation_time;
   Location anchor;
-  RotatingObstacle(DynamicSprite img, Tuple2<num, num> t_draw_dimensions, Tuple2<num, num> t_occupy_dimensions,
+  RotatingObstacle(ImageElement img, Tuple2<num, num> t_draw_dimensions, Tuple2<num, num> t_occupy_dimensions,
                    num t_num_spins, {num t_rotation_time = 2.0, Location t_anchor = null}) :
         super(img, Location.from_tuple(t_draw_dimensions).integer_rotate(t_num_spins).to_abs_tuple(),
           Location.from_tuple(t_occupy_dimensions).integer_rotate(t_num_spins).to_abs_tuple(), false) {
@@ -110,8 +108,8 @@ class RotatingObstacle extends Obstacle {
 }
 
 class FallingObstacle extends Obstacle {
-  List<DynamicSprite> images;
-  FallingObstacle(List<DynamicSprite> t_images, Tuple2<num, num> draw_dimensions, Tuple2<num, num> occupy_dimensions) : super(t_images[0], draw_dimensions, occupy_dimensions, false) {
+  List<ImageElement> images;
+  FallingObstacle(List<ImageElement> t_images, Tuple2<num, num> draw_dimensions, Tuple2<num, num> occupy_dimensions) : super(t_images[0], draw_dimensions, occupy_dimensions, false) {
     images = t_images;
   }
   Tuple3<bool, Obstacle, Location> do_action(Player player, Location my_loc) {
@@ -140,29 +138,29 @@ class FallingObstacle extends Obstacle {
         }
       }
     }
+    print([[my_loc.x, my_loc.y], [ret.item2.x, ret.item2.y]]);
     return Tuple3<bool, Obstacle, Location>(true, ret.item1, ret.item2);
   }
 }
 
 StaticObstacle make_house() {
-  return StaticObstacle(DynamicSprite([[house_large_image]], Location(2, 2)), Tuple2<num, num>(2, 2), Tuple2<num, num>(2, 1));
+  return StaticObstacle(house_large_image, Tuple2<num, num>(2, 2), Tuple2<num, num>(2, 1));
 }
 
 StaticObstacle make_tree1() {
-  return StaticObstacle(DynamicSprite([[tree1_large_image]], Location(2, 2)), Tuple2<num, num>(2, 2), Tuple2<num, num>(2, 1));
+  return StaticObstacle(tree1_large_image, Tuple2<num, num>(2, 2), Tuple2<num, num>(2, 1));
 }
 
 FallingObstacle make_tree2() {
-  List<DynamicSprite> sprites = [DynamicSprite([[tree2_large_image]], Location(1, 2)), DynamicSprite([[tree2_large_left_image]], Location(1, 2)), DynamicSprite([[tree2_large_right_image]], Location(1, 2))];
-  return FallingObstacle(sprites, Tuple2<num, num>(1, 2), Tuple2<num, num>(1, 1));
+  return FallingObstacle([tree2_large_image, tree2_large_left_image, tree2_large_right_image], Tuple2<num, num>(1, 2), Tuple2<num, num>(1, 1));
 }
 
 StaticObstacle make_bush1() {
-  return StaticObstacle(DynamicSprite([[bush_large_image]], Location(2, 2)), Tuple2<num, num>(2, 2), Tuple2<num, num>(2, 1));
+  return StaticObstacle(bush_large_image, Tuple2<num, num>(2, 2), Tuple2<num, num>(2, 1));
 }
 
 StaticObstacle make_bush2() {
-  return StaticObstacle(DynamicSprite([[bush_small_image]], Location(1, 1)), Tuple2<num, num>(1, 1), Tuple2<num, num>(1, 1));
+  return StaticObstacle(bush_small_image, Tuple2<num, num>(1, 1), Tuple2<num, num>(1, 1));
 }
 
 List<Tuple2<Obstacle, Location>> obstacles_from_string(String s) {
