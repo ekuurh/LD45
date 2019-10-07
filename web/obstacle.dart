@@ -96,7 +96,9 @@ class RotatingObstacle extends Obstacle {
 
     if(tot_time >= rotation_time) {
       tot_time = rotation_time;
-      get_tree_fall_sound().play();
+      if(!is_muted) {
+        get_tree_fall_sound().play();
+      }
       angle = end_angle;
       done_rotating = true;
     }
