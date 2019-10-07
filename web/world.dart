@@ -58,6 +58,8 @@ class World {
     for(Tuple2<Obstacle, Location> obstacle in obstacles) {
       for(var i = -obstacle.item1.occupy_dimensions.item1+1; i <= 0; i++) {
         for(var j = -obstacle.item1.occupy_dimensions.item2+1; j <= 0; j++) {
+          assert(verbosify(map.is_valid_location(Location(obstacle.item2.x + i, obstacle.item2.y + j)),
+            "Obstacle of size (${obstacle.item1.occupy_dimensions.item1}, ${obstacle.item1.occupy_dimensions.item2}) out of bounds at location (${obstacle.item2.x + i}, ${obstacle.item2.y + j}) in world of size (${map.width}, ${map.height})"));
           is_walkable_arr[obstacle.item2.x + i][obstacle.item2.y + j] = false;
         }
       }
