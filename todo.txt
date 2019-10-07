@@ -11,7 +11,7 @@ polish:
 - add glow to current target
 - nicer mana bar
 - graphics for mute button?
-- have mana bar above
+- have mana bar above?
 - try to disable anti-aliasing (maybe only in winlose screens)?
 - have winlose text be a pixelart font?
 
