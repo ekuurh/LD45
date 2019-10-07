@@ -30,17 +30,39 @@ class RotatingObstacle extends Obstacle {
   num angle;
   num rotation_speed;
   num end_angle;
+  num num_spins;
   bool done_rotating;
   Location anchor;
-  RotatingObstacle(ImageElement img, Tuple2<num, num> draw_dimensions, Tuple2<num, num> occupy_dimensions,
-                   num start_angle, num t_end_angle, {num rotation_time = 2.0, Location t_anchor = null}) : super(img, draw_dimensions, occupy_dimensions, false) {
-    angle = start_angle;
-    end_angle = t_end_angle;
-    rotation_speed = (end_angle - start_angle)/rotation_time;
+  RotatingObstacle(ImageElement img, Tuple2<num, num> t_draw_dimensions, Tuple2<num, num> t_occupy_dimensions,
+                   num t_num_spins, {num rotation_time = 2.0, Location t_anchor = null}) :
+        super(img, Location.from_tuple(t_draw_dimensions).integer_rotate(t_num_spins).to_abs_tuple(),
+          Location.from_tuple(t_occupy_dimensions).integer_rotate(t_num_spins).to_abs_tuple(), false) {
+    num_spins = t_num_spins;
+    angle = - num_spins * math.pi/2;
+    end_angle = 0;
+    rotation_speed = (end_angle - angle)/rotation_time;
     done_rotating = false;
     if(t_anchor == null) {
-//      anchor = Location(0, 0);
-        anchor = Location(0.5, 0.5);
+      if(num_spins%2 == 0) {
+        anchor = Location(draw_dimensions.item1/2.0, draw_dimensions.item2/2.0);
+      }
+      else  if (num_spins%4 == 1){
+        if(draw_dimensions.item1 >= draw_dimensions.item2) {
+          anchor = Location(-draw_dimensions.item2/2.0 + 1, 1 - draw_dimensions.item2/2.0);
+        }
+        else {
+          anchor = Location(-draw_dimensions.item1/2.0 + 1, 1 - draw_dimensions.item1/2.0);
+        }
+      }
+      else {
+        assert(verbosify(num_spins%4 == 3, "WTF"));
+        if(draw_dimensions.item1 >= draw_dimensions.item2) {
+          anchor = Location(-draw_dimensions.item1 + 1 + draw_dimensions.item2/2.0, -draw_dimensions.item2/2.0 + 1);
+        }
+        else {
+          anchor = Location(-draw_dimensions.item1/2.0 + 1, 1 - draw_dimensions.item1/2.0);
+        }
+      }
     }
     else {
       anchor = t_anchor;
@@ -82,20 +104,23 @@ class RotatingObstacle extends Obstacle {
 }
 
 class FallingObstacle extends Obstacle {
-  FallingObstacle(ImageElement img, Tuple2<num, num> draw_dimensions, Tuple2<num, num> occupy_dimensions) : super(img, draw_dimensions, occupy_dimensions, false);
+  List<ImageElement> images;
+  FallingObstacle(List<ImageElement> t_images, Tuple2<num, num> draw_dimensions, Tuple2<num, num> occupy_dimensions) : super(t_images[0], draw_dimensions, occupy_dimensions, false) {
+    images = t_images;
+  }
   Tuple3<bool, Obstacle, Location> do_action(Player player, Location my_loc) {
     Tuple2<Obstacle, Location> ret;
-    Tuple2<num, num> new_dimension_tup = Tuple2<num, num>(draw_dimensions.item2, draw_dimensions.item1);
+//    Tuple2<num, num> new_dimension_tup = Tuple2<num, num>(draw_dimensions.item2, draw_dimensions.item1);
     if(player.x > my_loc.x - (draw_dimensions.item1 - 1) / 2) {
       // anchor by bottom-right
-      ret = Tuple2(RotatingObstacle(img, new_dimension_tup, new_dimension_tup, 0, math.pi/2), my_loc);
+      ret = Tuple2(RotatingObstacle(images[1], draw_dimensions, draw_dimensions, 1), my_loc);
     }
     else {
       // anchor by bottom-left
       Location new_loc = Location(
           my_loc.x - draw_dimensions.item1 + draw_dimensions.item2, my_loc.y);
       ret = Tuple2(
-          RotatingObstacle(img, new_dimension_tup, new_dimension_tup, 0, -math.pi/2),
+          RotatingObstacle(images[2], draw_dimensions, draw_dimensions, -1),
           new_loc);
     }
     for(num i = 1-ret.item1.occupy_dimensions.item1; i <= 1; i++) {
@@ -109,6 +134,7 @@ class FallingObstacle extends Obstacle {
         }
       }
     }
+    print([[my_loc.x, my_loc.y], [ret.item2.x, ret.item2.y]]);
     return Tuple3<bool, Obstacle, Location>(true, ret.item1, ret.item2);
   }
 }
@@ -122,7 +148,7 @@ StaticObstacle make_tree1() {
 }
 
 FallingObstacle make_tree2() {
-  return FallingObstacle(tree2_large_image, Tuple2<num, num>(1, 1), Tuple2<num, num>(1, 1));
+  return FallingObstacle([tree2_large_image, tree2_large_right_image, tree2_large_left_image], Tuple2<num, num>(1, 2), Tuple2<num, num>(1, 1));
 }
 
 StaticObstacle make_bush1() {
