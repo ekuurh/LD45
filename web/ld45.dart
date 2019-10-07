@@ -122,6 +122,7 @@ void main() async {
   World world;
 
   make_person_sprites();
+  make_all_persona_sounds();
   
   await show_starting_screen(ctx);
 

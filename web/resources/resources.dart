@@ -45,6 +45,23 @@ ImageElement talk_right_sprite = ImageElement(src: 'resources/images/talk_right.
 
 ImageElement intro_image = ImageElement(src: 'resources/images/intro.jpg');
 
-List<PersonaSounds> all_persona_sounds = [
-  PersonaSounds(['resources/audio/conversation_1_1.wav']),
-  PersonaSounds(['resources/audio/conversation_2_1.wav'])];
+List<PersonaSounds> all_persona_sounds;
+
+void make_all_persona_sounds() {
+  all_persona_sounds = [];
+  List<String> curr = [];
+  for(num ind = 0; ind <= 9; ind++) {
+    curr.add('resources/audio/convo Convo_1' + ind.toString() + '.wav');
+  }
+  all_persona_sounds.add(PersonaSounds(curr));
+  curr = [];
+  for(num ind = 0; ind <= 9; ind++) {
+    curr.add('resources/audio/convo Convo_2' + ind.toString() + '.wav');
+  }
+  all_persona_sounds.add(PersonaSounds(curr));
+  curr = [];
+  for(num ind = 0; ind <= 6; ind++) {
+    curr.add('resources/audio/convo Convo_3' + ind.toString() + '.wav');
+  }
+  all_persona_sounds.add(PersonaSounds(curr));
+}
