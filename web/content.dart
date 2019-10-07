@@ -165,5 +165,54 @@ T--H-----b-H-T
       t_music: get_village_music2()
 );
 
-List<Level> all_levels = [levelIntro, level11, level13, level12];
+
+Level level14 = Level(WorldMap.fromString("""
+gggggggggggggggg
+ggggggggggggggRg
+gRRRRRRGGGGgggRg
+GRRRRRRRRGGGGGRG
+GRRRRRRRRRRRRRRG
+GRRRRRRgGRggGGGG
+GRRRRRRgGRGggGGG
+gRRRRRRggRGGGGGG
+gRGGgggggggggGGG
+gRRRRRRRRRRRRGGG
+gRGGGgggggggRggG
+GRRRRRRRRRRRRggg
+GGggggGGGgggGGGg
+
+"""),
+    pesrons_from_string("""
+
+1,7;6|5,2;2|0
+12,9;2|11,1;2|-1
+9,6;2|9,4;2|-2
+14,4;2|14,2;2|2
+9,4;3|14,4;3|0
+
+
+
+      """),
+    obstacles_from_string("""
+
+------t-t-t----
+-t-t-t-t-t-t-H--
+-------TT-------
+-------------T--
+---H-H--H-------
+-------BT-------
+-------BB-------
+-------BB------H
+--T-------------
+----------------
+--BBBBBBBBBB----
+B------------T--
+-----B-b--------
+
+      """),
+    100, level_win_screens[2],
+      t_music: get_village_music2()
+);
+
+List<Level> all_levels = [levelInrto, level11, level12, level13];
 
