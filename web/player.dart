@@ -9,7 +9,8 @@ import 'person.dart';
 import 'package:mutex/mutex.dart';
 
 const num PLAYER_SPEED = 2.0;
-const num MAX_ACTION_DISTANCE = 0.8;
+const num MAX_PERSON_ACTION_DISTANCE = 0.8;
+const num MAX_TREE_ACTION_DISTANCE = 1.5;
 
 const num SUGGESTION_MANA_USAGE = 20;
 const num INTERACTION_MANA_USAGE = 10;
@@ -54,7 +55,10 @@ class Player {
   void perform_action() {
     var loc = Location(x+0.5, y+0.5);
     Tuple2<Object, num> closest = world.closest_object_to(loc);
-    if(closest.item2 > MAX_ACTION_DISTANCE) {
+    if(closest.item2 > MAX_TREE_ACTION_DISTANCE) {
+      return;
+    }
+    if((closest.item1 is Person) && (closest.item2 > MAX_PERSON_ACTION_DISTANCE)) {
       return;
     }
     if (closest.item1 is Person) {
@@ -137,8 +141,11 @@ class Player {
           }
           var loc = Location(x+0.5, y+0.5);
           Tuple2<Object, num> closest = world.closest_object_to(loc);
-          if(closest.item2 > MAX_ACTION_DISTANCE) {
-            break;
+          if(closest.item2 > MAX_TREE_ACTION_DISTANCE) {
+            return;
+          }
+          if((closest.item1 is Person) && (closest.item2 > MAX_PERSON_ACTION_DISTANCE)) {
+            return;
           }
           if ((closest.item1 is Person) && (mana >= POSSESSION_INITIAL_MANA_USAGE)) {
             Person person = closest.item1;
