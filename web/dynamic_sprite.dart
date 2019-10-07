@@ -54,7 +54,10 @@ void make_person_sprites() {
   String step1_possession_filepath = 'resources/images/possess_step1.png';
   String step2_possession_filepath = 'resources/images/possess_step2.png';
 
+  String talk_filepath = 'resources/images/talk_left.png';
+
   person_sprites = {};
+  talking_person_sprites = {};
 
   for (var amount_possessed = -2; amount_possessed <= 2; amount_possessed++) {
     String filename_suffix;
@@ -73,10 +76,13 @@ void make_person_sprites() {
     person_sprites[Tuple3<bool, bool, num>(true, false, amount_possessed)] = DynamicSprite([[ImageElement(src: path1)], [ImageElement(src: path2)]], Location(1, 1));
     person_sprites[Tuple3<bool, bool, num>(true, true, amount_possessed)] = DynamicSprite(
         [[ImageElement(src: path1), ImageElement(src: step1_possession_filepath)], [ImageElement(src: path2), ImageElement(src: step2_possession_filepath)]], Location(1, 1));
+
+    talking_person_sprites[amount_possessed] = DynamicSprite([[ImageElement(src: path), ImageElement(src: talk_filepath)]], Location(1, 1));
   }
 }
 
 Map<Tuple3<bool, bool, num>, DynamicSprite> person_sprites; // (is_walking, is_possessed, belief) -> dynamic sprite
+Map<num, DynamicSprite> talking_person_sprites; // belief -> dynamic sprite
 
 DynamicSprite make_player_sprite() {
   return DynamicSprite([[player_images[0]], [player_images[1]], [player_images[2]], [player_images[3]], [player_images[2]], [player_images[1]]],

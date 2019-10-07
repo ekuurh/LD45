@@ -180,7 +180,13 @@ class Person extends Drawable {
   }
 
   void update_sprite() {
-    sprite = get_person_sprite(am_walking(), state == PersonState.POSSESSED, belief);
+    if(state == PersonState.CONVERSING) {
+      sprite = talking_person_sprites[belief];
+    }
+    else {
+      sprite = get_person_sprite(
+          am_walking(), state == PersonState.POSSESSED, belief);
+    }
   }
 
   void unpossess() {

@@ -1,4 +1,5 @@
 - can only influence twice
+- instruction screen
 
 sound stuff:
 - add conversation sounds
@@ -12,6 +13,8 @@ polish:
 - nicer mana bar
 - graphics for mute button?
 - have mana bar above
+- try to disable anti-aliasing (maybe only in winlose screens)?
+- have winlose text be a pixelart font?
 
 final stuff:
 - add copyright for howler
