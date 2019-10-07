@@ -82,7 +82,9 @@ class World {
     recompute_is_walkable_arr();
     if((music != null) && (start_music)) {
       music.play();
-      music.fade(0, 0.6, 1000);
+      if(!is_muted) {
+        music.fade(0, 0.6, 1000);
+      }
       update_mute();
     }
     clock_progress = 0;

@@ -1,8 +1,5 @@
 - can only influence twice
 
-bugfixes:
-- fade music appears despite mute
-
 sound stuff:
 - add conversation sounds
 - add sound effects
