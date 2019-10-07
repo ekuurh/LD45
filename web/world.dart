@@ -297,7 +297,6 @@ class World {
     num actual_height = element.height / scale;
     num center_x = TILE_SIZE * map.width / 2.0;
     num center_y = TILE_SIZE * map.height / 2.0;
-    print([element.width, element.height, map.width, map.height]);
     ctx.drawImageScaled(element, (center_x-(actual_width/2.0)).round(), (center_y-(actual_height/2.0)).round(),
         actual_width, actual_height);
   }

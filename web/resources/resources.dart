@@ -46,6 +46,8 @@ ImageElement talk_right_sprite = ImageElement(src: 'resources/images/talk_right.
 ImageElement intro_image = ImageElement(src: 'resources/images/intro.png');
 ImageElement instruction_image = ImageElement(src: 'resources/images/instructions.png');
 
+ImageElement orb_image = ImageElement(src: 'resources/images/pos_spot.png');
+
 List<PersonaSounds> all_persona_sounds;
 List<ImageElement> all_manabars;
 

@@ -175,7 +175,6 @@ class Person extends Drawable {
   }
 
   void possess() {
-    print("POSSESSED!");
     state = PersonState.POSSESSED;
     update_sprite();
   }

@@ -140,7 +140,6 @@ class FallingObstacle extends Obstacle {
         }
       }
     }
-    print([[my_loc.x, my_loc.y], [ret.item2.x, ret.item2.y]]);
     return Tuple3<bool, Obstacle, Location>(true, ret.item1, ret.item2);
   }
 }
