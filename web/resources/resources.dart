@@ -46,5 +46,5 @@ ImageElement talk_right_sprite = ImageElement(src: 'resources/images/talk_right.
 ImageElement intro_image = ImageElement(src: 'resources/images/intro.jpg');
 
 List<PersonaSounds> all_persona_sounds = [
-  PersonaSounds(['resources/audio/conversation_1_1.mp3']),
-  PersonaSounds(['resources/audio/conversation_2_1.mp3'])];
+  PersonaSounds(['resources/audio/conversation_1_1.wav']),
+  PersonaSounds(['resources/audio/conversation_2_1.wav'])];
