@@ -38,6 +38,7 @@ class Person extends Drawable {
   PersonState state;
   DynamicSprite sprite;
   PersonaSounds sounds;
+  bool is_targeted;
   
   Person(this.waypoints_and_waits, {this.belief = -1}) {
     walk_progress = 0;
@@ -50,6 +51,7 @@ class Person extends Drawable {
     next_location = location;
     update_sprite();
     sounds = pick_elements_from_list<PersonaSounds>(all_persona_sounds, 1).first;
+    is_targeted = false;
   }
 
   Direction get_desired_direction(WorldMap map, List<List<bool>> is_walkable_arr, Location rounded_player_loc) {
@@ -193,7 +195,7 @@ class Person extends Drawable {
     }
     else {
       sprite = get_person_sprite(
-          am_walking(), state == PersonState.POSSESSED, belief);
+          am_walking(), state == PersonState.POSSESSED, is_targeted, belief);
     }
   }
 
@@ -210,53 +212,14 @@ class Person extends Drawable {
   void draw_impl(CanvasRenderingContext2D ctx) {
     Location interpolated_loc = get_interpolated_location();
     sprite.draw(ctx, interpolated_loc);
-//    ctx.drawImageScaled(person_image, interpolated_loc.x * TILE_SIZE, interpolated_loc.y * TILE_SIZE,
-//        TILE_SIZE, TILE_SIZE);
+  }
 
-//    num center_tile_x = 0.5 + interpolated_loc.x;
-//    num center_tile_y = 0.5 + interpolated_loc.y;
-//
-//    num normalized_interpolated_belief = get_interpolated_belief() / (MAX_BELIEF * 1.0);
-//    ctx.fillStyle = RgbColor(255*(1+normalized_interpolated_belief)/2, 255/2, 255*(1-normalized_interpolated_belief)/2).toHexColor().toCssString();
-//
-//    ctx.beginPath();
-//    if(state != PersonState.CONVERSING) {
-//      ctx.ellipse(
-//          center_tile_x * TILE_SIZE,
-//          center_tile_y * TILE_SIZE,
-//          TILE_SIZE * 0.4,
-//          TILE_SIZE * 0.4,
-//          0,
-//          0,
-//          pi * 2,
-//          false);
-//    }
-//    else {
-//      ctx.ellipse(
-//          center_tile_x * TILE_SIZE,
-//          center_tile_y * TILE_SIZE,
-//          TILE_SIZE * 0.2,
-//          TILE_SIZE * 0.2,
-//          0,
-//          0,
-//          pi * 2,
-//          false);
-//    }
-//    ctx.fill();
-//    if(state == PersonState.POSSESSED) {
-//      ctx.fillStyle = "rgb(0, 255, 0)";
-//      ctx.beginPath();
-//      ctx.ellipse(
-//          center_tile_x * TILE_SIZE,
-//          center_tile_y * TILE_SIZE,
-//          TILE_SIZE * 0.1,
-//          TILE_SIZE * 0.1,
-//          0,
-//          0,
-//          pi * 2,
-//          false);
-//      ctx.fill();
-//    }
+  void target() {
+    is_targeted = true;
+  }
+
+  void untarget() {
+    is_targeted = false;
   }
 
   void draw(CanvasRenderingContext2D ctx, Location loc) {
