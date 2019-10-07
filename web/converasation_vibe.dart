@@ -40,5 +40,6 @@ class ConversationVibe {
       time_left = 0;
       sound.mute(true);
     }
+    sound.mute(is_muted);
   }
 }

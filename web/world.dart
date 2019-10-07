@@ -256,6 +256,9 @@ class World {
       p.update(dt);
     for (Tuple2<Obstacle, Location> ob in obstacles)
       ob.item1.update(dt);
+    for (ConversationVibe convo in conversations) {
+      convo.update(dt, Location(player.x, player.y));
+    }
     player.update(dt);
     if (clock_progress >= 1.0) {
       do_routing();
