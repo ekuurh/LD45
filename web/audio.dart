@@ -29,3 +29,9 @@ src: ['resources/audio/Village alt music.wav'], // source in MP3 and WAV fallbac
 loop: true,
 volume: 1.00 // Play with 60% of original volume.
 ) ; }
+
+Howl get_tree_fall_sound() { return new Howl(
+    src: ['resources/audio/tree_fall.wav'], // source in MP3 and WAV fallback
+    loop: false,
+    volume: 1.00 // Play with 60% of original volume.
+) ; }

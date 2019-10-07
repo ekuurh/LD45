@@ -7,6 +7,7 @@ sound stuff:
 - - tree falling
 - - suggestion
 - - possession
+- make mute work with everything
 
 polish:
 - add glow to current target
