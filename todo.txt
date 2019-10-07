@@ -3,9 +3,8 @@ bugfix:
 
 sound stuff:
 - add sound effects
-- - suggestion
-- - possession
-- make mute work with everything
+- - suggestion?
+- - possession?
 
 polish:
 - add glow to current target
