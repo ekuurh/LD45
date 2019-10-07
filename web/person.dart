@@ -181,7 +181,12 @@ class Person extends Drawable {
 
   void update_sprite() {
     if(state == PersonState.CONVERSING) {
-      sprite = talking_person_sprites[belief];
+      if(conversation_buddy.location.x < location.x) {
+        sprite = talking_person_sprites[Tuple2<bool, num>(false, belief)];
+      }
+      else {
+        sprite = talking_person_sprites[Tuple2<bool, num>(true, belief)];
+      }
     }
     else {
       sprite = get_person_sprite(
