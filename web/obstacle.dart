@@ -51,9 +51,9 @@ class RotatingObstacle extends Obstacle {
   void draw(CanvasRenderingContext2D ctx, Location loc) {
 //    print(angle);
     ctx.rotate(-angle);
-    Location rotated_anchor = anchor.rotate(angle);
+    Location rotated_anchor = anchor.rotate(-angle);
     Location rotated_unanchored_loc = loc.rotate(-angle);
-    Location rotated_loc = Location(rotated_unanchored_loc.x - rotated_anchor.x + anchor.x, rotated_unanchored_loc.y - rotated_anchor.y + anchor.y);
+    Location rotated_loc = Location(rotated_unanchored_loc.x + rotated_anchor.x - anchor.x, rotated_unanchored_loc.y + rotated_anchor.y - anchor.y);
     super.draw(ctx, rotated_loc);
     ctx.rotate(angle);
   }
@@ -88,14 +88,14 @@ class FallingObstacle extends Obstacle {
     Tuple2<num, num> new_dimension_tup = Tuple2<num, num>(draw_dimensions.item2, draw_dimensions.item1);
     if(player.x > my_loc.x - (draw_dimensions.item1 - 1) / 2) {
       // anchor by bottom-right
-      ret = Tuple2(RotatingObstacle(img, new_dimension_tup, new_dimension_tup, -math.pi/2, 0), my_loc);
+      ret = Tuple2(RotatingObstacle(img, new_dimension_tup, new_dimension_tup, 0, math.pi/2), my_loc);
     }
     else {
       // anchor by bottom-left
       Location new_loc = Location(
           my_loc.x - draw_dimensions.item1 + draw_dimensions.item2, my_loc.y);
       ret = Tuple2(
-          RotatingObstacle(img, new_dimension_tup, new_dimension_tup, math.pi/2, 0),
+          RotatingObstacle(img, new_dimension_tup, new_dimension_tup, 0, -math.pi/2),
           new_loc);
     }
     for(num i = 1-ret.item1.occupy_dimensions.item1; i <= 1; i++) {
