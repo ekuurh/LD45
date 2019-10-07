@@ -1,5 +1,6 @@
 import 'package:tuple/tuple.dart';
 import 'dynamic_sprite.dart';
+import 'persona_sounds.dart';
 import 'utils.dart';
 import 'dart:math';
 import 'dart:html';
@@ -36,6 +37,7 @@ class Person extends Drawable {
   Person conversation_buddy;
   PersonState state;
   DynamicSprite sprite;
+  PersonaSounds sounds;
   
   Person(this.waypoints_and_waits, {this.belief = -1}) {
     walk_progress = 0;
@@ -47,6 +49,7 @@ class Person extends Drawable {
     location = waypoints_and_waits[0].item1;
     next_location = location;
     update_sprite();
+    sounds = pick_elements_from_list<PersonaSounds>(all_persona_sounds, 1).first;
   }
 
   Direction get_desired_direction(WorldMap map, List<List<bool>> is_walkable_arr, Location rounded_player_loc) {
@@ -260,25 +263,6 @@ class Person extends Drawable {
     assert(verbosify((loc.x == location.x) && (loc.y == location.y), "Weird..."));
     draw_impl(ctx);
   }
-}
-
-int start_conversation(Person first, Person second) {
-  Tuple2<num, num> next_beliefs = null;
-  Tuple2<num, num> belief_tup = Tuple2<num, num>(first.belief, second.belief);
-  if(belief_table.containsKey(belief_tup)) {
-    next_beliefs = belief_table[belief_tup];
-  }
-  Tuple2<num, num> reverse_belief_tup = Tuple2<num, num>(second.belief, first.belief);
-  if(belief_table.containsKey(reverse_belief_tup)) {
-    next_beliefs = Tuple2<num, num>(belief_table[reverse_belief_tup].item2, belief_table[reverse_belief_tup].item1);
-  }
-  assert(verbosify(next_beliefs != null, "Don't know what to do when the beliefs are (${first.belief}, ${second
-      .belief})!"));
-
-  var mana_earned = 0;
-  mana_earned += first.start_conversing(second, next_beliefs.item1);
-  mana_earned += second.start_conversing(first, next_beliefs.item2);
-  return mana_earned;
 }
 
 List<Person> pesrons_from_string(String s) {

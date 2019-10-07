@@ -1,6 +1,8 @@
 import 'dart:html';
 import 'package:tuple/tuple.dart';
 import '../dynamic_sprite.dart';
+import '../person.dart';
+import '../persona_sounds.dart';
 
 ImageElement op_screen_image = ImageElement(src: "resources/images/op_screen.jpg");
 ImageElement end_screen_image = ImageElement(src: "resources/images/end_screen.jpg");
@@ -42,3 +44,7 @@ ImageElement talk_left_sprite = ImageElement(src: 'resources/images/talk_left.pn
 ImageElement talk_right_sprite = ImageElement(src: 'resources/images/talk_right.png');
 
 ImageElement intro_image = ImageElement(src: 'resources/images/intro.jpg');
+
+List<PersonaSounds> all_persona_sounds = [
+  PersonaSounds(['resources/audio/conversation_1_1.mp3']),
+  PersonaSounds(['resources/audio/conversation_2_1.mp3'])];

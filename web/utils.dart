@@ -147,3 +147,18 @@ int print_and_fail(String message) {
 int verbose_parse_string(String input, String error_message) {
   return int.parse(input, onError: (jnk) => print_and_fail(error_message));
 }
+
+List<T> pick_elements_from_list<T>(List<T> arr, num amount) {
+  assert(verbosify(arr.length >= amount, "List ${arr} smaller than ${amount} elements"));
+  List<T> arr2 = arr.sublist(0);
+  arr2.shuffle();
+  return arr2.sublist(0, amount);
+}
+
+List<T> generate_random_list_from_pool<T>(List<T> pool, num amount) {
+  List<T> ret = [];
+  for(var ind = 0; ind < amount; ind++) {
+    ret.add(pick_elements_from_list(pool, 1).first);
+  }
+  return ret;
+}
