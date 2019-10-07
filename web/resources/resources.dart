@@ -27,7 +27,7 @@ ImageElement person_image = ImageElement(src: "resources/images/sprite_test.png"
 ImageElement house_large_image = ImageElement(src: 'resources/images/house_large.png');
 ImageElement tree1_large_image = ImageElement(src: 'resources/images/tree1_large.png');
 ImageElement bush_large_image = ImageElement(src: 'resources/images/bush_large.png');
-ImageElement bush_small_image = ImageElement(src: 'resources/images/bush_small.bmp');
+ImageElement bush_small_image = ImageElement(src: 'resources/images/bush_small.png');
 
 ImageElement tree2_large_image = ImageElement(src: 'resources/images/tree2_large.png');
 ImageElement tree2_large_right_image = ImageElement(src: 'resources/images/tree2_large_right.png');
