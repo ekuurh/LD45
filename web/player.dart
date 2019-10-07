@@ -1,6 +1,6 @@
 import 'dart:html';
 import 'package:tuple/tuple.dart';
-
+import 'dart:math' as math;
 import 'dynamic_sprite.dart';
 import 'obstacle.dart';
 import 'utils.dart';
@@ -28,6 +28,8 @@ class Player {
   num mana;
   bool is_possessing;
   Location mana_bar_loc, mana_bar_size;
+  Location suggestion_orb_loc;
+  num suggestion_orb_radius;
   Person possession_targeted_player;
   Mutex update_key_mutex;
   DynamicSprite sprite;
@@ -42,6 +44,8 @@ class Player {
     mana = world.starting_mana;
     mana_bar_loc = Location(world.map.width / 15.0, world.map.height / 15.0);
     mana_bar_size = Location(world.map.width / 2.5, world.map.height / 8.0);
+    suggestion_orb_loc = Location(world.map.width / 15.0, world.map.height / 4.5);
+    suggestion_orb_radius = world.map.width / 40.0;
     is_possessing = false;
     update_key_mutex = new Mutex();
     sprite = make_player_sprite();
@@ -277,5 +281,28 @@ class Player {
 
     ctx.fillStyle = "rgb(0, 0, 0, 1)";
     ctx.strokeStyle = "rgb(0, 0, 0, 1)";
+  }
+
+  void draw_suggestion_orbs(CanvasRenderingContext2D ctx) {
+    print("!!");
+    ctx.fillStyle = "rgb(120, 0, 120, 0.8)";
+    Location absolute_orb_pos = Location((suggestion_orb_loc.x * TILE_SIZE).round(), (suggestion_orb_loc.y * TILE_SIZE).round());
+    num absolute_orb_radius = suggestion_orb_radius * TILE_SIZE;
+    for(var ind = 0; ind < suggestions_left; ind++) {
+//      print([((absolute_orb_pos.x + (ind + 0.5) * absolute_orb_radius) * TILE_SIZE).round(), ((absolute_orb_pos.y + 0.5 * absolute_orb_radius) * TILE_SIZE).round()]);
+      ctx.beginPath();
+      ctx.ellipse(
+          (absolute_orb_pos.x + (2*ind + 1) * absolute_orb_radius).round(),
+          (absolute_orb_pos.y + 0.5 * absolute_orb_radius).round(),
+          (absolute_orb_radius * 0.8).round(),
+          (absolute_orb_radius * 0.8).round(),
+          0,
+          0,
+          math.pi * 2,
+          false);
+      ctx.fill();
+    }
+
+    ctx.fillStyle = "rgb(0, 0, 0, 1)";
   }
 }

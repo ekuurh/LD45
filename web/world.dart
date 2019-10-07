@@ -314,6 +314,7 @@ class World {
     }
     player.draw(ctx);
     player.draw_mana(ctx);
+    player.draw_suggestion_orbs(ctx);
 
     ctx.fillStyle = "rgb(0, 0, 0," + tint_level.toString() + ")";
     ctx.fillRect(0, 0, map.width * TILE_SIZE, map.height * TILE_SIZE);
