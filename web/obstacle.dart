@@ -160,7 +160,7 @@ StaticObstacle make_bush1() {
 }
 
 StaticObstacle make_bush2() {
-  return StaticObstacle(bush2_image, Tuple2<num, num>(1, 1), Tuple2<num, num>(1, 1));
+  return StaticObstacle(bush_small_image, Tuple2<num, num>(1, 1), Tuple2<num, num>(1, 1));
 }
 
 List<Tuple2<Obstacle, Location>> obstacles_from_string(String s) {

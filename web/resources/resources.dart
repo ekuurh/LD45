@@ -27,7 +27,7 @@ ImageElement person_image = ImageElement(src: "resources/images/sprite_test.png"
 ImageElement house_large_image = ImageElement(src: 'resources/images/house_large.png');
 ImageElement tree1_large_image = ImageElement(src: 'resources/images/tree1_large.png');
 ImageElement bush_large_image = ImageElement(src: 'resources/images/bush_large.png');
-ImageElement bush2_image = ImageElement(src: 'resources/images/bush2.bmp');
+ImageElement bush_small_image = ImageElement(src: 'resources/images/bush_small.png');
 
 ImageElement tree2_large_image = ImageElement(src: 'resources/images/tree2_large.png');
 ImageElement tree2_large_right_image = ImageElement(src: 'resources/images/tree2_large_right.png');
@@ -45,6 +45,23 @@ ImageElement talk_right_sprite = ImageElement(src: 'resources/images/talk_right.
 
 ImageElement intro_image = ImageElement(src: 'resources/images/intro.jpg');
 
-List<PersonaSounds> all_persona_sounds = [
-  PersonaSounds(['resources/audio/conversation_1_1.wav']),
-  PersonaSounds(['resources/audio/conversation_2_1.wav'])];
+List<PersonaSounds> all_persona_sounds;
+
+void make_all_persona_sounds() {
+  all_persona_sounds = [];
+  List<String> curr = [];
+  for(num ind = 0; ind <= 9; ind++) {
+    curr.add('resources/audio/convo Convo_1' + ind.toString() + '.wav');
+  }
+  all_persona_sounds.add(PersonaSounds(curr));
+  curr = [];
+  for(num ind = 0; ind <= 9; ind++) {
+    curr.add('resources/audio/convo Convo_2' + ind.toString() + '.wav');
+  }
+  all_persona_sounds.add(PersonaSounds(curr));
+  curr = [];
+  for(num ind = 0; ind <= 6; ind++) {
+    curr.add('resources/audio/convo Convo_3' + ind.toString() + '.wav');
+  }
+  all_persona_sounds.add(PersonaSounds(curr));
+}

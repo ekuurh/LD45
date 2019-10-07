@@ -1,10 +1,10 @@
 - instruction screen
+- triple press-any-key-to-continue
 
 bugfix:
 - await everything?
 
 sound stuff:
-- tweak conversation sounds
 - add sound effects
 - - suggestion
 - - possession
