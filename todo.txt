@@ -1,6 +1,9 @@
 - can only influence twice
 - instruction screen
 
+bugfix:
+- await everything?
+
 sound stuff:
 - tweak conversation sounds
 - add sound effects
