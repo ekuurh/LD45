@@ -7,7 +7,6 @@ sound stuff:
 - - possession?
 
 polish:
-- add glow to current target
 - graphics for mute button?
 - have mana bar above?
 - try to disable anti-aliasing (maybe only in winlose screens)?
