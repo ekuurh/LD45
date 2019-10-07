@@ -52,14 +52,19 @@ class DynamicSprite extends Drawable{
 }
 
 DynamicSprite get_person_sprite(bool is_walking, bool is_possessed, bool is_targeted, num belief) {
+  DynamicSprite ret;
   if(is_possessed) {
-    return person_sprites[Tuple3<bool, PlayerOutline, num>(is_walking, PlayerOutline.POSSESSED, belief)];
+    ret = person_sprites[Tuple3<bool, PlayerOutline, num>(is_walking, PlayerOutline.POSSESSED, belief)];
   }
-  if(is_targeted) {
-    return person_sprites[Tuple3<bool, PlayerOutline, num>(
+  else if(is_targeted) {
+    ret = person_sprites[Tuple3<bool, PlayerOutline, num>(
         is_walking, PlayerOutline.TARGETED, belief)];
+  } else {
+    ret = person_sprites[Tuple3<bool, PlayerOutline, num>(
+        is_walking, PlayerOutline.CLEAN, belief)];
   }
-  return person_sprites[Tuple3<bool, PlayerOutline, num>(is_walking, PlayerOutline.CLEAN, belief)];
+  assert(verbosify(ret != null, "No person sprite for ${is_walking}-walking, ${is_possessed}-possessed, ${is_targeted}-targeted, ${belief}-belief"));
+  return ret;
 }
 
 void make_person_sprites() {
@@ -95,7 +100,7 @@ void make_person_sprites() {
     person_sprites[Tuple3<bool, PlayerOutline, num>(true, PlayerOutline.CLEAN, amount_possessed)] = DynamicSprite([[step1_sprite], [step2_sprite]], Location(1, 1));
     person_sprites[Tuple3<bool, PlayerOutline, num>(true, PlayerOutline.POSSESSED, amount_possessed)] = DynamicSprite(
         [[step1_sprite, ImageElement(src: step1_possession_filepath)], [step2_sprite, ImageElement(src: step2_possession_filepath)]], Location(1, 1));
-    person_sprites[Tuple3<bool, PlayerOutline, num>(true, PlayerOutline.POSSESSED, amount_possessed)] = DynamicSprite(
+    person_sprites[Tuple3<bool, PlayerOutline, num>(true, PlayerOutline.TARGETED, amount_possessed)] = DynamicSprite(
         [[step1_sprite, ImageElement(src: step1_targeting_filepath)], [step2_sprite, ImageElement(src: step2_targeting_filepath)]], Location(1, 1));
 
     talking_person_sprites[Tuple2<bool, num>(true, amount_possessed)] = DynamicSprite([[idle_sprite, talk_left_sprite]], Location(1, 1));

@@ -13,7 +13,7 @@ import 'belief_table.dart';
 const num WALK_TIME = 1;
 const num CONVERSATION_TIME = 3;
 const num MAX_BELIEF = 2;
-const num MANA_EARNED_FROM_CONVERSION = 5;
+const num MANA_EARNED_FROM_CONVERSION = 10;
 
 enum PersonState {
   WALKING,
@@ -49,9 +49,9 @@ class Person extends Drawable {
     state = PersonState.STAYING;
     location = waypoints_and_waits[0].item1;
     next_location = location;
+    is_targeted = false;
     update_sprite();
     sounds = pick_elements_from_list<PersonaSounds>(all_persona_sounds, 1).first;
-    is_targeted = false;
   }
 
   Direction get_desired_direction(WorldMap map, List<List<bool>> is_walkable_arr, Location rounded_player_loc) {
@@ -216,10 +216,12 @@ class Person extends Drawable {
 
   void target() {
     is_targeted = true;
+    update_sprite();
   }
 
   void untarget() {
     is_targeted = false;
+    update_sprite();
   }
 
   void draw(CanvasRenderingContext2D ctx, Location loc) {

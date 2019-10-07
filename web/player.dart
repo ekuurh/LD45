@@ -36,6 +36,7 @@ class Player {
   Mutex update_key_mutex;
   DynamicSprite sprite;
   num suggestions_left;
+  Object current_target;
 
   Player(this.world) {
     speed_x = 0;
@@ -51,23 +52,42 @@ class Player {
     is_possessing = false;
     update_key_mutex = new Mutex();
     sprite = make_player_sprite();
+
+  }
+
+  Object get_target() {
+    var loc = Location(x+0.5, y+0.5);
+    Tuple2<Object, num> closest = world.closest_object_to(loc);
+    if(closest.item2 > MAX_TREE_ACTION_DISTANCE) {
+      return null;
+    }
+    if((closest.item1 is Person) && (closest.item2 > MAX_PERSON_ACTION_DISTANCE)) {
+      return null;
+    }
+    return closest.item1;
+  }
+
+  void retarget(Object new_target) {
+    if(current_target is Person) {
+      Person tmp = current_target;
+      tmp.untarget();
+    }
+    if(new_target is Person) {
+      Person tmp = new_target;
+      tmp.target();
+    }
+    current_target = new_target;
   }
   
   void perform_action() {
     var loc = Location(x+0.5, y+0.5);
-    Tuple2<Object, num> closest = world.closest_object_to(loc);
-    if(closest.item2 > MAX_TREE_ACTION_DISTANCE) {
-      return;
-    }
-    if((closest.item1 is Person) && (closest.item2 > MAX_PERSON_ACTION_DISTANCE)) {
-      return;
-    }
-    if (closest.item1 is Person) {
+    Object closest = get_target();
+    if (closest is Person) {
       if(mana < SUGGESTION_MANA_USAGE) {
         // Not enough mana
         return;
       }
-      Person p = closest.item1;
+      Person p = closest;
       if(p.belief < 0) {
         return;
       }
@@ -82,8 +102,8 @@ class Player {
       mana -= SUGGESTION_MANA_USAGE;
       p.set_belief(MAX_BELIEF);
     }
-    if (closest.item1 is Tuple2) {
-      Tuple2<Obstacle, Location> tup = closest.item1;
+    if (closest is Tuple2) {
+      Tuple2<Obstacle, Location> tup = closest;
       if(tup.item1 is FallingObstacle) {
         FallingObstacle obstacle = tup.item1;
         if(mana < INTERACTION_MANA_USAGE) {
@@ -140,18 +160,11 @@ class Player {
             // Already pressed
             break;
           }
-          var loc = Location(x+0.5, y+0.5);
-          Tuple2<Object, num> closest = world.closest_object_to(loc);
-          if(closest.item2 > MAX_TREE_ACTION_DISTANCE) {
-            return;
-          }
-          if((closest.item1 is Person) && (closest.item2 > MAX_PERSON_ACTION_DISTANCE)) {
-            return;
-          }
-          if ((closest.item1 is Person) && (mana >= POSSESSION_INITIAL_MANA_USAGE)) {
-            Person person = closest.item1;
+          Object closest = get_target();
+          if ((closest is Person) && (mana >= POSSESSION_INITIAL_MANA_USAGE)) {
+            Person person = closest;
             if(person.belief > 0) {
-              possession_targeted_player = closest.item1;
+              possession_targeted_player = closest;
               spacebar_start_time = DateTime.now();
             }
           }
@@ -236,6 +249,7 @@ class Player {
   }
   
   void update(num dt) {
+    retarget(get_target());
     update_key_mutex.acquire();
     x += speed_x * dt / CLOCK_TIME;
     y += speed_y * dt / CLOCK_TIME;
