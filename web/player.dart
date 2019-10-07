@@ -31,10 +31,12 @@ class Player {
   Person possession_targeted_player;
   Mutex update_key_mutex;
   DynamicSprite sprite;
+  num suggestions_left;
 
   Player(this.world) {
     speed_x = 0;
     speed_y = 0;
+    suggestions_left = 2;
     x = 1;
     y = 1;
     mana = world.starting_mana;
@@ -62,6 +64,10 @@ class Player {
       }
       if(p.belief == 2) {
         return;
+      }
+      if(suggestions_left == 0) {
+        // Can't suggest anymore
+
       }
       mana -= SUGGESTION_MANA_USAGE;
       p.set_belief(MAX_BELIEF);

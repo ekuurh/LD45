@@ -1,5 +1,6 @@
 - can only influence twice
 - instruction screen
+- have trees fall forwards/backwards as well
 
 bugfix:
 - await everything?
