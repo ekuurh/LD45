@@ -18,7 +18,6 @@ const num OPENING_SCROLL_SPEED = 200.0;
 
 const num OPENING_TEXT_TINT_TIME = 3.0;
 const num OPENING_TEXT_UNTINT_TIME = 1.0;
-//const num OPENING_TEXT_STAY_TIME = 7.0;
 
 CanvasElement canvas;
 CanvasRenderingContext2D ctx;
@@ -103,6 +102,13 @@ void show_starting_screen(CanvasRenderingContext2D ctx) async {
     ctx.fillStyle = "rgb(0, 0, 0," + tint_level.toString() + ")";
     ctx.fillRect(0, 0, canvas.width, canvas.width * TILE_SIZE);
     ctx.fillStyle = "rgb(0, 0, 0)";
+  }
+
+  waiting_for_click_at_start = true;
+
+  while (waiting_for_click_at_start) {
+    await window.animationFrame;
+    ctx.drawImageScaled(instruction_image, 0, 0, canvas.width, canvas.height);
   }
 
   in_intro_screen = false;

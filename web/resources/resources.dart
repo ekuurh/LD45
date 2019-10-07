@@ -44,6 +44,7 @@ ImageElement talk_left_sprite = ImageElement(src: 'resources/images/talk_left.pn
 ImageElement talk_right_sprite = ImageElement(src: 'resources/images/talk_right.png');
 
 ImageElement intro_image = ImageElement(src: 'resources/images/intro.jpg');
+ImageElement instruction_image = ImageElement(src: 'resources/images/instructions.png');
 
 List<PersonaSounds> all_persona_sounds;
 
