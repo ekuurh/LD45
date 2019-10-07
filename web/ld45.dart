@@ -17,7 +17,8 @@ const num OPENING_SCROLL_TIME = 4.0;
 const num OPENING_SCROLL_SPEED = 200.0;
 
 const num OPENING_TEXT_TINT_TIME = 3.0;
-const num OPENING_TEXT_STAY_TIME = 7.0;
+const num OPENING_TEXT_UNTINT_TIME = 1.0;
+//const num OPENING_TEXT_STAY_TIME = 7.0;
 
 CanvasElement canvas;
 CanvasRenderingContext2D ctx;
@@ -72,12 +73,30 @@ void show_starting_screen(CanvasRenderingContext2D ctx) async {
     draw_image_x_scaled(ctx, op_screen_image, op_screen_y);
   }
 
+  waiting_for_click_at_start = true;
+
   startTime = await window.animationFrame;
-  while (time - startTime < (OPENING_TEXT_TINT_TIME + OPENING_TEXT_STAY_TIME) * 1000) {
+  time = startTime;
+  while ((time - startTime < OPENING_TEXT_TINT_TIME * 1000) || (waiting_for_click_at_start)) {
     time = await window.animationFrame;
     num tot = (time - startTime) / 1000.0; // In seconds
     
     num tint_level = 1 - min(tot / OPENING_TEXT_TINT_TIME, 1);
+
+    ctx.drawImageScaled(intro_image, 0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "rgb(0, 0, 0," + tint_level.toString() + ")";
+    ctx.fillRect(0, 0, canvas.width, canvas.width * TILE_SIZE);
+    ctx.fillStyle = "rgb(0, 0, 0)";
+  }
+
+  startTime = await window.animationFrame;
+  time = startTime;
+  while (time - startTime < OPENING_TEXT_UNTINT_TIME * 1000) {
+    time = await window.animationFrame;
+    num tot = (time - startTime) / 1000.0; // In seconds
+
+    num tint_level = min(tot / OPENING_TEXT_UNTINT_TIME, 1);
 
     ctx.drawImageScaled(intro_image, 0, 0, canvas.width, canvas.height);
 
