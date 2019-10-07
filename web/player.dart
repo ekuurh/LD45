@@ -279,19 +279,6 @@ class Player {
     ctx.fillStyle = "rgb(30, 30, 30, 0.1)";
     Location absolute_mana_pos = Location((mana_bar_loc.x * TILE_SIZE).round(), (mana_bar_loc.y * TILE_SIZE).round());
     Location absolute_mana_size = Location((mana_bar_size.x * TILE_SIZE).round(), (mana_bar_size.y * TILE_SIZE).round());
-//    ctx.fillRect(absolute_mana_pos.x, absolute_mana_pos.y, absolute_mana_size.x, absolute_mana_size.y);
-//
-//    // mana content
-//    ctx.fillStyle = "rgb(200, 30, 200, 0.85)";
-//    ctx.fillRect(absolute_mana_pos.x, absolute_mana_pos.y, (absolute_mana_size.x * mana/100.0).round(), absolute_mana_size.y);
-//
-//    // mana outline
-//    ctx.strokeStyle = "rgb(30, 30, 30, 0.85)";
-//    ctx.lineWidth = (absolute_mana_size.y / 8.0);
-//    ctx.strokeRect(absolute_mana_pos.x, absolute_mana_pos.y, absolute_mana_size.x, absolute_mana_size.y);
-//
-//    ctx.fillStyle = "rgb(0, 0, 0, 1)";
-//    ctx.strokeStyle = "rgb(0, 0, 0, 1)";
     ctx.drawImageScaled(all_manabars[(mana/10).ceil()], absolute_mana_pos.x, absolute_mana_pos.y, absolute_mana_size.x, absolute_mana_size.y);
   }
 
