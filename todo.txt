@@ -1,6 +1,3 @@
-- instruction screen
-- triple press-any-key-to-continue
-
 bugfix:
 - await everything?
 
