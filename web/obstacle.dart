@@ -192,7 +192,7 @@ List<Tuple2<Obstacle, Location>> obstacles_from_string(String s) {
 // Ignore lines with no tiles
           line++;
           col = -1;
-        }} break;
+        } else {col = -1;}} break;
       case " ":
         col -= 1;
         break;
