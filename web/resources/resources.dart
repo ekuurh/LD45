@@ -1,6 +1,8 @@
 import 'dart:html';
 import 'package:tuple/tuple.dart';
 import '../dynamic_sprite.dart';
+import '../person.dart';
+import '../persona_sounds.dart';
 
 ImageElement op_screen_image = ImageElement(src: "resources/images/op_screen.jpg");
 ImageElement end_screen_image = ImageElement(src: "resources/images/end_screen.jpg");
@@ -24,9 +26,12 @@ ImageElement person_image = ImageElement(src: "resources/images/sprite_test.png"
 
 ImageElement house_large_image = ImageElement(src: 'resources/images/house_large.png');
 ImageElement tree1_large_image = ImageElement(src: 'resources/images/tree1_large.png');
-ImageElement tree2_large_image = ImageElement(src: 'resources/images/tree2_large.png');
 ImageElement bush_large_image = ImageElement(src: 'resources/images/bush_large.png');
 ImageElement bush2_image = ImageElement(src: 'resources/images/bush2.bmp');
+
+ImageElement tree2_large_image = ImageElement(src: 'resources/images/tree2_large.png');
+ImageElement tree2_large_right_image = ImageElement(src: 'resources/images/tree2_large_right.png');
+ImageElement tree2_large_left_image = ImageElement(src: 'resources/images/tree2_large_left.png');
 
 List<ImageElement> player_images = [
   ImageElement(src: 'resources/images/player_1.png'),
@@ -35,4 +40,11 @@ List<ImageElement> player_images = [
   ImageElement(src: 'resources/images/player_4.png')
 ];
 
+ImageElement talk_left_sprite = ImageElement(src: 'resources/images/talk_left.png');
+ImageElement talk_right_sprite = ImageElement(src: 'resources/images/talk_right.png');
+
 ImageElement intro_image = ImageElement(src: 'resources/images/intro.jpg');
+
+List<PersonaSounds> all_persona_sounds = [
+  PersonaSounds(['resources/audio/conversation_1_1.wav']),
+  PersonaSounds(['resources/audio/conversation_2_1.wav'])];

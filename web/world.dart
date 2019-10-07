@@ -2,6 +2,8 @@ import 'dart:core';
 import 'dart:html';
 import 'dart:math';
 import 'package:collection/collection.dart';
+import 'belief_table.dart';
+import 'converasation_vibe.dart';
 import 'obstacle.dart';
 import 'resources/resources.dart';
 import 'utils.dart';
@@ -42,6 +44,7 @@ class World {
   num starting_mana;
   num tint_level;
   ImageElement win_screen;
+  List<ConversationVibe> conversations;
 
   void recompute_is_walkable_arr() {
     is_walkable_arr = List<List<bool>>();
@@ -82,13 +85,16 @@ class World {
     recompute_is_walkable_arr();
     if((music != null) && (start_music)) {
       music.play();
-      music.fade(0, 0.6, 1000);
+      if(!is_muted) {
+        music.fade(0, 0.6, 1000);
+      }
       update_mute();
     }
     clock_progress = 0;
     starting_mana = level.starting_mana;
     player = Player(this); // last in init since it uses "this"
     do_routing();
+    conversations = [];
   }
   
   Tuple2<Object, num> closest_object_to(Location p) {
@@ -370,5 +376,25 @@ class World {
       CLOCK_TIME = REGULAR_CLOCK_TIME;
       return;
     }
+  }
+
+  int start_conversation(Person first, Person second) {
+    Tuple2<num, num> next_beliefs = null;
+    Tuple2<num, num> belief_tup = Tuple2<num, num>(first.belief, second.belief);
+    if(belief_table.containsKey(belief_tup)) {
+      next_beliefs = belief_table[belief_tup];
+    }
+    Tuple2<num, num> reverse_belief_tup = Tuple2<num, num>(second.belief, first.belief);
+    if(belief_table.containsKey(reverse_belief_tup)) {
+      next_beliefs = Tuple2<num, num>(belief_table[reverse_belief_tup].item2, belief_table[reverse_belief_tup].item1);
+    }
+    assert(verbosify(next_beliefs != null, "Don't know what to do when the beliefs are (${first.belief}, ${second
+        .belief})!"));
+
+    var mana_earned = 0;
+    mana_earned += first.start_conversing(second, next_beliefs.item1);
+    mana_earned += second.start_conversing(first, next_beliefs.item2);
+    conversations.add(ConversationVibe(first.location, first.sounds, second.sounds)); // TODO make average of locations
+    return mana_earned;
   }
 }
