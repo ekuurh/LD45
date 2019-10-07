@@ -13,11 +13,11 @@ import 'content.dart';
 import 'audio.dart';
 import 'package:howler/howler.dart';
 
-const num OPENING_SCROLL_TIME = 1.0; // 4.0;
+const num OPENING_SCROLL_TIME = 4.0;
 const num OPENING_SCROLL_SPEED = 200.0;
 
-const num OPENING_TEXT_TINT_TIME = 1.0; // 3.0;
-const num OPENING_TEXT_STAY_TIME = 1.0; // 7.0;
+const num OPENING_TEXT_TINT_TIME = 3.0;
+const num OPENING_TEXT_STAY_TIME = 7.0;
 
 CanvasElement canvas;
 CanvasRenderingContext2D ctx;
