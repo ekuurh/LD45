@@ -67,8 +67,9 @@ class Player {
       }
       if(suggestions_left == 0) {
         // Can't suggest anymore
-
+        return;
       }
+      suggestions_left -= 1;
       mana -= SUGGESTION_MANA_USAGE;
       p.set_belief(MAX_BELIEF);
     }
