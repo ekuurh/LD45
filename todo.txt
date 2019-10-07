@@ -2,11 +2,11 @@
 - instruction screen
 
 sound stuff:
-- add conversation sounds
+- tweak conversation sounds
 - add sound effects
-- - tree falling
 - - suggestion
 - - possession
+- make mute work with everything
 
 polish:
 - add glow to current target

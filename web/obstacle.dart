@@ -1,5 +1,6 @@
 import 'dart:html';
 import 'package:tuple/tuple.dart';
+import 'audio.dart';
 import 'player.dart';
 import 'resources/resources.dart';
 import 'utils.dart';
@@ -27,21 +28,25 @@ class StaticObstacle extends Obstacle {
 }
 
 class RotatingObstacle extends Obstacle {
+  num starting_angle;
   num angle;
-  num rotation_speed;
   num end_angle;
   num num_spins;
   bool done_rotating;
+  num tot_time;
+  num rotation_time;
   Location anchor;
   RotatingObstacle(ImageElement img, Tuple2<num, num> t_draw_dimensions, Tuple2<num, num> t_occupy_dimensions,
-                   num t_num_spins, {num rotation_time = 2.0, Location t_anchor = null}) :
+                   num t_num_spins, {num t_rotation_time = 2.0, Location t_anchor = null}) :
         super(img, Location.from_tuple(t_draw_dimensions).integer_rotate(t_num_spins).to_abs_tuple(),
           Location.from_tuple(t_occupy_dimensions).integer_rotate(t_num_spins).to_abs_tuple(), false) {
     num_spins = t_num_spins;
     angle = - num_spins * math.pi/2;
+    starting_angle = angle;
     end_angle = 0;
-    rotation_speed = (end_angle - angle)/rotation_time;
+    tot_time = 0;
     done_rotating = false;
+    rotation_time = t_rotation_time;
     if(t_anchor == null) {
       if(num_spins%2 == 0) {
         anchor = Location(draw_dimensions.item1/2.0, draw_dimensions.item2/2.0);
@@ -85,21 +90,18 @@ class RotatingObstacle extends Obstacle {
     super.update(dt);
     if(done_rotating) return;
 
-    num added_angle = dt * rotation_speed / CLOCK_TIME;
-    angle += added_angle;
-    if(rotation_speed < 0) {
-      if(angle < end_angle) {
-        angle = end_angle;
-        done_rotating = true;
-      }
-    }
+    tot_time += dt / CLOCK_TIME;
 
-    if(rotation_speed > 0) {
-      if(angle > end_angle) {
-        angle = end_angle;
-        done_rotating = true;
-      }
+    angle = tot_time * tot_time;
+
+    if(tot_time >= rotation_time) {
+      tot_time = rotation_time;
+      get_tree_fall_sound().play();
+      angle = end_angle;
+      done_rotating = true;
     }
+    num move_percentage = math.pow(tot_time / rotation_time, 2);
+    angle = interpolate(starting_angle, end_angle, move_percentage);
   }
 }
 
